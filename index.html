@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Western Loop">
+<meta name="theme-color" content="#23272B">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<title>The Grand Western Loop — Trip Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --asphalt:#23272B; --asphalt-2:#2E3338; --paper:#FAF8F2; --card:#FFFFFF;
+    --ink:#22262A; --ink-soft:#5A6068;
+    --sign-green:#00693C; --sign-green-dark:#00552F;
+    --interstate-blue:#10437C; --shield-red:#B01E24; --dash-yellow:#F5C518;
+    --line:#E2DDD0; --radius:12px;
+    --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  body{font-family:'Public Sans',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.5;font-size:15px;
+       padding-bottom:calc(76px + var(--sab));overscroll-behavior-y:none}
+  .display{font-family:'Oswald',system-ui,sans-serif;text-transform:uppercase;letter-spacing:.04em}
+  button{font:inherit;border:none;cursor:pointer;background:none}
+  a{color:var(--interstate-blue)}
+
+  /* ===== header ===== */
+  header{background:var(--asphalt);color:#fff;padding:calc(14px + var(--sat)) 16px 12px;position:sticky;top:0;z-index:30;
+         box-shadow:0 2px 8px rgba(0,0,0,.25)}
+  .hrow{display:flex;align-items:center;justify-content:space-between;gap:10px;max-width:720px;margin:0 auto}
+  .htitle{font-family:'Oswald';font-weight:600;font-size:17px;text-transform:uppercase;letter-spacing:.05em;line-height:1.15}
+  .htitle span{color:var(--dash-yellow)}
+  .hday{font-family:'Oswald';font-size:12px;letter-spacing:.12em;text-transform:uppercase;background:var(--interstate-blue);
+        border:2px solid #fff;border-radius:8px;padding:4px 10px;white-space:nowrap}
+  .progress{max-width:720px;margin:10px auto 0;height:8px;background:#3A4046;border-radius:99px;position:relative;overflow:hidden}
+  .progress i{position:absolute;left:0;top:0;bottom:0;background:var(--dash-yellow);border-radius:99px;transition:width .4s}
+  .progress-label{max-width:720px;margin:5px auto 0;font-size:10.5px;color:#9AA1A8;letter-spacing:.1em;text-transform:uppercase;
+                  display:flex;justify-content:space-between}
+  .roadline{height:10px;background:var(--asphalt);position:relative}
+  .roadline::before{content:"";position:absolute;left:0;right:0;top:50%;height:3px;transform:translateY(-50%);
+    background:repeating-linear-gradient(90deg,var(--dash-yellow) 0 26px,transparent 26px 46px)}
+
+  main{max-width:720px;margin:0 auto;padding:14px 14px 30px}
+
+  /* ===== cards / shared ===== */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:15px 16px;
+        box-shadow:0 1px 4px rgba(34,38,42,.06);margin-bottom:12px}
+  .date-eyebrow{font-family:'Oswald';font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--shield-red);font-weight:600}
+  h2.daytitle{font-family:'Oswald';font-size:21px;font-weight:600;text-transform:uppercase;letter-spacing:.02em;margin:2px 0 8px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+  .chip{font-size:11.5px;font-weight:600;border-radius:5px;padding:2px 9px}
+  .chip.drive{background:#EDF4EF;color:var(--sign-green);border:1px solid #CBE0D3}
+  .chip.wx{background:#FDF6E1;color:#8A6D00;border:1px solid #F0E2AE}
+  .chip.rest{background:#EEF2F8;color:var(--interstate-blue);border:1px solid #D4DFEE}
+  .desc{font-size:13.5px;color:#3B4148;margin-bottom:8px}
+  .stay{display:flex;justify-content:space-between;gap:10px;align-items:center;border-top:1px dashed var(--line);
+        padding-top:9px;margin-top:9px;font-size:13px}
+  .stay b{color:var(--ink)}
+  .stay .cost{font-family:'Oswald';font-size:14px;color:var(--sign-green);font-weight:600;white-space:nowrap}
+
+  /* ===== hero (next stop) ===== */
+  .hero{background:var(--sign-green);color:#fff;border-radius:14px;border:3px solid #fff;outline:2px solid var(--sign-green-dark);
+        box-shadow:0 4px 14px rgba(0,0,0,.18);padding:16px;margin-bottom:14px}
+  .hero .eyebrow{font-family:'Oswald';font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--dash-yellow)}
+  .hero h2{font-family:'Oswald';font-size:24px;font-weight:600;text-transform:uppercase;letter-spacing:.02em;line-height:1.1;margin:4px 0 2px}
+  .hero .sub{font-size:13px;color:rgba(255,255,255,.85)}
+  .hero .dist{margin-top:8px;font-family:'Oswald';font-size:16px;color:var(--dash-yellow);letter-spacing:.04em}
+  .hero .dist small{color:rgba(255,255,255,.75);font-family:'Public Sans';font-size:12px;letter-spacing:0;text-transform:none}
+  .hero-btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;font-family:'Oswald';font-size:13.5px;
+       letter-spacing:.07em;text-transform:uppercase;font-weight:500;padding:11px 15px;border-radius:9px;text-decoration:none;
+       min-height:44px}
+  .btn.nav{background:var(--interstate-blue);color:#fff;flex:1 1 auto}
+  .btn.nav.g{background:#fff;color:var(--interstate-blue)}
+  .btn.arrive{background:var(--dash-yellow);color:#1c1c1c;flex:1 1 100%}
+  .btn.ghost{background:transparent;border:2px solid var(--line);color:var(--ink-soft)}
+  .btn:active{transform:scale(.98)}
+  .hero.done{background:var(--interstate-blue);outline-color:#0A3159}
+
+  .locbar{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-soft);margin:0 2px 12px}
+  .locbar button{color:var(--interstate-blue);font-weight:600;font-size:12px;text-decoration:underline}
+  .locdot{width:8px;height:8px;border-radius:50%;background:#B8BEC5;flex:none}
+  .locdot.on{background:#2BA05A;box-shadow:0 0 0 3px rgba(43,160,90,.2)}
+  .locdot.err{background:var(--shield-red)}
+
+  /* ===== alerts ===== */
+  .alert{background:#FBEBEC;border:1px solid #EBC2C4;border-left:5px solid var(--shield-red);border-radius:10px;
+         padding:10px 13px;font-size:13px;margin-bottom:10px}
+  .alert b{color:var(--shield-red);font-family:'Oswald';text-transform:uppercase;letter-spacing:.05em;font-size:12.5px}
+
+  /* ===== stops checklist ===== */
+  .stop{display:flex;gap:11px;align-items:flex-start;padding:11px 2px;border-bottom:1px solid #F0EDE4}
+  .stop:last-child{border-bottom:none}
+  .stop input[type=checkbox]{width:22px;height:22px;accent-color:var(--sign-green);flex:none;margin-top:1px}
+  .stop .s-main{flex:1;min-width:0}
+  .stop .s-name{font-weight:600;font-size:14px}
+  .stop .s-note{font-size:12px;color:var(--ink-soft)}
+  .stop .s-opt{font-size:10px;font-weight:700;letter-spacing:.08em;color:#8A6D00;background:#FDF6E1;border-radius:4px;padding:1px 6px;
+               text-transform:uppercase;vertical-align:2px;margin-left:5px}
+  .stop.done .s-name{text-decoration:line-through;color:var(--ink-soft)}
+  .stop .s-nav{flex:none;width:40px;height:40px;border-radius:9px;background:var(--interstate-blue);color:#fff;
+               display:flex;align-items:center;justify-content:center;text-decoration:none}
+  .stop .s-nav svg{width:17px;height:17px}
+  .stop .s-dist{flex:none;font-family:'Oswald';font-size:11.5px;color:var(--ink-soft);margin-top:11px;white-space:nowrap}
+
+  .section-label{font-family:'Oswald';font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);
+                 margin:16px 4px 8px}
+  .daynav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
+  .daynav button{font-family:'Oswald';font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--interstate-blue);
+                 font-weight:600;padding:8px 12px;border-radius:8px;background:#EEF2F8;border:1px solid #D4DFEE}
+  .daynav button:disabled{opacity:.35}
+  .daynav .dn-mid{font-family:'Oswald';font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+  .back-today{display:block;width:100%;text-align:center;margin:-4px 0 12px;color:var(--shield-red);font-weight:700;font-size:12.5px;
+              text-decoration:underline;padding:6px}
+
+  /* ===== route (itinerary) ===== */
+  .leg-head{background:var(--sign-green);color:#fff;border-radius:12px;border:3px solid #fff;outline:2px solid var(--sign-green-dark);
+            padding:11px 16px;display:flex;justify-content:space-between;align-items:baseline;gap:6px;margin:18px 0 10px;
+            box-shadow:0 2px 8px rgba(0,0,0,.12)}
+  .leg-head h2{font-family:'Oswald';font-size:16px;text-transform:uppercase;letter-spacing:.04em;font-weight:600}
+  .leg-head .dates{font-family:'Oswald';font-size:13px;color:var(--dash-yellow);letter-spacing:.08em}
+  .dayrow{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+          padding:12px 14px;margin-bottom:9px;cursor:pointer}
+  .dayrow.today{border:2px solid var(--dash-yellow);box-shadow:0 2px 10px rgba(245,197,24,.25)}
+  .dayrow.past{opacity:.62}
+  .marker{flex:none;width:46px;height:42px;background:var(--interstate-blue);border:2px solid #fff;outline:1.5px solid #0A3159;
+          border-radius:8px 8px 13px 13px;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;
+          box-shadow:0 2px 5px rgba(0,0,0,.22)}
+  .marker small{font-size:7.5px;letter-spacing:.13em;font-weight:700;text-transform:uppercase;color:#BFD3EC}
+  .marker b{font-family:'Oswald';font-size:16px;font-weight:600;line-height:1}
+  .dayrow.past .marker{background:var(--sign-green);outline-color:var(--sign-green-dark)}
+  .dr-main{flex:1;min-width:0}
+  .dr-date{font-family:'Oswald';font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--shield-red);font-weight:600}
+  .dr-title{font-family:'Oswald';font-size:15.5px;font-weight:600;text-transform:uppercase;letter-spacing:.02em;line-height:1.2}
+  .dr-meta{font-size:12px;color:var(--ink-soft);margin-top:2px}
+  .dr-check{font-family:'Oswald';font-size:11px;color:var(--sign-green);letter-spacing:.06em}
+
+  /* ===== todos ===== */
+  .todo{display:flex;gap:11px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+        padding:13px 14px;margin-bottom:9px}
+  .todo input[type=checkbox]{width:22px;height:22px;accent-color:var(--sign-green);flex:none;margin-top:2px}
+  .todo .t-title{font-family:'Oswald';font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:.02em}
+  .todo .t-due{display:inline-block;font-size:11px;font-weight:700;border-radius:4px;padding:1px 7px;margin:3px 0 4px;
+               background:#EEF2F8;color:var(--interstate-blue);letter-spacing:.05em;text-transform:uppercase}
+  .todo.overdue .t-due{background:#FBEBEC;color:var(--shield-red)}
+  .todo .t-note{font-size:12.5px;color:var(--ink-soft)}
+  .todo .t-note a{font-weight:600}
+  .todo.done{opacity:.5}
+  .todo.done .t-title{text-decoration:line-through}
+  .addrow{display:flex;gap:8px;margin:12px 0 4px}
+  .addrow input[type=text]{flex:1;border:1px solid var(--line);border-radius:9px;padding:11px 13px;font:inherit;background:#fff}
+  .addrow button{background:var(--sign-green);color:#fff;border-radius:9px;padding:0 18px;font-family:'Oswald';
+                 text-transform:uppercase;letter-spacing:.06em;font-size:13px}
+
+  /* ===== info ===== */
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+  .panel h3{font-family:'Oswald';font-size:16px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+  table{width:100%;border-collapse:collapse;font-size:12.5px}
+  th{font-family:'Oswald';font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);text-align:left;
+     padding:6px 6px;border-bottom:2px solid var(--asphalt)}
+  td{padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+  td:last-child,th:last-child{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  tr.total td{font-weight:700;border-bottom:none;border-top:2px solid var(--asphalt);font-family:'Oswald';font-size:13px}
+  .tip{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-size:12.5px;margin-bottom:8px}
+  .tip b{font-family:'Oswald';text-transform:uppercase;letter-spacing:.05em;font-size:12px;color:var(--interstate-blue);display:block;margin-bottom:2px}
+  textarea{width:100%;min-height:110px;border:1px solid var(--line);border-radius:9px;padding:10px;font:12px ui-monospace,monospace;
+           background:#fff;margin-bottom:8px}
+  .btnrow{display:flex;gap:8px;flex-wrap:wrap}
+  .btn.small{min-height:38px;padding:8px 13px;font-size:12px;background:var(--interstate-blue);color:#fff}
+  .btn.small.warn{background:var(--shield-red)}
+  .btn.small.plain{background:#EEF2F8;color:var(--interstate-blue);border:1px solid #D4DFEE}
+  .fineprint{font-size:11.5px;color:var(--ink-soft);margin-top:8px}
+
+  /* ===== tab bar ===== */
+  nav{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--asphalt);border-top:3px solid var(--dash-yellow);
+      display:flex;padding-bottom:var(--sab)}
+  nav button{flex:1;color:#9AA1A8;display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 0 7px;
+             font-family:'Oswald';font-size:10px;letter-spacing:.14em;text-transform:uppercase;position:relative}
+  nav button.active{color:var(--dash-yellow)}
+  nav button svg{width:21px;height:21px}
+  nav .badge{position:absolute;top:4px;left:calc(50% + 8px);background:var(--shield-red);color:#fff;font-size:9.5px;font-weight:700;
+             border-radius:99px;min-width:16px;height:16px;display:flex;align-items:center;justify-content:center;padding:0 4px;
+             font-family:'Public Sans';letter-spacing:0}
+
+  .empty{color:var(--ink-soft);font-size:13px;text-align:center;padding:20px 10px}
+  .install-hint{background:#EEF2F8;border:1px solid #D4DFEE;border-radius:10px;padding:11px 13px;font-size:12.5px;color:var(--interstate-blue);
+                margin-bottom:12px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hrow">
+    <div class="htitle" id="hdr-title">Trip <span>Tracker</span></div>
+    <div class="hday display" id="hdr-day"></div>
+  </div>
+  <div class="progress"><i id="prog-bar" style="width:0%"></i></div>
+  <div class="progress-label"><span id="prog-label"></span><span id="prog-pct"></span></div>
+</header>
+<div class="roadline"></div>
+
+<main id="view"></main>
+
+<nav id="tabs">
+  <button data-tab="today"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Today</button>
+  <button data-tab="route"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 15.5A3.5 3.5 0 0 0 7.5 19H17v2l4-3-4-3v2H7.5a1.5 1.5 0 0 1 0-3H16a4 4 0 0 0 0-8H6V4L2 7l4 3V8h10a2 2 0 0 1 0 4H7.5A3.5 3.5 0 0 0 4 15.5z"/></svg>Route</button>
+  <button data-tab="todo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>To-Do<span class="badge" id="todo-badge" hidden></span></button>
+  <button data-tab="info"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>Info</button>
+</nav>
+
+<script type="application/json" id="trip-data">{"format":"trip-tracker/v1","meta":{"id":"grand-western-loop-2026","name":"The Grand Western Loop","tagline":"Chicago → West → Chicago · 2 brothers, 1 pickup truck","start":"2026-07-05","end":"2026-07-29","stats":[["24","nights"],["~4,900 mi","driving"],["7","national parks"],["2","theme parks"]]},"todos":[{"id":"t1","title":"Hotel: West Yellowstone ×2","due":"2026-07-03","note":"Nights of Jul 9 & 10. July occupancy runs 90%+ and rates $305–559. Backup if full: Island Park, ID (30 min south, cheaper).","url":"https://www.booking.com/city/us/west-yellowstone.html"},{"id":"t2","title":"Hotel: Springdale (Zion) ×2","due":"2026-07-03","note":"Nights of Jul 14 & 15. Springdale sits at the park gate and fills fast; backup: Hurricane, UT (25 min).","url":"https://www.booking.com/city/us/springdale.html"},{"id":"t4","title":"Hotel: Jackson or Victor, ID","due":"2026-07-03","note":"Night of Jul 11. Jackson is charming but ~$300+; Victor, ID over the Teton Pass is ~$180 and 35 min away."},{"id":"t8","title":"Pack for 3 climates","due":"2026-07-05","note":"Fleece/jacket (Yellowstone nights hit 5–8°C), swimwear + water shoes (the Narrows), sunscreen & 4L water jugs (desert days 38–40°C). Cooler for the truck bed."},{"id":"t5","title":"America the Beautiful pass","due":"2026-07-06","note":"$80 per vehicle at the Badlands gate — covers every national park on this route (would be $205+ separately). Keep it on the dashboard."},{"id":"t6","title":"Cody Nite Rodeo tickets","due":"2026-07-06","note":"~$25/person, runs every summer night at 8pm — for the Jul 8 show. Easy to buy online a couple of days out.","url":"https://codystampederodeo.com"},{"id":"t9","title":"Download offline maps (WY, UT, AZ, NM)","due":"2026-07-08","note":"Google Maps → profile → Offline maps. Dead zones ahead in Yellowstone, Bryce and long stretches of AZ/NM."},{"id":"t3","title":"Universal Hollywood tickets ×2","due":"2026-07-10","note":"Dated tickets for Sat Jul 18 — from ~$154/adult for July weekends. Buy the Super Nintendo World early-access add-on if available.","url":"https://www.universalstudioshollywood.com"},{"id":"t7","title":"Silver Dollar City tickets","due":"2026-07-23","note":"~$99/person online, for Jul 26. Marvel Cave tour is included with admission — do it in the afternoon heat.","url":"https://www.silverdollarcity.com"},{"id":"t10","title":"Gateway Arch tram slot","due":"2026-07-26","note":"Book the 3–4pm tram slot online for Jul 27 — summer slots sell out day-of.","url":"https://www.gatewayarch.com"}],"legs":[{"name":"Leg 1 · Great Plains & Black Hills","dates":"Jul 5 – 8","days":[{"n":1,"date":"2026-07-05","title":"Chicago → Sioux Falls, SD","drive":"570 mi · ~8 h — the one big push","wx":"Sunny, 34°C","desc":"Knock out the prairie on day one while you're fresh. Evening leg-stretch at Falls Park's waterfalls downtown.","stops":[{"name":"Falls Park, Sioux Falls","lat":43.5586,"lng":-96.7226,"note":"Waterfalls downtown — evening leg-stretch"}],"stay":{"place":"Sioux Falls — any downtown chain hotel","cost":"~$120","lat":43.546,"lng":-96.7313},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=Chicago%2C+IL&destination=Falls+Park%2C+Sioux+Falls%2C+SD"},{"n":2,"date":"2026-07-06","title":"Sioux Falls → Badlands NP → Wall","drive":"~290 mi · 4.5 h + park loop","wx":"Sunny, ~31°C","desc":"Buy the $80 parks pass at the Badlands gate. Drive the Loop Road in golden-hour light; bighorn sheep at dusk.","stops":[{"name":"Corn Palace, Mitchell","lat":43.7166,"lng":-98.0263,"note":"World's only — 15-min photo stop"},{"name":"Badlands NP — Ben Reifel Visitor Center","lat":43.7508,"lng":-101.9415,"note":"Buy the $80 America the Beautiful pass at the gate"},{"name":"Door & Notch Trailhead","lat":43.7529,"lng":-101.927,"note":"Short walks into the moonscape"},{"name":"Wall Drug","lat":43.993,"lng":-102.2416,"note":"Free ice water since 1931"}],"stay":{"place":"Wall or Rapid City","cost":"~$140","lat":44.0805,"lng":-103.231},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=Sioux+Falls%2C+SD&destination=Wall%2C+SD&waypoints=Corn+Palace%2C+Mitchell%2C+SD%7CBadlands+National+Park"},{"n":3,"date":"2026-07-07","title":"Black Hills Day — Rushmore & Custer","drive":"Scenic loop ~100 mi — driving IS the activity","wx":"Mild, ~24°C","desc":"Mount Rushmore early (parking $10), then Custer State Park's Wildlife Loop — 1,300 bison roam free — and the Needles Highway's granite tunnels.","stops":[{"name":"Mount Rushmore","lat":43.8791,"lng":-103.4591,"note":"Go early — parking $10"},{"name":"Custer SP Wildlife Loop (State Game Lodge)","lat":43.7622,"lng":-103.3745,"note":"1,300 bison roam free — stay in the truck"},{"name":"Needles Eye Tunnel, Needles Hwy","lat":43.8715,"lng":-103.5311,"note":"Granite spires & one-lane tunnels"},{"name":"Crazy Horse Memorial (optional)","lat":43.8366,"lng":-103.6238,"note":"Visible from the highway viewpoint if skipping","optional":true}],"stay":{"place":"Rapid City (2nd night)","cost":"~$140","lat":44.0805,"lng":-103.231},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=Rapid+City%2C+SD&destination=Rapid+City%2C+SD&waypoints=Mount+Rushmore+National+Memorial%7CCuster+State+Park%7CNeedles+Highway"},{"n":4,"date":"2026-07-08","title":"Rapid City → Devils Tower → Cody, WY","drive":"~380 mi · 5.5–6 h","desc":"Walk the 2 km paved loop under Devils Tower (watch for climbers), then cross the Bighorn Mountains. Tonight: Cody Nite Rodeo, 8pm — bulls, broncos, pure Wyoming.","stops":[{"name":"Devils Tower","lat":44.5902,"lng":-104.7146,"note":"2 km paved Tower Trail loop"},{"name":"Shell Falls, Bighorn Mtns (US-14)","lat":44.5866,"lng":-107.539,"note":"Quick overlook on the pass","optional":true},{"name":"Cody Nite Rodeo — 8pm","lat":44.523,"lng":-109.108,"note":"Arrive ~7:30pm, tickets ~$25"}],"stay":{"place":"Cody — splurge-ish rodeo town","cost":"~$220","lat":44.5263,"lng":-109.0565},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=Rapid+City%2C+SD&destination=Cody%2C+WY&waypoints=Devils+Tower+National+Monument"}]},{"name":"Leg 2 · Yellowstone & Grand Teton","dates":"Jul 9 – 12","days":[{"n":5,"date":"2026-07-09","title":"Cody → Yellowstone East Side","drive":"~130 mi but a full sightseeing day","wx":"Days ~26°C · nights 5–8°C","desc":"Enter via the East Entrance — “the most scenic 50 miles in America.” Bison jams, elk, maybe wolves at dusk in Hayden Valley.","stops":[{"name":"Yellowstone East Entrance","lat":44.49,"lng":-110.005,"note":"Show the parks pass"},{"name":"Yellowstone Lake / Fishing Bridge","lat":44.5652,"lng":-110.373},{"name":"Hayden Valley","lat":44.6598,"lng":-110.4682,"note":"Bison jams — 25 m minimum distance"},{"name":"Artist Point — Lower Falls","lat":44.72,"lng":-110.4794,"note":"Grand Canyon of the Yellowstone"}],"stay":{"place":"West Yellowstone, MT — the splurge","cost":"~$320","lat":44.6621,"lng":-111.1041},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=Cody%2C+WY&destination=West+Yellowstone%2C+MT&waypoints=Yellowstone+Lake%7CArtist+Point%2C+Yellowstone"},{"n":6,"date":"2026-07-10","title":"Yellowstone Geyser Day","drive":"Lower loop, ~100 mi in-park","desc":"Enter the park by 7:30am to beat crowds. Old Faithful erupts ~every 90 min — check predicted times at the visitor center.","stops":[{"name":"Old Faithful","lat":44.4605,"lng":-110.8281,"note":"Erupts ~every 90 min — check times"},{"name":"Fairy Falls TH — Grand Prismatic Overlook","lat":44.5157,"lng":-110.8327,"note":"THE photo — 1.6 km walk to the overlook"},{"name":"Fountain Paint Pot","lat":44.5497,"lng":-110.8072},{"name":"Norris Geyser Basin","lat":44.7264,"lng":-110.703}],"stay":{"place":"West Yellowstone (2nd night)","cost":"~$320","lat":44.6621,"lng":-111.1041},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=West+Yellowstone%2C+MT&destination=West+Yellowstone%2C+MT&waypoints=Old+Faithful%7CGrand+Prismatic+Spring%7CNorris+Geyser+Basin"},{"n":7,"date":"2026-07-11","title":"Yellowstone → Grand Teton → Jackson","drive":"~120 mi · relaxed","desc":"Catch anything missed in the morning, then drive south — the Teton range appears like a wall.","stops":[{"name":"Snake River Overlook","lat":43.7328,"lng":-110.6737,"note":"The Ansel Adams shot"},{"name":"Mormon Row barns","lat":43.66,"lng":-110.665,"note":"Most-photographed barn in America"},{"name":"Jackson Town Square","lat":43.4799,"lng":-110.7624,"note":"Elk-antler arches"}],"stay":{"place":"Jackson (~$300) or Victor, ID (~$180)","cost":"$180–300","lat":43.4799,"lng":-110.7624},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=West+Yellowstone%2C+MT&destination=Jackson%2C+WY&waypoints=Snake+River+Overlook%7CMormon+Row+Historic+District"},{"n":8,"date":"2026-07-12","title":"Jenny Lake → Salt Lake City","drive":"~280 mi · 4.5 h (afternoon)","desc":"Morning: boat shuttle across Jenny Lake (~$12) + the short hike to Hidden Falls & Inspiration Point. Leave ~1pm for Salt Lake City.","stops":[{"name":"Jenny Lake Visitor Center","lat":43.7512,"lng":-110.7224,"note":"Boat shuttle ~$12 → Hidden Falls & Inspiration Point"},{"name":"Salt Lake City","lat":40.7608,"lng":-111.891,"note":"Cheap recovery night"}],"stay":{"place":"Salt Lake City — cheap recovery night","cost":"~$130","lat":40.7608,"lng":-111.891},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=Jackson%2C+WY&destination=Salt+Lake+City%2C+UT&waypoints=Jenny+Lake+Visitor+Center"}]},{"name":"Leg 3 · Red Rock, Vegas & Los Angeles","dates":"Jul 13 – 19","days":[{"n":9,"date":"2026-07-13","title":"SLC → Bryce Canyon Country","drive":"~270 mi · 4 h","rest":"Laundry + resupply morning","desc":"Slow morning: Temple Square walk, laundry, restock the cooler. Afternoon drive south into red-rock country.","stops":[{"name":"Temple Square","lat":40.7707,"lng":-111.8912,"note":"Morning walk"},{"name":"Bryce — Sunset Point (if arrived by 8pm)","lat":37.6216,"lng":-112.167,"note":"Sunset peek at the rim","optional":true}],"stay":{"place":"Bryce Canyon City / Panguitch","cost":"~$180","lat":37.6739,"lng":-112.1567},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=Salt+Lake+City%2C+UT&destination=Bryce+Canyon+City%2C+UT"},{"n":10,"date":"2026-07-14","title":"Bryce Sunrise → Zion Gateway","drive":"~85 mi · 2 h scenic","wx":"Bryce ~27°C (2,500 m altitude!)","desc":"Sunrise Point at dawn (hoodoos glow orange), then the Queen's Garden → Navajo Loop combo — 4.6 km, the best short hike in Utah. Afternoon: Hwy 89 → the Zion–Mt Carmel tunnel into Springdale.","stops":[{"name":"Bryce — Sunrise Point (dawn!)","lat":37.6282,"lng":-112.1621,"note":"Hoodoos glow orange at first light"},{"name":"Queen's Garden / Navajo Loop (Sunset Point)","lat":37.6216,"lng":-112.167,"note":"4.6 km combo hike — do it before the heat"},{"name":"Zion–Mt Carmel Tunnel","lat":37.213,"lng":-112.94,"note":"1.1-mile 1930 tunnel — lights on"},{"name":"Springdale","lat":37.1889,"lng":-112.9988}],"stay":{"place":"Springdale — splurge #2","cost":"~$280","lat":37.1889,"lng":-112.9988},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=Bryce+Canyon+National+Park&destination=Springdale%2C+UT"},{"n":11,"date":"2026-07-15","title":"Zion — Hike the Narrows","drive":"No driving — mandatory park shuttle","wx":"Hot: ~39°C by 2pm","desc":"First shuttles ~6am — be on one. Rent water shoes + pole in Springdale (~$30). Hiking in the river is how you beat the heat. Pool + ice cream after 1pm.","stops":[{"name":"Zion Visitor Center (park shuttle)","lat":37.2,"lng":-112.9869,"note":"Park in Springdale, free town shuttle to the gate"},{"name":"Temple of Sinawava — Riverside Walk","lat":37.2852,"lng":-112.9477,"note":"Then wade upstream into the Narrows"}],"stay":{"place":"Springdale (2nd night)","cost":"~$280","lat":37.1889,"lng":-112.9988},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=Springdale%2C+UT&destination=Zion+National+Park+Visitor+Center"},{"n":12,"date":"2026-07-16","title":"Zion → Las Vegas","drive":"~160 mi · 2.5 h","wx":"Vegas ~41°C — indoor evening","desc":"Arrive early afternoon, nap in the A/C. Evening: the Strip as a free spectacle + one legendary buffet. Midweek rooms are a bargain.","stops":[{"name":"Bellagio Fountains","lat":36.1126,"lng":-115.1767,"note":"Shows every 15–30 min after dark"},{"name":"The Sphere (exterior)","lat":36.1207,"lng":-115.162},{"name":"Fremont Street light canopy","lat":36.1699,"lng":-115.1443}],"stay":{"place":"Las Vegas Strip","cost":"~$100","lat":36.1147,"lng":-115.1728},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=Springdale%2C+UT&destination=Las+Vegas%2C+NV"},{"n":13,"date":"2026-07-17","title":"Vegas → Los Angeles","drive":"~280 mi · 4.5 h — leave by 9am","desc":"Beat the heat and the Friday traffic. Evening: Griffith Observatory at sunset — the whole LA basin in one view. First In-N-Out (order it “animal style”).","stops":[{"name":"Griffith Observatory","lat":34.1184,"lng":-118.3004,"note":"Sunset — LA basin + Hollywood sign"},{"name":"In-N-Out Burbank","lat":34.177,"lng":-118.3282,"note":"Animal style","optional":true}],"stay":{"place":"Universal City / Burbank ×3 nights","cost":"~$200","lat":34.1381,"lng":-118.3534},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=Las+Vegas%2C+NV&destination=Universal+City%2C+CA&waypoints=Griffith+Observatory"},{"n":14,"date":"2026-07-18","title":"Universal Studios Hollywood","drive":"Zero driving — park at the resort","desc":"Arrive at opening (9am). Priority order: Super Nintendo World & Mario Kart first, then the Lower Lot (Jurassic World, Transformers), Studio Tour midday, Hogwarts & Butterbeer in the afternoon.","stops":[{"name":"Universal Studios Hollywood","lat":34.1381,"lng":-118.3534,"note":"Nintendo World first, Studio Tour midday"}],"stay":{"place":"Universal City / Burbank","cost":"~$200","lat":34.1381,"lng":-118.3534},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=Burbank%2C+CA&destination=Universal+Studios+Hollywood"},{"n":15,"date":"2026-07-19","title":"LA Beach Day — the Pacific","drive":"City driving only · ~40 mi","wx":"Perfect: ~26°C at the coast","desc":"Santa Monica Pier — the official western end of Route 66 (you'll drive the eastern stretches home). Dip in the Pacific, tacos, sunset from the Ferris wheel ($10).","stops":[{"name":"Santa Monica Pier — Route 66 end","lat":34.0084,"lng":-118.4987,"note":"“End of the Trail” sign photo"},{"name":"Venice Beach Boardwalk","lat":33.985,"lng":-118.4695}],"stay":{"place":"Universal City / Burbank (3rd night)","cost":"~$200","lat":34.1381,"lng":-118.3534},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=Universal+City%2C+CA&destination=Santa+Monica+Pier&waypoints=Venice+Beach+Boardwalk"}]},{"name":"Leg 4 · Grand Canyon & Route 66 Home","dates":"Jul 20 – 29","days":[{"n":16,"date":"2026-07-20","title":"LA → Route 66 → Williams, AZ","drive":"~440 mi · 6.5–7 h — 2nd longest day","desc":"Leave by 8am. Detour onto historic Route 66 at Kingman → Seligman, the town that inspired Cars. Williams is the last Route 66 town bypassed by the interstate — neon signs, diners.","stops":[{"name":"Kingman — Route 66 Museum","lat":35.1894,"lng":-114.053,"note":"Join historic 66 here","optional":true},{"name":"Delgadillo's Snow Cap, Seligman","lat":35.3258,"lng":-112.8746,"note":"Milkshake in the town that inspired Cars"},{"name":"Williams, AZ","lat":35.2494,"lng":-112.191,"note":"Neon signs & diners"}],"stay":{"place":"Williams or Tusayan ×2 nights","cost":"~$200","lat":35.2494,"lng":-112.191},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=Universal+City%2C+CA&destination=Williams%2C+AZ&waypoints=Seligman%2C+AZ"},{"n":17,"date":"2026-07-21","title":"Grand Canyon South Rim","drive":"~60 mi to the rim","wx":"Rim ~29°C (2,100 m) — do NOT hike deep","desc":"Sunrise at Mather Point, walk the flat Rim Trail, free shuttle to the Hermit's Rest viewpoints. If you must descend: Bright Angel to the 1.5-mile resthouse, before 8am only. Sunset at Hopi Point is the grand finale.","stops":[{"name":"Mather Point (sunrise)","lat":36.0617,"lng":-112.1075},{"name":"Bright Angel Trailhead","lat":36.0577,"lng":-112.1445,"note":"Before 8am only, 1.5-mile resthouse max","optional":true},{"name":"Hopi Point (sunset)","lat":36.0745,"lng":-112.1547,"note":"Free Hermit Road shuttle"}],"stay":{"place":"Williams/Tusayan (2nd night)","cost":"~$200","lat":35.2494,"lng":-112.191},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=Williams%2C+AZ&destination=Grand+Canyon+Village%2C+AZ"},{"n":18,"date":"2026-07-22","title":"Desert View → Petrified Forest → Santa Fe","drive":"~420 mi · ~6 h with stops","desc":"Exit the canyon east past the Desert View Watchtower. Adobe evening in Santa Fe — the oldest capital in the US.","stops":[{"name":"Desert View Watchtower","lat":36.0402,"lng":-111.8262,"note":"Last canyon view, exit east"},{"name":"Standin' on the Corner, Winslow AZ","lat":35.0242,"lng":-110.6974,"note":"Eagles photo op"},{"name":"Meteor Crater","lat":35.0278,"lng":-111.0225,"note":"$29 — optional","optional":true},{"name":"Petrified Forest NP","lat":35.0657,"lng":-109.7817,"note":"Quick drive-through — covered by your pass"},{"name":"Santa Fe","lat":35.687,"lng":-105.9378}],"stay":{"place":"Santa Fe — oldest capital in the US","cost":"~$200","lat":35.687,"lng":-105.9378},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=Grand+Canyon+Village%2C+AZ&destination=Santa+Fe%2C+NM&waypoints=Winslow%2C+AZ%7CPetrified+Forest+National+Park"},{"n":19,"date":"2026-07-23","title":"Santa Fe → Amarillo, TX","drive":"~280 mi · 4.5 h (afternoon)","desc":"Morning on Santa Fe Plaza: 400-year-old adobe old town and green-chile everything for lunch. Sunset: spray-paint a Cadillac at Cadillac Ranch (grab cans at a hardware store). Dinner at the Big Texan — watch someone attempt the 72oz steak challenge.","stops":[{"name":"Santa Fe Plaza","lat":35.6871,"lng":-105.9381,"note":"Palace of the Governors, green-chile lunch"},{"name":"Cadillac Ranch","lat":35.1872,"lng":-101.987,"note":"Bring spray cans — sunset light"},{"name":"The Big Texan, Amarillo","lat":35.1922,"lng":-101.7549,"note":"72oz steak challenge spectating"}],"stay":{"place":"Amarillo","cost":"~$100","lat":35.193,"lng":-101.831},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=Santa+Fe%2C+NM&destination=Amarillo%2C+TX&waypoints=Cadillac+Ranch"},{"n":20,"date":"2026-07-24","title":"Amarillo → Oklahoma City","drive":"~260 mi · 3.75 h","rest":"Easy day","desc":"Old Route 66 alignments if you like, then a relaxed OKC afternoon and Oklahoma's famous onion burgers.","stops":[{"name":"OKC National Memorial","lat":35.473,"lng":-97.5171,"note":"Moving — allow an hour"},{"name":"Bricktown canal walk","lat":35.4661,"lng":-97.5089,"note":"Onion burgers"}],"stay":{"place":"Oklahoma City","cost":"~$110","lat":35.4676,"lng":-97.5164},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=Amarillo%2C+TX&destination=Oklahoma+City%2C+OK"},{"n":21,"date":"2026-07-25","title":"OKC → Branson, MO (Ozarks)","drive":"~290 mi · 4.5 h","desc":"Into the green Ozark hills — suddenly the West is behind you. Evening at Branson Landing on the lakefront; early night before the theme park.","stops":[{"name":"Branson Landing","lat":36.6437,"lng":-93.2113,"note":"Lakefront evening"}],"stay":{"place":"Branson ×2 nights","cost":"~$130","lat":36.6437,"lng":-93.2185},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=Oklahoma+City%2C+OK&destination=Branson%2C+MO"},{"n":22,"date":"2026-07-26","title":"Silver Dollar City — Theme Park #2","drive":"15 min from town","desc":"An 1880s frontier town in the forest with world-class coasters: Time Traveler and Outlaw Run. Marvel Cave tour is included — do it during the afternoon heat. Cinnamon bread is mandatory.","stops":[{"name":"Silver Dollar City","lat":36.6685,"lng":-93.338,"note":"Time Traveler, Outlaw Run, Marvel Cave in the heat"}],"stay":{"place":"Branson (2nd night)","cost":"~$130","lat":36.6437,"lng":-93.2185},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=Branson%2C+MO&destination=Silver+Dollar+City"},{"n":23,"date":"2026-07-27","title":"Branson → St. Louis","drive":"~250 mi · 4 h","desc":"Ride the space-age tram to the top of the Gateway Arch (192 m — book the 3–4pm slot online). Frozen custard “concrete” at Ted Drewes, a Route 66 landmark since 1929.","stops":[{"name":"Gateway Arch","lat":38.6247,"lng":-90.1848,"note":"Tram to the top — book 3–4pm slot"},{"name":"Ted Drewes Frozen Custard","lat":38.59,"lng":-90.3021,"note":"Route 66 landmark since 1929"}],"stay":{"place":"St. Louis","cost":"~$140","lat":38.627,"lng":-90.1994},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=Branson%2C+MO&destination=Gateway+Arch%2C+St.+Louis%2C+MO"},{"n":24,"date":"2026-07-28","title":"St. Louis → Chicago (O'Hare)","drive":"~300 mi · 4.5 h","desc":"Old Route 66 towns on the way if you want one last dose. Farewell deep-dish dinner. Fill the tank tonight so the truck goes back full.","stops":[{"name":"Route 66 Museum, Pontiac IL","lat":40.8809,"lng":-88.6298,"note":"Great little museum + murals","optional":true},{"name":"Lou Malnati's, Park Ridge","lat":42.0111,"lng":-87.8406,"note":"Farewell deep-dish near O'Hare"}],"stay":{"place":"near O'Hare","cost":"~$140","lat":41.9803,"lng":-87.9067},"routeUrl":"https://www.google.com/maps/dir/?api=1&origin=St.+Louis%2C+MO&destination=O%27Hare+International+Airport%2C+Chicago%2C+IL"},{"n":25,"date":"2026-07-29","title":"Return Truck → Flight 16:40","rest":"Buffer built in — no stress","desc":"Return the pickup by late morning (allow time for the rental inspection), airport by 13:30 for the 16:40 departure. Güle güle, America. 🇺🇸→🇹🇷","stops":[{"name":"O'Hare rental car return (Multi-Modal Facility)","lat":41.9885,"lng":-87.8846,"note":"Tank full, allow inspection time"},{"name":"O'Hare Terminals — by 13:30","lat":41.9786,"lng":-87.9048,"note":"Flight 16:40"}],"stay":{"place":"24 nights · ~4,900 miles · one loop of a lifetime","cost":"Done ✓"}}]}],"budget":{"rows":[["Hotels · 24 nights","Avg ≈ $185/night (splurges: W. Yellowstone, Springdale, Jackson · offsets: Vegas, TX/OK, Branson)","≈ $4,450"],["Fuel","~4,900 mi ÷ ~18 mpg pickup ≈ 270 gal","≈ $850–900"],["Parks pass","America the Beautiful — one per vehicle, covers all 7 parks","$80"],["Universal Hollywood ×2","Saturday July date, from ~$154/adult","≈ $310"],["Silver Dollar City ×2","~$99/adult, cave tour included","≈ $200"],["Small tickets","Rodeo ($50), Jenny Lake boat ($24), Arch tram ($40), Rushmore parking ($10), Narrows gear ($60)","≈ $185"]],"total":["Trip total (excl. food)","Food realistically adds $60–100/day for two","≈ $6,050–6,150"]},"tips":[{"t":"Heat rules (Jul 15–23)","d":"Desert days hit 38–41°C. Hike 6–10am only, 4L water per person in the truck, never leave anyone (or food) in a parked car."},{"t":"Wildlife rules","d":"Yellowstone: 25 m from bison/elk, 100 m from bears. Bison look slow; they sprint at 55 km/h. Photograph from the truck."},{"t":"Fuel discipline","d":"Fill up at half-tank in WY/UT/AZ — stations can be 100+ km apart. GasBuddy app finds the cheapest pumps."},{"t":"Zion shuttle","d":"Private cars are banned on the Scenic Drive in summer. Park in Springdale, ride the free town shuttle to the gate, then the park shuttle."},{"t":"Phone signal","d":"Expect dead zones in Yellowstone, Bryce and stretches of AZ/NM. Download offline Google Maps for WY, UT, AZ, NM before Jul 8."},{"t":"Time zones","d":"You'll cross Central → Mountain (Jul 6) → Pacific (Jul 16) → back. Double-check park shuttle and rodeo times against your phone's auto-update."}]}</script>
+<script>
+'use strict';
+/* ================= data & state ================= */
+const CUSTOM_KEY = 'tt-custom-trip';
+function loadTrip(){
+  try{
+    const c = localStorage.getItem(CUSTOM_KEY);
+    if(c){ const t = JSON.parse(c); if(t && t.legs) return t; }
+  }catch(e){ console.warn('custom trip unreadable, using default', e); }
+  return JSON.parse(document.getElementById('trip-data').textContent);
+}
+let TRIP = loadTrip();
+let DAYS = TRIP.legs.flatMap(l=>l.days);
+const SKEY = ()=>'tt-state:'+(TRIP.meta.id||'trip');
+let S = {};
+try{ S = JSON.parse(localStorage.getItem(SKEY())||'{}'); }catch(e){ S = {}; }
+S.stops  = S.stops  || {};   // {"d2s1": true}
+S.todos  = S.todos  || {};   // {"t3": true}
+S.custom = S.custom || [];   // [{id,title,note}]
+const save = ()=>localStorage.setItem(SKEY(), JSON.stringify(S));
+
+let TAB = 'today';
+let DAY_OVERRIDE = null;      // day number when browsing, null = follow the date
+let POS = null;               // {lat,lng,at}
+let LOC_STATE = 'off';        // off | ok | err
+let LOC_ERRMSG = '';
+
+/* ================= helpers ================= */
+const $ = s=>document.querySelector(s);
+const esc = s=>String(s??'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const todayISO = ()=>new Date().toLocaleDateString('en-CA');
+const fmtDate = iso=>{
+  const d = new Date(iso+'T12:00:00');
+  return d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+};
+const stopKey = (day,i)=>'d'+day.n+'s'+i;
+
+function currentDay(){
+  if(DAY_OVERRIDE!=null){ const d = DAYS.find(x=>x.n===DAY_OVERRIDE); if(d) return d; }
+  const t = todayISO();
+  if(t < DAYS[0].date) return DAYS[0];
+  if(t > DAYS[DAYS.length-1].date) return DAYS[DAYS.length-1];
+  return DAYS.find(d=>d.date===t) || DAYS.find(d=>d.date>t) || DAYS[DAYS.length-1];
+}
+function autoDay(){ const o=DAY_OVERRIDE; DAY_OVERRIDE=null; const d=currentDay(); DAY_OVERRIDE=o; return d; }
+
+function nextStop(){
+  const start = DAYS.indexOf(autoDay());
+  for(let di=start; di<DAYS.length; di++){
+    const day = DAYS[di];
+    for(let i=0;i<(day.stops||[]).length;i++){
+      const st = day.stops[i];
+      if(st.optional) continue;
+      if(!S.stops[stopKey(day,i)]) return {day, stop:st, i};
+    }
+  }
+  return null;
+}
+
+function haversine(a,b){
+  const R=6371, rad=x=>x*Math.PI/180;
+  const dLat=rad(b.lat-a.lat), dLng=rad(b.lng-a.lng);
+  const h=Math.sin(dLat/2)**2 + Math.cos(rad(a.lat))*Math.cos(rad(b.lat))*Math.sin(dLng/2)**2;
+  return 2*R*Math.asin(Math.sqrt(h));
+}
+function distLabel(stop){
+  if(!POS || stop.lat==null) return '';
+  const km = haversine(POS, stop);
+  const mi = km*0.621371;
+  return (mi>=100?Math.round(mi):mi.toFixed(1))+' mi';
+}
+function distLabelLong(stop){
+  if(!POS || stop.lat==null) return '';
+  const km = haversine(POS, stop);
+  const mi = km*0.621371;
+  return (mi>=100?Math.round(mi):mi.toFixed(1))+' mi ('+(km>=100?Math.round(km):km.toFixed(1))+' km) away';
+}
+
+const appleUrl  = st=>'https://maps.apple.com/?daddr='+st.lat+','+st.lng+'&dirflg=d';
+const googleUrl = st=>'https://www.google.com/maps/dir/?api=1&destination='+st.lat+'%2C'+st.lng+'&travelmode=driving';
+
+function locate(auto){
+  if(!navigator.geolocation){ LOC_STATE='err'; LOC_ERRMSG='No geolocation on this device'; render(); return; }
+  navigator.geolocation.getCurrentPosition(p=>{
+    POS = {lat:p.coords.latitude, lng:p.coords.longitude, at:Date.now()};
+    LOC_STATE='ok'; S.geoOk = true; save(); render();
+  }, err=>{
+    LOC_STATE='err';
+    LOC_ERRMSG = err.code===1 ? 'Location permission denied — enable in Settings' : 'Could not get a fix';
+    if(!auto) render();
+  }, {enableHighAccuracy:true, maximumAge:120000, timeout:15000});
+}
+
+/* ================= progress ================= */
+function progress(){
+  let total=0, done=0;
+  DAYS.forEach(d=>(d.stops||[]).forEach((st,i)=>{ total++; if(S.stops[stopKey(d,i)]) done++; }));
+  return {total, done, pct: total? Math.round(done/total*100) : 0};
+}
+function renderHeader(){
+  $('#hdr-title').innerHTML = esc(TRIP.meta.name).replace(/\s(\S+)$/,' <span>$1</span>');
+  const ad = autoDay(), t = todayISO();
+  let label;
+  if(t < TRIP.meta.start) label = 'Starts '+fmtDate(TRIP.meta.start);
+  else if(t > TRIP.meta.end) label = 'Trip complete';
+  else label = 'Day '+ad.n+' of '+DAYS.length;
+  $('#hdr-day').textContent = label;
+  const p = progress();
+  $('#prog-bar').style.width = p.pct+'%';
+  $('#prog-label').textContent = p.done+' / '+p.total+' stops checked';
+  $('#prog-pct').textContent = p.pct+'%';
+  const od = TRIP.todos.filter(td=>!S.todos[td.id] && td.due && td.due<=t).length;
+  const badge = $('#todo-badge');
+  badge.hidden = od===0; badge.textContent = od;
+}
+
+/* ================= views ================= */
+const navSvg = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.7 11.3 12.7 2.3a1 1 0 0 0-1.4 0l-9 9a1 1 0 0 0 0 1.4l9 9a1 1 0 0 0 1.4 0l9-9a1 1 0 0 0 0-1.4zM14 14.5V12h-4v3H8v-4a1 1 0 0 1 1-1h5V7.5l3.5 3.5-3.5 3.5z"/></svg>';
+
+function stopRow(day,i,st){
+  const key = stopKey(day,i), done = !!S.stops[key];
+  const d = distLabel(st);
+  return '<div class="stop'+(done?' done':'')+'">'
+    +'<input type="checkbox" data-stop="'+key+'" '+(done?'checked':'')+'>'
+    +'<div class="s-main"><div class="s-name">'+esc(st.name)+(st.optional?'<span class="s-opt">optional</span>':'')+'</div>'
+    +(st.note?'<div class="s-note">'+esc(st.note)+'</div>':'')+'</div>'
+    +(d?'<span class="s-dist">'+d+'</span>':'')
+    +(st.lat!=null?'<a class="s-nav" href="'+appleUrl(st)+'" target="_blank" rel="noopener" aria-label="Navigate">'+navSvg+'</a>':'')
+    +'</div>';
+}
+
+function dayChips(d){
+  let h='<div class="chips">';
+  if(d.drive) h+='<span class="chip drive">'+esc(d.drive)+'</span>';
+  if(d.wx)    h+='<span class="chip wx">'+esc(d.wx)+'</span>';
+  if(d.rest)  h+='<span class="chip rest">'+esc(d.rest)+'</span>';
+  return h+'</div>';
+}
+
+function viewToday(){
+  const day = currentDay(), t = todayISO();
+  const ns = nextStop();
+  let h = '';
+
+  // location bar
+  h += '<div class="locbar"><span class="locdot '+(LOC_STATE==='ok'?'on':LOC_STATE==='err'?'err':'')+'"></span>';
+  if(LOC_STATE==='ok' && POS) h += '<span>GPS on · updated '+Math.max(0,Math.round((Date.now()-POS.at)/60000))+' min ago</span><button data-act="locate">refresh</button>';
+  else if(LOC_STATE==='err') h += '<span>'+esc(LOC_ERRMSG)+'</span><button data-act="locate">retry</button>';
+  else h += '<span>Enable GPS to see distance to your next stop</span><button data-act="locate">turn on</button>';
+  h += '</div>';
+
+  // due / overdue todos — due-today first, cap at 2 so the Next Stop hero stays visible
+  const due = TRIP.todos.filter(td=>!S.todos[td.id] && td.due && td.due<=t)
+                        .sort((a,b)=>a.due===b.due?0:(a.due===t?-1:b.due===t?1:a.due<b.due?-1:1));
+  due.slice(0,2).forEach(td=>{
+    h += '<div class="alert"><b>'+(td.due<t?'Overdue':'Due today')+' · '+esc(fmtDate(td.due))+'</b> — '+esc(td.title)
+       + (td.url?' · <a href="'+esc(td.url)+'" target="_blank" rel="noopener">open link</a>':'')
+       + ' <span style="white-space:nowrap">(<a href="#" data-todo-quick="'+esc(td.id)+'">mark done</a>)</span></div>';
+  });
+  if(due.length>2) h += '<div class="alert" style="background:#FDF6E1;border-color:#F0E2AE;border-left-color:#8A6D00">'
+       +'<b style="color:#8A6D00">+'+(due.length-2)+' more deadline'+(due.length-2>1?'s':'')+'</b> — <a href="#" data-goto-todo>open the To-Do tab</a></div>';
+
+  // hero: next stop
+  if(ns){
+    h += '<div class="hero"><div class="eyebrow">Next stop · Day '+ns.day.n+'</div>'
+      +'<h2>'+esc(ns.stop.name)+'</h2>'
+      +(ns.stop.note?'<div class="sub">'+esc(ns.stop.note)+'</div>':'')
+      +(POS && ns.stop.lat!=null?'<div class="dist">'+distLabelLong(ns.stop)+' <small>as the crow flies</small></div>':'')
+      +'<div class="hero-btns">'
+      +(ns.stop.lat!=null?'<a class="btn nav" href="'+appleUrl(ns.stop)+'" target="_blank" rel="noopener">'+navSvg+' Apple Maps</a>'
+        +'<a class="btn nav g" href="'+googleUrl(ns.stop)+'" target="_blank" rel="noopener">Google Maps</a>':'')
+      +'<button class="btn arrive" data-arrive="'+stopKey(ns.day,ns.i)+'">✓ Arrived — next stop</button>'
+      +'</div></div>';
+  }else{
+    h += '<div class="hero done"><div class="eyebrow">All stops checked</div><h2>One loop of a lifetime ✓</h2>'
+      +'<div class="sub">Every stop on the itinerary is done. Güle güle, America.</div></div>';
+  }
+
+  // day browser
+  const idx = DAYS.indexOf(day);
+  h += '<div class="daynav">'
+    +'<button data-act="prevday" '+(idx===0?'disabled':'')+'>‹ Day '+(idx>0?DAYS[idx-1].n:'')+'</button>'
+    +'<span class="dn-mid">'+(DAY_OVERRIDE!=null?'Browsing':'Today')+'</span>'
+    +'<button data-act="nextday" '+(idx===DAYS.length-1?'disabled':'')+'>Day '+(idx<DAYS.length-1?DAYS[idx+1].n:'')+' ›</button></div>';
+  if(DAY_OVERRIDE!=null) h += '<button class="back-today" data-act="backtoday">↩ back to today (Day '+autoDay().n+')</button>';
+
+  // the day card
+  h += '<div class="card"><div class="date-eyebrow">'+esc(fmtDate(day.date))+' · Day '+day.n+'</div>'
+    +'<h2 class="daytitle">'+esc(day.title)+'</h2>'+dayChips(day)
+    +(day.desc?'<p class="desc">'+esc(day.desc)+'</p>':'');
+  if((day.stops||[]).length){
+    h += '<div class="section-label" style="margin:8px 0 0">Today’s stops</div>';
+    day.stops.forEach((st,i)=>h+=stopRow(day,i,st));
+  }
+  if(day.stay) h += '<div class="stay"><span>Stay: <b>'+esc(day.stay.place)+'</b>'
+      +(day.stay.lat!=null?' · <a href="'+appleUrl(day.stay)+'" target="_blank" rel="noopener">navigate</a>':'')
+      +'</span><span class="cost">'+esc(day.stay.cost||'')+'</span></div>';
+  if(day.routeUrl) h += '<a class="btn small" style="margin-top:11px" href="'+esc(day.routeUrl)+'" target="_blank" rel="noopener">Full day route ↗</a>';
+  h += '</div>';
+
+  // tomorrow teaser
+  if(idx < DAYS.length-1){
+    const tm = DAYS[idx+1];
+    h += '<div class="card" style="opacity:.85"><div class="date-eyebrow">Tomorrow · '+esc(fmtDate(tm.date))+'</div>'
+      +'<h2 class="daytitle" style="font-size:16px">'+esc(tm.title)+'</h2>'
+      +(tm.drive?'<div class="chips"><span class="chip drive">'+esc(tm.drive)+'</span></div>':'')+'</div>';
+  }
+  return h;
+}
+
+function viewRoute(){
+  const ad = autoDay(), t = todayISO();
+  let h='';
+  TRIP.legs.forEach(leg=>{
+    h += '<div class="leg-head"><h2>'+esc(leg.name)+'</h2><span class="dates display">'+esc(leg.dates)+'</span></div>';
+    leg.days.forEach(d=>{
+      const stops=d.stops||[];
+      const done = stops.filter((st,i)=>S.stops[stopKey(d,i)]).length;
+      const cls = d.date<t?' past':(d.n===ad.n && t>=TRIP.meta.start && t<=TRIP.meta.end?' today':'');
+      h += '<div class="dayrow'+cls+'" data-goday="'+d.n+'">'
+        +'<div class="marker"><small>Day</small><b>'+d.n+'</b></div>'
+        +'<div class="dr-main"><div class="dr-date">'+esc(fmtDate(d.date))+'</div>'
+        +'<div class="dr-title">'+esc(d.title)+'</div>'
+        +'<div class="dr-meta">'+esc(d.drive||d.rest||'')+(stops.length?' · <span class="dr-check">'+done+'/'+stops.length+' stops</span>':'')+'</div>'
+        +'</div></div>';
+    });
+  });
+  h += '<p class="empty">Tap a day to open it in the Today tab.</p>';
+  return h;
+}
+
+function viewTodo(){
+  const t = todayISO();
+  let h='<div class="section-label" style="margin-top:2px">Bookings & deadlines</div>';
+  const todos=[...TRIP.todos].sort((a,b)=>(a.due||'9999')<(b.due||'9999')?-1:1);
+  todos.forEach(td=>{
+    const done=!!S.todos[td.id], over=!done && td.due && td.due<t;
+    h += '<div class="todo'+(done?' done':'')+(over?' overdue':'')+'">'
+      +'<input type="checkbox" data-todo="'+esc(td.id)+'" '+(done?'checked':'')+'>'
+      +'<div><div class="t-title">'+esc(td.title)+'</div>'
+      +(td.due?'<span class="t-due">'+(over?'⚠ overdue · ':'')+'by '+esc(fmtDate(td.due))+'</span>':'')
+      +'<div class="t-note">'+esc(td.note||'')+(td.url?' <a href="'+esc(td.url)+'" target="_blank" rel="noopener">Open ↗</a>':'')+'</div>'
+      +'</div></div>';
+  });
+  h += '<div class="section-label">Your own list</div>';
+  if(!S.custom.length) h+='<p class="empty" style="padding:8px">Add anything — gas, ice for the cooler, souvenirs…</p>';
+  S.custom.forEach(c=>{
+    const done=!!S.todos[c.id];
+    h += '<div class="todo'+(done?' done':'')+'"><input type="checkbox" data-todo="'+esc(c.id)+'" '+(done?'checked':'')+'>'
+      +'<div style="flex:1"><div class="t-title">'+esc(c.title)+'</div></div>'
+      +'<button data-del="'+esc(c.id)+'" style="color:var(--shield-red);font-size:18px;padding:0 4px" aria-label="Delete">×</button></div>';
+  });
+  h += '<div class="addrow"><input type="text" id="new-todo" placeholder="Add an item…" enterkeyhint="done">'
+     +'<button data-act="addtodo">Add</button></div>';
+  return h;
+}
+
+function viewInfo(){
+  const b=TRIP.budget||{rows:[]};
+  let h='';
+  if(!matchMedia('(display-mode: standalone)').matches){
+    h += '<div class="install-hint"><b>📲 Install:</b> in Safari tap <b>Share → Add to Home Screen</b> — you get a full-screen app that works offline.</div>';
+  }
+  h += '<div class="panel"><h3 class="display">Budget (2 people)</h3><table><thead><tr><th>Item</th><th>Detail</th><th>Est.</th></tr></thead><tbody>';
+  b.rows.forEach(r=>h+='<tr><td><b>'+esc(r[0])+'</b></td><td>'+esc(r[1])+'</td><td>'+esc(r[2])+'</td></tr>');
+  if(b.total) h+='<tr class="total"><td>'+esc(b.total[0])+'</td><td>'+esc(b.total[1])+'</td><td>'+esc(b.total[2])+'</td></tr>';
+  h += '</tbody></table></div>';
+
+  h += '<div class="panel"><h3 class="display">Road rules</h3>';
+  (TRIP.tips||[]).forEach(tp=>h+='<div class="tip"><b>'+esc(tp.t)+'</b>'+esc(tp.d)+'</div>');
+  h += '</div>';
+
+  h += '<div class="panel"><h3 class="display">Trip data</h3>'
+    +'<p class="fineprint" style="margin:0 0 8px">This app renders any <code>trip-tracker/v1</code> JSON. Export this trip, or paste another trip’s JSON to switch.</p>'
+    +'<textarea id="io" placeholder="Paste trip JSON here to import…"></textarea>'
+    +'<div class="btnrow">'
+    +'<button class="btn small" data-act="export">Export JSON</button>'
+    +'<button class="btn small" data-act="import">Import from box</button>'
+    +(localStorage.getItem(CUSTOM_KEY)?'<button class="btn small plain" data-act="unimport">Restore default trip</button>':'')
+    +'<button class="btn small warn" data-act="reset">Reset progress</button>'
+    +'</div>'
+    +'<p class="fineprint">Progress is stored on this phone (per trip). Version '+esc(TRIP.format||'')+' · '+DAYS.length+' days · '
+    +DAYS.reduce((a,d)=>a+(d.stops||[]).length,0)+' stops.</p></div>';
+  return h;
+}
+
+/* ================= render & events ================= */
+function render(){
+  renderHeader();
+  const v = $('#view');
+  v.innerHTML = TAB==='today'?viewToday():TAB==='route'?viewRoute():TAB==='todo'?viewTodo():viewInfo();
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active', b.dataset.tab===TAB));
+}
+
+document.getElementById('tabs').addEventListener('click', e=>{
+  const b = e.target.closest('button[data-tab]'); if(!b) return;
+  TAB = b.dataset.tab; window.scrollTo(0,0); render();
+});
+
+document.getElementById('view').addEventListener('click', e=>{
+  const t = e.target;
+  const gt = t.closest('[data-goto-todo]');
+  if(gt){ e.preventDefault(); TAB='todo'; window.scrollTo(0,0); render(); return; }
+  const q = t.closest('[data-todo-quick]');
+  if(q){ e.preventDefault(); S.todos[q.dataset.todoQuick]=true; save(); render(); return; }
+  const arr = t.closest('[data-arrive]');
+  if(arr){ S.stops[arr.dataset.arrive]=true; save(); render(); return; }
+  const del = t.closest('[data-del]');
+  if(del){ S.custom = S.custom.filter(c=>c.id!==del.dataset.del); delete S.todos[del.dataset.del]; save(); render(); return; }
+  const row = t.closest('[data-goday]');
+  if(row){ DAY_OVERRIDE = +row.dataset.goday; TAB='today'; window.scrollTo(0,0); render(); return; }
+  const act = t.closest('[data-act]');
+  if(!act) return;
+  const a = act.dataset.act;
+  if(a==='locate') locate(false);
+  else if(a==='prevday' || a==='nextday'){
+    const idx = DAYS.indexOf(currentDay()) + (a==='nextday'?1:-1);
+    if(idx>=0 && idx<DAYS.length){ DAY_OVERRIDE = DAYS[idx].n; if(DAYS[idx].n===autoDay().n) DAY_OVERRIDE=null; render(); }
+  }
+  else if(a==='backtoday'){ DAY_OVERRIDE=null; render(); }
+  else if(a==='addtodo'){
+    const inp = $('#new-todo'); const val=(inp.value||'').trim(); if(!val) return;
+    S.custom.push({id:'c'+Date.now(), title:val}); save(); render();
+  }
+  else if(a==='export'){
+    const data = JSON.stringify(TRIP,null,2);
+    $('#io').value = data;
+    if(navigator.share) navigator.share({title:TRIP.meta.name+' — trip.json', text:data}).catch(()=>{});
+    else if(navigator.clipboard) navigator.clipboard.writeText(data).then(()=>alert('Trip JSON copied to clipboard'));
+  }
+  else if(a==='import'){
+    try{
+      const t2 = JSON.parse($('#io').value);
+      if(!t2 || !t2.legs || !t2.meta) throw new Error('Missing meta/legs — is this a trip-tracker JSON?');
+      localStorage.setItem(CUSTOM_KEY, JSON.stringify(t2));
+      location.reload();
+    }catch(err){ alert('Import failed: '+err.message); }
+  }
+  else if(a==='unimport'){ localStorage.removeItem(CUSTOM_KEY); location.reload(); }
+  else if(a==='reset'){
+    if(confirm('Reset all checkboxes and progress for this trip?')){
+      localStorage.removeItem(SKEY()); location.reload();
+    }
+  }
+});
+
+document.getElementById('view').addEventListener('change', e=>{
+  const t = e.target;
+  if(t.matches('[data-stop]')){ S.stops[t.dataset.stop] = t.checked; if(!t.checked) delete S.stops[t.dataset.stop]; save(); render(); }
+  else if(t.matches('[data-todo]')){ S.todos[t.dataset.todo] = t.checked; if(!t.checked) delete S.todos[t.dataset.todo]; save(); render(); }
+});
+document.getElementById('view').addEventListener('keydown', e=>{
+  if(e.target.id==='new-todo' && e.key==='Enter'){ e.preventDefault(); const b=$('[data-act="addtodo"]'); b&&b.click(); }
+});
+
+/* refresh distances every minute while visible */
+setInterval(()=>{ if(TAB==='today' && LOC_STATE==='ok' && !document.hidden) locate(true); }, 120000);
+document.addEventListener('visibilitychange', ()=>{ if(!document.hidden && S.geoOk) locate(true); });
+
+if(S.geoOk) locate(true);
+render();
+
+if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(e=>console.warn('SW failed', e));
+</script>
+</body>
+</html>

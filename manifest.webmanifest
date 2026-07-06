@@ -1,0 +1,15 @@
+{
+  "name": "The Grand Western Loop",
+  "short_name": "Western Loop",
+  "description": "Road-trip tracker: itinerary, checklists and next-stop navigation.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#23272B",
+  "theme_color": "#23272B",
+  "icons": [
+    { "src": "icon-180.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

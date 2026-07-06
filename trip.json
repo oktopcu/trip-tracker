@@ -1,0 +1,357 @@
+{
+  "format": "trip-tracker/v1",
+  "meta": {
+    "id": "grand-western-loop-2026",
+    "name": "The Grand Western Loop",
+    "tagline": "Chicago → West → Chicago · 2 brothers, 1 pickup truck",
+    "start": "2026-07-05",
+    "end": "2026-07-29",
+    "stats": [["24", "nights"], ["~4,900 mi", "driving"], ["7", "national parks"], ["2", "theme parks"]]
+  },
+  "todos": [
+    {"id": "t1", "title": "Hotel: West Yellowstone ×2", "due": "2026-07-03", "note": "Nights of Jul 9 & 10. July occupancy runs 90%+ and rates $305–559. Backup if full: Island Park, ID (30 min south, cheaper).", "url": "https://www.booking.com/city/us/west-yellowstone.html"},
+    {"id": "t2", "title": "Hotel: Springdale (Zion) ×2", "due": "2026-07-03", "note": "Nights of Jul 14 & 15. Springdale sits at the park gate and fills fast; backup: Hurricane, UT (25 min).", "url": "https://www.booking.com/city/us/springdale.html"},
+    {"id": "t4", "title": "Hotel: Jackson or Victor, ID", "due": "2026-07-03", "note": "Night of Jul 11. Jackson is charming but ~$300+; Victor, ID over the Teton Pass is ~$180 and 35 min away."},
+    {"id": "t8", "title": "Pack for 3 climates", "due": "2026-07-05", "note": "Fleece/jacket (Yellowstone nights hit 5–8°C), swimwear + water shoes (the Narrows), sunscreen & 4L water jugs (desert days 38–40°C). Cooler for the truck bed."},
+    {"id": "t5", "title": "America the Beautiful pass", "due": "2026-07-06", "note": "$80 per vehicle at the Badlands gate — covers every national park on this route (would be $205+ separately). Keep it on the dashboard."},
+    {"id": "t6", "title": "Cody Nite Rodeo tickets", "due": "2026-07-06", "note": "~$25/person, runs every summer night at 8pm — for the Jul 8 show. Easy to buy online a couple of days out.", "url": "https://codystampederodeo.com"},
+    {"id": "t9", "title": "Download offline maps (WY, UT, AZ, NM)", "due": "2026-07-08", "note": "Google Maps → profile → Offline maps. Dead zones ahead in Yellowstone, Bryce and long stretches of AZ/NM."},
+    {"id": "t3", "title": "Universal Hollywood tickets ×2", "due": "2026-07-10", "note": "Dated tickets for Sat Jul 18 — from ~$154/adult for July weekends. Buy the Super Nintendo World early-access add-on if available.", "url": "https://www.universalstudioshollywood.com"},
+    {"id": "t7", "title": "Silver Dollar City tickets", "due": "2026-07-23", "note": "~$99/person online, for Jul 26. Marvel Cave tour is included with admission — do it in the afternoon heat.", "url": "https://www.silverdollarcity.com"},
+    {"id": "t10", "title": "Gateway Arch tram slot", "due": "2026-07-26", "note": "Book the 3–4pm tram slot online for Jul 27 — summer slots sell out day-of.", "url": "https://www.gatewayarch.com"}
+  ],
+  "legs": [
+    {
+      "name": "Leg 1 · Great Plains & Black Hills",
+      "dates": "Jul 5 – 8",
+      "days": [
+        {
+          "n": 1, "date": "2026-07-05", "title": "Chicago → Sioux Falls, SD",
+          "drive": "570 mi · ~8 h — the one big push", "wx": "Sunny, 34°C",
+          "desc": "Knock out the prairie on day one while you're fresh. Evening leg-stretch at Falls Park's waterfalls downtown.",
+          "stops": [
+            {"name": "Falls Park, Sioux Falls", "lat": 43.5586, "lng": -96.7226, "note": "Waterfalls downtown — evening leg-stretch"}
+          ],
+          "stay": {"place": "Sioux Falls — any downtown chain hotel", "cost": "~$120", "lat": 43.5460, "lng": -96.7313},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Chicago%2C+IL&destination=Falls+Park%2C+Sioux+Falls%2C+SD"
+        },
+        {
+          "n": 2, "date": "2026-07-06", "title": "Sioux Falls → Badlands NP → Wall",
+          "drive": "~290 mi · 4.5 h + park loop", "wx": "Sunny, ~31°C",
+          "desc": "Buy the $80 parks pass at the Badlands gate. Drive the Loop Road in golden-hour light; bighorn sheep at dusk.",
+          "stops": [
+            {"name": "Corn Palace, Mitchell", "lat": 43.7166, "lng": -98.0263, "note": "World's only — 15-min photo stop"},
+            {"name": "Badlands NP — Ben Reifel Visitor Center", "lat": 43.7508, "lng": -101.9415, "note": "Buy the $80 America the Beautiful pass at the gate"},
+            {"name": "Door & Notch Trailhead", "lat": 43.7529, "lng": -101.9270, "note": "Short walks into the moonscape"},
+            {"name": "Wall Drug", "lat": 43.9930, "lng": -102.2416, "note": "Free ice water since 1931"}
+          ],
+          "stay": {"place": "Wall or Rapid City", "cost": "~$140", "lat": 44.0805, "lng": -103.2310},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Sioux+Falls%2C+SD&destination=Wall%2C+SD&waypoints=Corn+Palace%2C+Mitchell%2C+SD%7CBadlands+National+Park"
+        },
+        {
+          "n": 3, "date": "2026-07-07", "title": "Black Hills Day — Rushmore & Custer",
+          "drive": "Scenic loop ~100 mi — driving IS the activity", "wx": "Mild, ~24°C",
+          "desc": "Mount Rushmore early (parking $10), then Custer State Park's Wildlife Loop — 1,300 bison roam free — and the Needles Highway's granite tunnels.",
+          "stops": [
+            {"name": "Mount Rushmore", "lat": 43.8791, "lng": -103.4591, "note": "Go early — parking $10"},
+            {"name": "Custer SP Wildlife Loop (State Game Lodge)", "lat": 43.7622, "lng": -103.3745, "note": "1,300 bison roam free — stay in the truck"},
+            {"name": "Needles Eye Tunnel, Needles Hwy", "lat": 43.8715, "lng": -103.5311, "note": "Granite spires & one-lane tunnels"},
+            {"name": "Crazy Horse Memorial (optional)", "lat": 43.8366, "lng": -103.6238, "note": "Visible from the highway viewpoint if skipping", "optional": true}
+          ],
+          "stay": {"place": "Rapid City (2nd night)", "cost": "~$140", "lat": 44.0805, "lng": -103.2310},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Rapid+City%2C+SD&destination=Rapid+City%2C+SD&waypoints=Mount+Rushmore+National+Memorial%7CCuster+State+Park%7CNeedles+Highway"
+        },
+        {
+          "n": 4, "date": "2026-07-08", "title": "Rapid City → Devils Tower → Cody, WY",
+          "drive": "~380 mi · 5.5–6 h",
+          "desc": "Walk the 2 km paved loop under Devils Tower (watch for climbers), then cross the Bighorn Mountains. Tonight: Cody Nite Rodeo, 8pm — bulls, broncos, pure Wyoming.",
+          "stops": [
+            {"name": "Devils Tower", "lat": 44.5902, "lng": -104.7146, "note": "2 km paved Tower Trail loop"},
+            {"name": "Shell Falls, Bighorn Mtns (US-14)", "lat": 44.5866, "lng": -107.5390, "note": "Quick overlook on the pass", "optional": true},
+            {"name": "Cody Nite Rodeo — 8pm", "lat": 44.5230, "lng": -109.1080, "note": "Arrive ~7:30pm, tickets ~$25"}
+          ],
+          "stay": {"place": "Cody — splurge-ish rodeo town", "cost": "~$220", "lat": 44.5263, "lng": -109.0565},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Rapid+City%2C+SD&destination=Cody%2C+WY&waypoints=Devils+Tower+National+Monument"
+        }
+      ]
+    },
+    {
+      "name": "Leg 2 · Yellowstone & Grand Teton",
+      "dates": "Jul 9 – 12",
+      "days": [
+        {
+          "n": 5, "date": "2026-07-09", "title": "Cody → Yellowstone East Side",
+          "drive": "~130 mi but a full sightseeing day", "wx": "Days ~26°C · nights 5–8°C",
+          "desc": "Enter via the East Entrance — “the most scenic 50 miles in America.” Bison jams, elk, maybe wolves at dusk in Hayden Valley.",
+          "stops": [
+            {"name": "Yellowstone East Entrance", "lat": 44.4900, "lng": -110.0050, "note": "Show the parks pass"},
+            {"name": "Yellowstone Lake / Fishing Bridge", "lat": 44.5652, "lng": -110.3730},
+            {"name": "Hayden Valley", "lat": 44.6598, "lng": -110.4682, "note": "Bison jams — 25 m minimum distance"},
+            {"name": "Artist Point — Lower Falls", "lat": 44.7200, "lng": -110.4794, "note": "Grand Canyon of the Yellowstone"}
+          ],
+          "stay": {"place": "West Yellowstone, MT — the splurge", "cost": "~$320", "lat": 44.6621, "lng": -111.1041},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Cody%2C+WY&destination=West+Yellowstone%2C+MT&waypoints=Yellowstone+Lake%7CArtist+Point%2C+Yellowstone"
+        },
+        {
+          "n": 6, "date": "2026-07-10", "title": "Yellowstone Geyser Day",
+          "drive": "Lower loop, ~100 mi in-park",
+          "desc": "Enter the park by 7:30am to beat crowds. Old Faithful erupts ~every 90 min — check predicted times at the visitor center.",
+          "stops": [
+            {"name": "Old Faithful", "lat": 44.4605, "lng": -110.8281, "note": "Erupts ~every 90 min — check times"},
+            {"name": "Fairy Falls TH — Grand Prismatic Overlook", "lat": 44.5157, "lng": -110.8327, "note": "THE photo — 1.6 km walk to the overlook"},
+            {"name": "Fountain Paint Pot", "lat": 44.5497, "lng": -110.8072},
+            {"name": "Norris Geyser Basin", "lat": 44.7264, "lng": -110.7030}
+          ],
+          "stay": {"place": "West Yellowstone (2nd night)", "cost": "~$320", "lat": 44.6621, "lng": -111.1041},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=West+Yellowstone%2C+MT&destination=West+Yellowstone%2C+MT&waypoints=Old+Faithful%7CGrand+Prismatic+Spring%7CNorris+Geyser+Basin"
+        },
+        {
+          "n": 7, "date": "2026-07-11", "title": "Yellowstone → Grand Teton → Jackson",
+          "drive": "~120 mi · relaxed",
+          "desc": "Catch anything missed in the morning, then drive south — the Teton range appears like a wall.",
+          "stops": [
+            {"name": "Snake River Overlook", "lat": 43.7328, "lng": -110.6737, "note": "The Ansel Adams shot"},
+            {"name": "Mormon Row barns", "lat": 43.6600, "lng": -110.6650, "note": "Most-photographed barn in America"},
+            {"name": "Jackson Town Square", "lat": 43.4799, "lng": -110.7624, "note": "Elk-antler arches"}
+          ],
+          "stay": {"place": "Jackson (~$300) or Victor, ID (~$180)", "cost": "$180–300", "lat": 43.4799, "lng": -110.7624},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=West+Yellowstone%2C+MT&destination=Jackson%2C+WY&waypoints=Snake+River+Overlook%7CMormon+Row+Historic+District"
+        },
+        {
+          "n": 8, "date": "2026-07-12", "title": "Jenny Lake → Salt Lake City",
+          "drive": "~280 mi · 4.5 h (afternoon)",
+          "desc": "Morning: boat shuttle across Jenny Lake (~$12) + the short hike to Hidden Falls & Inspiration Point. Leave ~1pm for Salt Lake City.",
+          "stops": [
+            {"name": "Jenny Lake Visitor Center", "lat": 43.7512, "lng": -110.7224, "note": "Boat shuttle ~$12 → Hidden Falls & Inspiration Point"},
+            {"name": "Salt Lake City", "lat": 40.7608, "lng": -111.8910, "note": "Cheap recovery night"}
+          ],
+          "stay": {"place": "Salt Lake City — cheap recovery night", "cost": "~$130", "lat": 40.7608, "lng": -111.8910},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Jackson%2C+WY&destination=Salt+Lake+City%2C+UT&waypoints=Jenny+Lake+Visitor+Center"
+        }
+      ]
+    },
+    {
+      "name": "Leg 3 · Red Rock, Vegas & Los Angeles",
+      "dates": "Jul 13 – 19",
+      "days": [
+        {
+          "n": 9, "date": "2026-07-13", "title": "SLC → Bryce Canyon Country",
+          "drive": "~270 mi · 4 h", "rest": "Laundry + resupply morning",
+          "desc": "Slow morning: Temple Square walk, laundry, restock the cooler. Afternoon drive south into red-rock country.",
+          "stops": [
+            {"name": "Temple Square", "lat": 40.7707, "lng": -111.8912, "note": "Morning walk"},
+            {"name": "Bryce — Sunset Point (if arrived by 8pm)", "lat": 37.6216, "lng": -112.1670, "note": "Sunset peek at the rim", "optional": true}
+          ],
+          "stay": {"place": "Bryce Canyon City / Panguitch", "cost": "~$180", "lat": 37.6739, "lng": -112.1567},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Salt+Lake+City%2C+UT&destination=Bryce+Canyon+City%2C+UT"
+        },
+        {
+          "n": 10, "date": "2026-07-14", "title": "Bryce Sunrise → Zion Gateway",
+          "drive": "~85 mi · 2 h scenic", "wx": "Bryce ~27°C (2,500 m altitude!)",
+          "desc": "Sunrise Point at dawn (hoodoos glow orange), then the Queen's Garden → Navajo Loop combo — 4.6 km, the best short hike in Utah. Afternoon: Hwy 89 → the Zion–Mt Carmel tunnel into Springdale.",
+          "stops": [
+            {"name": "Bryce — Sunrise Point (dawn!)", "lat": 37.6282, "lng": -112.1621, "note": "Hoodoos glow orange at first light"},
+            {"name": "Queen's Garden / Navajo Loop (Sunset Point)", "lat": 37.6216, "lng": -112.1670, "note": "4.6 km combo hike — do it before the heat"},
+            {"name": "Zion–Mt Carmel Tunnel", "lat": 37.2130, "lng": -112.9400, "note": "1.1-mile 1930 tunnel — lights on"},
+            {"name": "Springdale", "lat": 37.1889, "lng": -112.9988}
+          ],
+          "stay": {"place": "Springdale — splurge #2", "cost": "~$280", "lat": 37.1889, "lng": -112.9988},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Bryce+Canyon+National+Park&destination=Springdale%2C+UT"
+        },
+        {
+          "n": 11, "date": "2026-07-15", "title": "Zion — Hike the Narrows",
+          "drive": "No driving — mandatory park shuttle", "wx": "Hot: ~39°C by 2pm",
+          "desc": "First shuttles ~6am — be on one. Rent water shoes + pole in Springdale (~$30). Hiking in the river is how you beat the heat. Pool + ice cream after 1pm.",
+          "stops": [
+            {"name": "Zion Visitor Center (park shuttle)", "lat": 37.2000, "lng": -112.9869, "note": "Park in Springdale, free town shuttle to the gate"},
+            {"name": "Temple of Sinawava — Riverside Walk", "lat": 37.2852, "lng": -112.9477, "note": "Then wade upstream into the Narrows"}
+          ],
+          "stay": {"place": "Springdale (2nd night)", "cost": "~$280", "lat": 37.1889, "lng": -112.9988},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Springdale%2C+UT&destination=Zion+National+Park+Visitor+Center"
+        },
+        {
+          "n": 12, "date": "2026-07-16", "title": "Zion → Las Vegas",
+          "drive": "~160 mi · 2.5 h", "wx": "Vegas ~41°C — indoor evening",
+          "desc": "Arrive early afternoon, nap in the A/C. Evening: the Strip as a free spectacle + one legendary buffet. Midweek rooms are a bargain.",
+          "stops": [
+            {"name": "Bellagio Fountains", "lat": 36.1126, "lng": -115.1767, "note": "Shows every 15–30 min after dark"},
+            {"name": "The Sphere (exterior)", "lat": 36.1207, "lng": -115.1620},
+            {"name": "Fremont Street light canopy", "lat": 36.1699, "lng": -115.1443}
+          ],
+          "stay": {"place": "Las Vegas Strip", "cost": "~$100", "lat": 36.1147, "lng": -115.1728},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Springdale%2C+UT&destination=Las+Vegas%2C+NV"
+        },
+        {
+          "n": 13, "date": "2026-07-17", "title": "Vegas → Los Angeles",
+          "drive": "~280 mi · 4.5 h — leave by 9am",
+          "desc": "Beat the heat and the Friday traffic. Evening: Griffith Observatory at sunset — the whole LA basin in one view. First In-N-Out (order it “animal style”).",
+          "stops": [
+            {"name": "Griffith Observatory", "lat": 34.1184, "lng": -118.3004, "note": "Sunset — LA basin + Hollywood sign"},
+            {"name": "In-N-Out Burbank", "lat": 34.1770, "lng": -118.3282, "note": "Animal style", "optional": true}
+          ],
+          "stay": {"place": "Universal City / Burbank ×3 nights", "cost": "~$200", "lat": 34.1381, "lng": -118.3534},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Las+Vegas%2C+NV&destination=Universal+City%2C+CA&waypoints=Griffith+Observatory"
+        },
+        {
+          "n": 14, "date": "2026-07-18", "title": "Universal Studios Hollywood",
+          "drive": "Zero driving — park at the resort",
+          "desc": "Arrive at opening (9am). Priority order: Super Nintendo World & Mario Kart first, then the Lower Lot (Jurassic World, Transformers), Studio Tour midday, Hogwarts & Butterbeer in the afternoon.",
+          "stops": [
+            {"name": "Universal Studios Hollywood", "lat": 34.1381, "lng": -118.3534, "note": "Nintendo World first, Studio Tour midday"}
+          ],
+          "stay": {"place": "Universal City / Burbank", "cost": "~$200", "lat": 34.1381, "lng": -118.3534},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Burbank%2C+CA&destination=Universal+Studios+Hollywood"
+        },
+        {
+          "n": 15, "date": "2026-07-19", "title": "LA Beach Day — the Pacific",
+          "drive": "City driving only · ~40 mi", "wx": "Perfect: ~26°C at the coast",
+          "desc": "Santa Monica Pier — the official western end of Route 66 (you'll drive the eastern stretches home). Dip in the Pacific, tacos, sunset from the Ferris wheel ($10).",
+          "stops": [
+            {"name": "Santa Monica Pier — Route 66 end", "lat": 34.0084, "lng": -118.4987, "note": "“End of the Trail” sign photo"},
+            {"name": "Venice Beach Boardwalk", "lat": 33.9850, "lng": -118.4695}
+          ],
+          "stay": {"place": "Universal City / Burbank (3rd night)", "cost": "~$200", "lat": 34.1381, "lng": -118.3534},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Universal+City%2C+CA&destination=Santa+Monica+Pier&waypoints=Venice+Beach+Boardwalk"
+        }
+      ]
+    },
+    {
+      "name": "Leg 4 · Grand Canyon & Route 66 Home",
+      "dates": "Jul 20 – 29",
+      "days": [
+        {
+          "n": 16, "date": "2026-07-20", "title": "LA → Route 66 → Williams, AZ",
+          "drive": "~440 mi · 6.5–7 h — 2nd longest day",
+          "desc": "Leave by 8am. Detour onto historic Route 66 at Kingman → Seligman, the town that inspired Cars. Williams is the last Route 66 town bypassed by the interstate — neon signs, diners.",
+          "stops": [
+            {"name": "Kingman — Route 66 Museum", "lat": 35.1894, "lng": -114.0530, "note": "Join historic 66 here", "optional": true},
+            {"name": "Delgadillo's Snow Cap, Seligman", "lat": 35.3258, "lng": -112.8746, "note": "Milkshake in the town that inspired Cars"},
+            {"name": "Williams, AZ", "lat": 35.2494, "lng": -112.1910, "note": "Neon signs & diners"}
+          ],
+          "stay": {"place": "Williams or Tusayan ×2 nights", "cost": "~$200", "lat": 35.2494, "lng": -112.1910},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Universal+City%2C+CA&destination=Williams%2C+AZ&waypoints=Seligman%2C+AZ"
+        },
+        {
+          "n": 17, "date": "2026-07-21", "title": "Grand Canyon South Rim",
+          "drive": "~60 mi to the rim", "wx": "Rim ~29°C (2,100 m) — do NOT hike deep",
+          "desc": "Sunrise at Mather Point, walk the flat Rim Trail, free shuttle to the Hermit's Rest viewpoints. If you must descend: Bright Angel to the 1.5-mile resthouse, before 8am only. Sunset at Hopi Point is the grand finale.",
+          "stops": [
+            {"name": "Mather Point (sunrise)", "lat": 36.0617, "lng": -112.1075},
+            {"name": "Bright Angel Trailhead", "lat": 36.0577, "lng": -112.1445, "note": "Before 8am only, 1.5-mile resthouse max", "optional": true},
+            {"name": "Hopi Point (sunset)", "lat": 36.0745, "lng": -112.1547, "note": "Free Hermit Road shuttle"}
+          ],
+          "stay": {"place": "Williams/Tusayan (2nd night)", "cost": "~$200", "lat": 35.2494, "lng": -112.1910},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Williams%2C+AZ&destination=Grand+Canyon+Village%2C+AZ"
+        },
+        {
+          "n": 18, "date": "2026-07-22", "title": "Desert View → Petrified Forest → Santa Fe",
+          "drive": "~420 mi · ~6 h with stops",
+          "desc": "Exit the canyon east past the Desert View Watchtower. Adobe evening in Santa Fe — the oldest capital in the US.",
+          "stops": [
+            {"name": "Desert View Watchtower", "lat": 36.0402, "lng": -111.8262, "note": "Last canyon view, exit east"},
+            {"name": "Standin' on the Corner, Winslow AZ", "lat": 35.0242, "lng": -110.6974, "note": "Eagles photo op"},
+            {"name": "Meteor Crater", "lat": 35.0278, "lng": -111.0225, "note": "$29 — optional", "optional": true},
+            {"name": "Petrified Forest NP", "lat": 35.0657, "lng": -109.7817, "note": "Quick drive-through — covered by your pass"},
+            {"name": "Santa Fe", "lat": 35.6870, "lng": -105.9378}
+          ],
+          "stay": {"place": "Santa Fe — oldest capital in the US", "cost": "~$200", "lat": 35.6870, "lng": -105.9378},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Grand+Canyon+Village%2C+AZ&destination=Santa+Fe%2C+NM&waypoints=Winslow%2C+AZ%7CPetrified+Forest+National+Park"
+        },
+        {
+          "n": 19, "date": "2026-07-23", "title": "Santa Fe → Amarillo, TX",
+          "drive": "~280 mi · 4.5 h (afternoon)",
+          "desc": "Morning on Santa Fe Plaza: 400-year-old adobe old town and green-chile everything for lunch. Sunset: spray-paint a Cadillac at Cadillac Ranch (grab cans at a hardware store). Dinner at the Big Texan — watch someone attempt the 72oz steak challenge.",
+          "stops": [
+            {"name": "Santa Fe Plaza", "lat": 35.6871, "lng": -105.9381, "note": "Palace of the Governors, green-chile lunch"},
+            {"name": "Cadillac Ranch", "lat": 35.1872, "lng": -101.9870, "note": "Bring spray cans — sunset light"},
+            {"name": "The Big Texan, Amarillo", "lat": 35.1922, "lng": -101.7549, "note": "72oz steak challenge spectating"}
+          ],
+          "stay": {"place": "Amarillo", "cost": "~$100", "lat": 35.1930, "lng": -101.8310},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Santa+Fe%2C+NM&destination=Amarillo%2C+TX&waypoints=Cadillac+Ranch"
+        },
+        {
+          "n": 20, "date": "2026-07-24", "title": "Amarillo → Oklahoma City",
+          "drive": "~260 mi · 3.75 h", "rest": "Easy day",
+          "desc": "Old Route 66 alignments if you like, then a relaxed OKC afternoon and Oklahoma's famous onion burgers.",
+          "stops": [
+            {"name": "OKC National Memorial", "lat": 35.4730, "lng": -97.5171, "note": "Moving — allow an hour"},
+            {"name": "Bricktown canal walk", "lat": 35.4661, "lng": -97.5089, "note": "Onion burgers"}
+          ],
+          "stay": {"place": "Oklahoma City", "cost": "~$110", "lat": 35.4676, "lng": -97.5164},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Amarillo%2C+TX&destination=Oklahoma+City%2C+OK"
+        },
+        {
+          "n": 21, "date": "2026-07-25", "title": "OKC → Branson, MO (Ozarks)",
+          "drive": "~290 mi · 4.5 h",
+          "desc": "Into the green Ozark hills — suddenly the West is behind you. Evening at Branson Landing on the lakefront; early night before the theme park.",
+          "stops": [
+            {"name": "Branson Landing", "lat": 36.6437, "lng": -93.2113, "note": "Lakefront evening"}
+          ],
+          "stay": {"place": "Branson ×2 nights", "cost": "~$130", "lat": 36.6437, "lng": -93.2185},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Oklahoma+City%2C+OK&destination=Branson%2C+MO"
+        },
+        {
+          "n": 22, "date": "2026-07-26", "title": "Silver Dollar City — Theme Park #2",
+          "drive": "15 min from town",
+          "desc": "An 1880s frontier town in the forest with world-class coasters: Time Traveler and Outlaw Run. Marvel Cave tour is included — do it during the afternoon heat. Cinnamon bread is mandatory.",
+          "stops": [
+            {"name": "Silver Dollar City", "lat": 36.6685, "lng": -93.3380, "note": "Time Traveler, Outlaw Run, Marvel Cave in the heat"}
+          ],
+          "stay": {"place": "Branson (2nd night)", "cost": "~$130", "lat": 36.6437, "lng": -93.2185},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Branson%2C+MO&destination=Silver+Dollar+City"
+        },
+        {
+          "n": 23, "date": "2026-07-27", "title": "Branson → St. Louis",
+          "drive": "~250 mi · 4 h",
+          "desc": "Ride the space-age tram to the top of the Gateway Arch (192 m — book the 3–4pm slot online). Frozen custard “concrete” at Ted Drewes, a Route 66 landmark since 1929.",
+          "stops": [
+            {"name": "Gateway Arch", "lat": 38.6247, "lng": -90.1848, "note": "Tram to the top — book 3–4pm slot"},
+            {"name": "Ted Drewes Frozen Custard", "lat": 38.5900, "lng": -90.3021, "note": "Route 66 landmark since 1929"}
+          ],
+          "stay": {"place": "St. Louis", "cost": "~$140", "lat": 38.6270, "lng": -90.1994},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Branson%2C+MO&destination=Gateway+Arch%2C+St.+Louis%2C+MO"
+        },
+        {
+          "n": 24, "date": "2026-07-28", "title": "St. Louis → Chicago (O'Hare)",
+          "drive": "~300 mi · 4.5 h",
+          "desc": "Old Route 66 towns on the way if you want one last dose. Farewell deep-dish dinner. Fill the tank tonight so the truck goes back full.",
+          "stops": [
+            {"name": "Route 66 Museum, Pontiac IL", "lat": 40.8809, "lng": -88.6298, "note": "Great little museum + murals", "optional": true},
+            {"name": "Lou Malnati's, Park Ridge", "lat": 42.0111, "lng": -87.8406, "note": "Farewell deep-dish near O'Hare"}
+          ],
+          "stay": {"place": "near O'Hare", "cost": "~$140", "lat": 41.9803, "lng": -87.9067},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=St.+Louis%2C+MO&destination=O%27Hare+International+Airport%2C+Chicago%2C+IL"
+        },
+        {
+          "n": 25, "date": "2026-07-29", "title": "Return Truck → Flight 16:40",
+          "rest": "Buffer built in — no stress",
+          "desc": "Return the pickup by late morning (allow time for the rental inspection), airport by 13:30 for the 16:40 departure. Güle güle, America. 🇺🇸→🇹🇷",
+          "stops": [
+            {"name": "O'Hare rental car return (Multi-Modal Facility)", "lat": 41.9885, "lng": -87.8846, "note": "Tank full, allow inspection time"},
+            {"name": "O'Hare Terminals — by 13:30", "lat": 41.9786, "lng": -87.9048, "note": "Flight 16:40"}
+          ],
+          "stay": {"place": "24 nights · ~4,900 miles · one loop of a lifetime", "cost": "Done ✓"}
+        }
+      ]
+    }
+  ],
+  "budget": {
+    "rows": [
+      ["Hotels · 24 nights", "Avg ≈ $185/night (splurges: W. Yellowstone, Springdale, Jackson · offsets: Vegas, TX/OK, Branson)", "≈ $4,450"],
+      ["Fuel", "~4,900 mi ÷ ~18 mpg pickup ≈ 270 gal", "≈ $850–900"],
+      ["Parks pass", "America the Beautiful — one per vehicle, covers all 7 parks", "$80"],
+      ["Universal Hollywood ×2", "Saturday July date, from ~$154/adult", "≈ $310"],
+      ["Silver Dollar City ×2", "~$99/adult, cave tour included", "≈ $200"],
+      ["Small tickets", "Rodeo ($50), Jenny Lake boat ($24), Arch tram ($40), Rushmore parking ($10), Narrows gear ($60)", "≈ $185"]
+    ],
+    "total": ["Trip total (excl. food)", "Food realistically adds $60–100/day for two", "≈ $6,050–6,150"]
+  },
+  "tips": [
+    {"t": "Heat rules (Jul 15–23)", "d": "Desert days hit 38–41°C. Hike 6–10am only, 4L water per person in the truck, never leave anyone (or food) in a parked car."},
+    {"t": "Wildlife rules", "d": "Yellowstone: 25 m from bison/elk, 100 m from bears. Bison look slow; they sprint at 55 km/h. Photograph from the truck."},
+    {"t": "Fuel discipline", "d": "Fill up at half-tank in WY/UT/AZ — stations can be 100+ km apart. GasBuddy app finds the cheapest pumps."},
+    {"t": "Zion shuttle", "d": "Private cars are banned on the Scenic Drive in summer. Park in Springdale, ride the free town shuttle to the gate, then the park shuttle."},
+    {"t": "Phone signal", "d": "Expect dead zones in Yellowstone, Bryce and stretches of AZ/NM. Download offline Google Maps for WY, UT, AZ, NM before Jul 8."},
+    {"t": "Time zones", "d": "You'll cross Central → Mountain (Jul 6) → Pacific (Jul 16) → back. Double-check park shuttle and rodeo times against your phone's auto-update."}
+  ]
+}

@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Grand Western Loop — Jul 5–29, 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --asphalt:#23272B;
+    --asphalt-2:#2E3338;
+    --paper:#FAF8F2;
+    --card:#FFFFFF;
+    --ink:#22262A;
+    --ink-soft:#5A6068;
+    --sign-green:#00693C;
+    --sign-green-dark:#00552F;
+    --interstate-blue:#10437C;
+    --shield-red:#B01E24;
+    --dash-yellow:#F5C518;
+    --line:#E2DDD0;
+    --radius:10px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Public Sans',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.55;font-size:15.5px}
+  .display{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.04em}
+
+  /* ============ HEADER ============ */
+  header{background:var(--asphalt);color:#fff;padding:44px 20px 0;position:relative;overflow:hidden}
+  .hdr-inner{max-width:960px;margin:0 auto}
+  .hdr-eyebrow{font-family:'Oswald';font-size:13px;letter-spacing:.28em;text-transform:uppercase;color:var(--dash-yellow);margin-bottom:10px}
+  h1{font-family:'Oswald';font-weight:700;font-size:clamp(34px,6vw,58px);line-height:1.02;text-transform:uppercase;letter-spacing:.01em}
+  h1 span{color:var(--dash-yellow)}
+  .hdr-sub{margin-top:14px;color:#C9CDD2;max-width:640px}
+  .hdr-stats{display:flex;flex-wrap:wrap;gap:0;margin-top:28px;border:1px solid #3A4046;border-bottom:none;border-radius:8px 8px 0 0;overflow:hidden}
+  .stat{flex:1 1 140px;padding:14px 18px;border-right:1px solid #3A4046;background:var(--asphalt-2)}
+  .stat:last-child{border-right:none}
+  .stat b{display:block;font-family:'Oswald';font-size:22px;font-weight:600;color:#fff}
+  .stat small{color:#9AA1A8;text-transform:uppercase;letter-spacing:.12em;font-size:10.5px}
+  .roadline{height:14px;background:var(--asphalt);position:relative}
+  .roadline::before{content:"";position:absolute;left:0;right:0;top:50%;height:3px;transform:translateY(-50%);
+    background:repeating-linear-gradient(90deg,var(--dash-yellow) 0 34px,transparent 34px 58px)}
+
+  main{max-width:960px;margin:0 auto;padding:0 20px 80px}
+
+  /* ============ SIGN PANELS (deadlines) ============ */
+  .board{margin-top:40px}
+  .board-title{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .board-title h2{font-family:'Oswald';font-size:24px;text-transform:uppercase;letter-spacing:.05em}
+  .tag-urgent{background:var(--shield-red);color:#fff;font-family:'Oswald';font-size:11px;letter-spacing:.18em;padding:4px 10px;border-radius:4px;text-transform:uppercase}
+  .board-sub{color:var(--ink-soft);margin-bottom:18px}
+  .signs{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px}
+  .sign{background:var(--sign-green);color:#fff;border-radius:12px;padding:16px 18px 14px;border:3px solid #fff;outline:2px solid var(--sign-green-dark);box-shadow:0 3px 10px rgba(0,0,0,.12);display:flex;gap:12px;align-items:flex-start}
+  .sign.blue{background:var(--interstate-blue);outline-color:#0A3159}
+  .sign input[type=checkbox]{width:20px;height:20px;margin-top:3px;accent-color:var(--dash-yellow);flex:none;cursor:pointer}
+  .sign label{cursor:pointer}
+  .sign b{font-family:'Oswald';font-size:16.5px;font-weight:600;letter-spacing:.03em;display:block;text-transform:uppercase}
+  .sign .when{display:inline-block;margin-top:2px;background:rgba(255,255,255,.18);border-radius:4px;padding:1px 8px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+  .sign p{font-size:13.5px;margin-top:7px;color:rgba(255,255,255,.92)}
+  .sign a{color:var(--dash-yellow);font-weight:600;text-decoration:none}
+  .sign a:hover{text-decoration:underline}
+  .sign:has(input:checked){opacity:.45}
+  .sign:has(input:checked) b{text-decoration:line-through}
+  .note-persist{font-size:12.5px;color:var(--ink-soft);margin-top:10px}
+
+  /* ============ LEG HEADERS & ROAD TIMELINE ============ */
+  .leg{margin-top:56px}
+  .leg-head{background:var(--sign-green);color:#fff;border-radius:12px;border:3px solid #fff;outline:2px solid var(--sign-green-dark);padding:16px 22px;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;box-shadow:0 3px 10px rgba(0,0,0,.12)}
+  .leg-head h2{font-family:'Oswald';font-size:clamp(18px,3vw,24px);text-transform:uppercase;letter-spacing:.04em;font-weight:600}
+  .leg-head .dates{font-family:'Oswald';font-size:15px;color:var(--dash-yellow);letter-spacing:.08em}
+
+  .road{position:relative;margin-top:8px;padding:26px 0 8px}
+  .road::before{content:"";position:absolute;top:0;bottom:0;left:29px;width:34px;background:var(--asphalt);border-radius:20px}
+  .road::after{content:"";position:absolute;top:14px;bottom:14px;left:45px;width:3px;
+    background:repeating-linear-gradient(180deg,var(--dash-yellow) 0 22px,transparent 22px 40px)}
+  @media(min-width:720px){
+    .road::before{left:calc(50% - 17px)}
+    .road::after{left:calc(50% - 1.5px)}
+  }
+
+  .day{position:relative;margin:0 0 26px 96px;max-width:640px}
+  .marker{position:absolute;left:-96px;top:6px;width:60px;height:52px;background:var(--interstate-blue);border:3px solid #fff;outline:2px solid #0A3159;border-radius:10px 10px 16px 16px;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+  .marker small{font-size:8.5px;letter-spacing:.14em;font-weight:700;text-transform:uppercase;color:#BFD3EC}
+  .marker b{font-family:'Oswald';font-size:19px;font-weight:600;line-height:1}
+  @media(min-width:720px){
+    .day{width:calc(50% - 64px);max-width:none;margin-left:calc(50% + 64px)}
+    .day.flip{margin-left:0;margin-right:calc(50% + 64px)}
+    .day .marker{left:-96px}
+    .day.flip .marker{left:auto;right:-96px}
+  }
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:0 1px 4px rgba(34,38,42,.06)}
+  .card .date{font-family:'Oswald';font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--shield-red);font-weight:600}
+  .card h3{font-family:'Oswald';font-size:19px;font-weight:600;text-transform:uppercase;letter-spacing:.02em;margin:3px 0 8px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+  .chip{font-size:12px;font-weight:600;border-radius:5px;padding:2px 9px;letter-spacing:.02em}
+  .chip.drive{background:#EDF4EF;color:var(--sign-green);border:1px solid #CBE0D3}
+  .chip.wx{background:#FDF6E1;color:#8A6D00;border:1px solid #F0E2AE}
+  .chip.rest{background:#EEF2F8;color:var(--interstate-blue);border:1px solid #D4DFEE}
+  .card p{font-size:14px;color:#3B4148;margin-bottom:10px}
+  .stay{display:flex;justify-content:space-between;gap:10px;align-items:center;border-top:1px dashed var(--line);padding-top:10px;font-size:13.5px}
+  .stay .town b{color:var(--ink)}
+  .stay .cost{font-family:'Oswald';font-size:15px;color:var(--sign-green);font-weight:600;white-space:nowrap}
+  .maplink{display:inline-flex;align-items:center;gap:7px;margin-top:11px;background:var(--interstate-blue);color:#fff;text-decoration:none;font-family:'Oswald';font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:8px 14px;border-radius:7px;font-weight:500}
+  .maplink:hover{background:#0C5AAD}
+  .maplink svg{width:13px;height:13px;flex:none}
+
+  /* ============ BUDGET & NOTES ============ */
+  .panel{margin-top:56px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px}
+  .panel h2{font-family:'Oswald';font-size:22px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th{font-family:'Oswald';font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:8px 10px;border-bottom:2px solid var(--asphalt)}
+  td{padding:9px 10px;border-bottom:1px solid var(--line)}
+  td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
+  tr.total td{font-weight:700;border-bottom:none;border-top:2px solid var(--asphalt);font-family:'Oswald';font-size:15px}
+  .fineprint{margin-top:14px;font-size:12.5px;color:var(--ink-soft)}
+  .tips{margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+  .tip{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:13px 15px;font-size:13.5px}
+  .tip b{font-family:'Oswald';text-transform:uppercase;letter-spacing:.05em;font-size:13px;color:var(--interstate-blue);display:block;margin-bottom:4px}
+
+  footer{background:var(--asphalt);color:#9AA1A8;text-align:center;padding:26px 20px;font-size:13px;margin-top:70px}
+  footer b{color:var(--dash-yellow);font-family:'Oswald';letter-spacing:.1em;text-transform:uppercase}
+
+  @media print{
+    body{font-size:12px;background:#fff}
+    header{padding-top:20px}
+    .maplink{display:none}
+    .day{break-inside:avoid}
+    .road::before,.road::after{display:none}
+    .day{margin-left:70px!important;margin-right:0!important;width:auto!important}
+    .day .marker{left:-70px!important;right:auto!important}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-inner">
+    <div class="hdr-eyebrow display">Chicago → West → Chicago &nbsp;·&nbsp; 2 brothers, 1 pickup truck</div>
+    <h1>The Grand<br>Western <span>Loop</span></h1>
+    <p class="hdr-sub">July 5 – 29, 2026 · Badlands, Yellowstone, Grand Teton, Bryce, Zion, Las Vegas, Universal Hollywood, the Grand Canyon &amp; Route 66 home. Truck returns at O'Hare before the 16:40 flight on Jul 29.</p>
+    <div class="hdr-stats">
+      <div class="stat"><b>24</b><small>Nights</small></div>
+      <div class="stat"><b>~4,900 mi</b><small>Total driving</small></div>
+      <div class="stat"><b>~$185</b><small>Avg hotel / night</small></div>
+      <div class="stat"><b>7</b><small>National parks</small></div>
+      <div class="stat"><b>2</b><small>Theme parks</small></div>
+    </div>
+  </div>
+</header>
+<div class="roadline"></div>
+
+<main>
+
+  <!-- ================= DEADLINES ================= -->
+  <section class="board">
+    <div class="board-title">
+      <h2 class="display">Book before you leave</h2>
+      <span class="tag-urgent">Do today — Jul 3</span>
+    </div>
+    <p class="board-sub">These are the only things on the trip that genuinely sell out. Everything else can be booked 1–3 days ahead from the road.</p>
+    <div class="signs">
+      <div class="sign">
+        <input type="checkbox" id="t1"><label for="t1">
+          <b>Hotel: West Yellowstone ×2</b><span class="when">Deadline: today, Jul 3</span>
+          <p>Nights of Jul 9 &amp; 10. July occupancy runs 90%+ and rates $305–559. Backup if full: Island Park, ID (30 min south, cheaper). <a href="https://www.booking.com/city/us/west-yellowstone.html" target="_blank">Search rooms →</a></p>
+        </label>
+      </div>
+      <div class="sign">
+        <input type="checkbox" id="t2"><label for="t2">
+          <b>Hotel: Springdale (Zion) ×2</b><span class="when">Deadline: today, Jul 3</span>
+          <p>Nights of Jul 14 &amp; 15. Springdale sits at the park gate and fills fast; backup: Hurricane, UT (25 min). <a href="https://www.booking.com/city/us/springdale.html" target="_blank">Search rooms →</a></p>
+        </label>
+      </div>
+      <div class="sign">
+        <input type="checkbox" id="t3"><label for="t3">
+          <b>Universal Hollywood tickets ×2</b><span class="when">Deadline: by Jul 10</span>
+          <p>Dated tickets for Sat Jul 18 — from ~$154/adult for July weekends. Buy the Super Nintendo World early-access add-on if available. <a href="https://www.universalstudioshollywood.com" target="_blank">Buy tickets →</a></p>
+        </label>
+      </div>
+      <div class="sign">
+        <input type="checkbox" id="t4"><label for="t4">
+          <b>Hotel: Jackson or Victor, ID</b><span class="when">Deadline: today, Jul 3</span>
+          <p>Night of Jul 11. Jackson is charming but ~$300+; Victor, ID over the Teton Pass is ~$180 and 35 min away.</p>
+        </label>
+      </div>
+      <div class="sign blue">
+        <input type="checkbox" id="t5"><label for="t5">
+          <b>America the Beautiful pass</b><span class="when">Buy at Badlands gate · Jul 6</span>
+          <p>$80 per vehicle, covers entry to every national park on this route (would be $205+ paid separately). Keep it on the dashboard.</p>
+        </label>
+      </div>
+      <div class="sign blue">
+        <input type="checkbox" id="t6"><label for="t6">
+          <b>Cody Nite Rodeo tickets</b><span class="when">Book by Jul 6 · for Jul 8</span>
+          <p>~$25/person, runs every summer night at 8pm. Easy to buy online a couple of days out. <a href="https://codystampederodeo.com" target="_blank">Tickets →</a></p>
+        </label>
+      </div>
+      <div class="sign blue">
+        <input type="checkbox" id="t7"><label for="t7">
+          <b>Silver Dollar City tickets</b><span class="when">Book by Jul 23 · for Jul 26</span>
+          <p>~$99/person online. Marvel Cave tour is included with admission — do it in the afternoon heat.</p>
+        </label>
+      </div>
+      <div class="sign blue">
+        <input type="checkbox" id="t8"><label for="t8">
+          <b>Pack for 3 climates</b><span class="when">Before Jul 5</span>
+          <p>Fleece/jacket (Yellowstone nights hit 5–8°C), swimwear + water shoes (the Narrows), sunscreen &amp; 4L water jugs (desert days 38–40°C). Cooler for the truck bed.</p>
+        </label>
+      </div>
+    </div>
+    <p class="note-persist">Checkboxes are for this session / printing — tick them as you go or print this page and check on paper.</p>
+  </section>
+
+  <!-- ================= LEG 1 ================= -->
+  <section class="leg">
+    <div class="leg-head"><h2>Leg 1 · Great Plains &amp; Black Hills</h2><span class="dates display">Jul 5 – 8</span></div>
+    <div class="road">
+
+      <div class="day">
+        <div class="marker"><small>Day</small><b>1</b></div>
+        <div class="card">
+          <div class="date">Sun · Jul 5</div>
+          <h3>Chicago → Sioux Falls, SD</h3>
+          <div class="chips"><span class="chip drive">570 mi · ~8 h — the one big push</span><span class="chip wx">Sunny, 34°C</span></div>
+          <p>Knock out the prairie on day one while you're fresh. Evening leg-stretch at Falls Park's waterfalls downtown.</p>
+          <div class="stay"><span class="town">Stay: <b>Sioux Falls</b> — any downtown chain hotel</span><span class="cost">~$120</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Chicago%2C+IL&destination=Falls+Park%2C+Sioux+Falls%2C+SD"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+      <div class="day flip">
+        <div class="marker"><small>Day</small><b>2</b></div>
+        <div class="card">
+          <div class="date">Mon · Jul 6</div>
+          <h3>Sioux Falls → Badlands NP → Wall</h3>
+          <div class="chips"><span class="chip drive">~290 mi · 4.5 h + park loop</span><span class="chip wx">Sunny, ~31°C</span></div>
+          <p>Stops: Corn Palace (Mitchell), Wall Drug (free ice water since 1931). <b>Buy the $80 parks pass at the Badlands gate.</b> Drive the Loop Road in golden-hour light; short walks at Notch &amp; Door trails; bighorn sheep at dusk.</p>
+          <div class="stay"><span class="town">Stay: <b>Wall or Rapid City</b></span><span class="cost">~$140</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Sioux+Falls%2C+SD&destination=Wall%2C+SD&waypoints=Corn+Palace%2C+Mitchell%2C+SD%7CBadlands+National+Park"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="marker"><small>Day</small><b>3</b></div>
+        <div class="card">
+          <div class="date">Tue · Jul 7</div>
+          <h3>Black Hills Day — Rushmore &amp; Custer</h3>
+          <div class="chips"><span class="chip drive">Scenic loop ~100 mi — driving IS the activity</span><span class="chip wx">Mild, ~24°C</span></div>
+          <p>Mount Rushmore early (parking $10), then Custer State Park's Wildlife Loop — 1,300 bison roam free — and the Needles Highway's granite tunnels. Optional: Crazy Horse Memorial.</p>
+          <div class="stay"><span class="town">Stay: <b>Rapid City</b> (2nd night)</span><span class="cost">~$140</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Rapid+City%2C+SD&destination=Rapid+City%2C+SD&waypoints=Mount+Rushmore+National+Memorial%7CCuster+State+Park%7CNeedles+Highway"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+      <div class="day flip">
+        <div class="marker"><small>Day</small><b>4</b></div>
+        <div class="card">
+          <div class="date">Wed · Jul 8</div>
+          <h3>Rapid City → Devils Tower → Cody, WY</h3>
+          <div class="chips"><span class="chip drive">~380 mi · 5.5–6 h</span></div>
+          <p>Walk the 2 km paved loop under Devils Tower (watch for climbers), then cross the Bighorn Mountains. Tonight: <b>Cody Nite Rodeo, 8pm</b> — bulls, broncos, pure Wyoming.</p>
+          <div class="stay"><span class="town">Stay: <b>Cody</b> — splurge-ish rodeo town</span><span class="cost">~$220</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Rapid+City%2C+SD&destination=Cody%2C+WY&waypoints=Devils+Tower+National+Monument"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= LEG 2 ================= -->
+  <section class="leg">
+    <div class="leg-head"><h2>Leg 2 · Yellowstone &amp; Grand Teton</h2><span class="dates display">Jul 9 – 12</span></div>
+    <div class="road">
+
+      <div class="day">
+        <div class="marker"><small>Day</small><b>5</b></div>
+        <div class="card">
+          <div class="date">Thu · Jul 9</div>
+          <h3>Cody → Yellowstone East Side</h3>
+          <div class="chips"><span class="chip drive">~130 mi but a full sightseeing day</span><span class="chip wx">Days ~26°C · nights 5–8°C</span></div>
+          <p>Enter via the East Entrance ("the most scenic 50 miles in America"). Yellowstone Lake → Hayden Valley (bison jams, elk, maybe wolves at dusk) → Grand Canyon of the Yellowstone: Artist Point &amp; Lower Falls.</p>
+          <div class="stay"><span class="town">Stay: <b>West Yellowstone, MT</b> — the splurge</span><span class="cost">~$320</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Cody%2C+WY&destination=West+Yellowstone%2C+MT&waypoints=Yellowstone+Lake%7CArtist+Point%2C+Yellowstone"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+      <div class="day flip">
+        <div class="marker"><small>Day</small><b>6</b></div>
+        <div class="card">
+          <div class="date">Fri · Jul 10</div>
+          <h3>Yellowstone Geyser Day</h3>
+          <div class="chips"><span class="chip drive">Lower loop, ~100 mi in-park</span></div>
+          <p>Old Faithful (erupts ~every 90 min — check times at the visitor center), Grand Prismatic from the Fairy Falls overlook trail (the photo you've seen), Norris Geyser Basin, Fountain Paint Pots. Enter the park by 7:30am to beat crowds.</p>
+          <div class="stay"><span class="town">Stay: <b>West Yellowstone</b> (2nd night)</span><span class="cost">~$320</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=West+Yellowstone%2C+MT&destination=West+Yellowstone%2C+MT&waypoints=Old+Faithful%7CGrand+Prismatic+Spring%7CNorris+Geyser+Basin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="marker"><small>Day</small><b>7</b></div>
+        <div class="card">
+          <div class="date">Sat · Jul 11</div>
+          <h3>Yellowstone → Grand Teton → Jackson</h3>
+          <div class="chips"><span class="chip drive">~120 mi · relaxed</span></div>
+          <p>Catch anything missed in the morning, then drive south — the Teton range appears like a wall. Snake River Overlook (the Ansel Adams shot), Mormon Row barns, stroll Jackson's town square with its elk-antler arches.</p>
+          <div class="stay"><span class="town">Stay: <b>Jackson</b> (~$300) or <b>Victor, ID</b> (~$180)</span><span class="cost">$180–300</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=West+Yellowstone%2C+MT&destination=Jackson%2C+WY&waypoints=Snake+River+Overlook%7CMormon+Row+Historic+District"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+      <div class="day flip">
+        <div class="marker"><small>Day</small><b>8</b></div>
+        <div class="card">
+          <div class="date">Sun · Jul 12</div>
+          <h3>Jenny Lake → Salt Lake City</h3>
+          <div class="chips"><span class="chip drive">~280 mi · 4.5 h (afternoon)</span></div>
+          <p>Morning: boat shuttle across Jenny Lake (~$12) + the short hike to Hidden Falls &amp; Inspiration Point — the most alpine view in America. Leave ~1pm for Salt Lake City.</p>
+          <div class="stay"><span class="town">Stay: <b>Salt Lake City</b> — cheap recovery night</span><span class="cost">~$130</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Jackson%2C+WY&destination=Salt+Lake+City%2C+UT&waypoints=Jenny+Lake+Visitor+Center"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= LEG 3 ================= -->
+  <section class="leg">
+    <div class="leg-head"><h2>Leg 3 · Red Rock, Vegas &amp; Los Angeles</h2><span class="dates display">Jul 13 – 19</span></div>
+    <div class="road">
+
+      <div class="day">
+        <div class="marker"><small>Day</small><b>9</b></div>
+        <div class="card">
+          <div class="date">Mon · Jul 13</div>
+          <h3>SLC → Bryce Canyon Country</h3>
+          <div class="chips"><span class="chip drive">~270 mi · 4 h</span><span class="chip rest">Laundry + resupply morning</span></div>
+          <p>Slow morning: Temple Square walk, laundry, restock the cooler. Afternoon drive south into red-rock country; sunset peek at Bryce's rim if you arrive by 8pm.</p>
+          <div class="stay"><span class="town">Stay: <b>Bryce Canyon City / Panguitch</b></span><span class="cost">~$180</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Salt+Lake+City%2C+UT&destination=Bryce+Canyon+City%2C+UT"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+      <div class="day flip">
+        <div class="marker"><small>Day</small><b>10</b></div>
+        <div class="card">
+          <div class="date">Tue · Jul 14</div>
+          <h3>Bryce Sunrise → Zion Gateway</h3>
+          <div class="chips"><span class="chip drive">~85 mi · 2 h scenic</span><span class="chip wx">Bryce ~27°C (2,500 m altitude!)</span></div>
+          <p>Sunrise Point at dawn (hoodoos glow orange), then hike the Queen's Garden → Navajo Loop combo (4.6 km, the best short hike in Utah). Afternoon: Hwy 89 → the Zion–Mt Carmel tunnel into Springdale.</p>
+          <div class="stay"><span class="town">Stay: <b>Springdale</b> — splurge #2</span><span class="cost">~$280</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Bryce+Canyon+National+Park&destination=Springdale%2C+UT"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="marker"><small>Day</small><b>11</b></div>
+        <div class="card">
+          <div class="date">Wed · Jul 15</div>
+          <h3>Zion — Hike the Narrows</h3>
+          <div class="chips"><span class="chip drive">No driving — mandatory park shuttle</span><span class="chip wx">Hot: ~39°C by 2pm</span></div>
+          <p>First shuttles ~6am — be on one. Riverside Walk, then wade upstream into the Narrows (rent water shoes + pole in Springdale, ~$30). Hiking <i>in</i> the river is how you beat the heat. Pool + ice cream after 1pm.</p>
+          <div class="stay"><span class="town">Stay: <b>Springdale</b> (2nd night)</span><span class="cost">~$280</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Springdale%2C+UT&destination=Zion+National+Park+Visitor+Center"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+      <div class="day flip">
+        <div class="marker"><small>Day</small><b>12</b></div>
+        <div class="card">
+          <div class="date">Thu · Jul 16</div>
+          <h3>Zion → Las Vegas</h3>
+          <div class="chips"><span class="chip drive">~160 mi · 2.5 h</span><span class="chip wx">Vegas ~41°C — indoor evening</span></div>
+          <p>Arrive early afternoon, nap in the A/C. Evening: the Strip as a free spectacle — Bellagio Fountains (every 15–30 min), the Sphere's exterior, Fremont Street's light canopy, one legendary buffet. Midweek rooms are a bargain.</p>
+          <div class="stay"><span class="town">Stay: <b>Las Vegas Strip</b></span><span class="cost">~$100</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Springdale%2C+UT&destination=Las+Vegas%2C+NV"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="marker"><small>Day</small><b>13</b></div>
+        <div class="card">
+          <div class="date">Fri · Jul 17</div>
+          <h3>Vegas → Los Angeles</h3>
+          <div class="chips"><span class="chip drive">~280 mi · 4.5 h — leave by 9am</span></div>
+          <p>Beat the heat and the Friday traffic. Evening: Griffith Observatory at sunset — the whole LA basin, the Hollywood sign, and the Pacific haze in one view. First In-N-Out burger (order it "animal style").</p>
+          <div class="stay"><span class="town">Stay: <b>Universal City / Burbank</b> ×3 nights</span><span class="cost">~$200</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Las+Vegas%2C+NV&destination=Universal+City%2C+CA&waypoints=Griffith+Observatory"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+      <div class="day flip">
+        <div class="marker"><small>Day</small><b>14</b></div>
+        <div class="card">
+          <div class="date">Sat · Jul 18</div>
+          <h3>Universal Studios Hollywood</h3>
+          <div class="chips"><span class="chip drive">Zero driving — park at the resort</span></div>
+          <p>Arrive at opening (9am). Priority order: Super Nintendo World &amp; Mario Kart first, then the Lower Lot (Jurassic World, Transformers), Studio Tour midday, Hogwarts &amp; Butterbeer in the afternoon. Mega Movie Summer events run all day.</p>
+          <div class="stay"><span class="town">Stay: <b>Universal City / Burbank</b></span><span class="cost">~$200</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Burbank%2C+CA&destination=Universal+Studios+Hollywood"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="marker"><small>Day</small><b>15</b></div>
+        <div class="card">
+          <div class="date">Sun · Jul 19</div>
+          <h3>LA Beach Day — the Pacific</h3>
+          <div class="chips"><span class="chip drive">City driving only · ~40 mi</span><span class="chip wx">Perfect: ~26°C at the coast</span></div>
+          <p>Santa Monica Pier — the official western end of Route 66 (you'll drive the eastern stretches home). Venice Beach boardwalk, dip in the Pacific, tacos. Sunset from the pier's Ferris wheel ($10).</p>
+          <div class="stay"><span class="town">Stay: <b>Universal City / Burbank</b> (3rd night)</span><span class="cost">~$200</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Universal+City%2C+CA&destination=Santa+Monica+Pier&waypoints=Venice+Beach+Boardwalk"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= LEG 4 ================= -->
+  <section class="leg">
+    <div class="leg-head"><h2>Leg 4 · Grand Canyon &amp; Route 66 Home</h2><span class="dates display">Jul 20 – 29</span></div>
+    <div class="road">
+
+      <div class="day">
+        <div class="marker"><small>Day</small><b>16</b></div>
+        <div class="card">
+          <div class="date">Mon · Jul 20</div>
+          <h3>LA → Route 66 → Williams, AZ</h3>
+          <div class="chips"><span class="chip drive">~440 mi · 6.5–7 h — 2nd longest day</span></div>
+          <p>Leave by 8am. Detour onto historic Route 66 at Kingman → Seligman, the town that inspired <i>Cars</i> (Delgadillo's Snow Cap for a milkshake). Williams is the last Route 66 town bypassed by the interstate — neon signs, diners.</p>
+          <div class="stay"><span class="town">Stay: <b>Williams or Tusayan</b> ×2 nights</span><span class="cost">~$200</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Universal+City%2C+CA&destination=Williams%2C+AZ&waypoints=Seligman%2C+AZ"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+      <div class="day flip">
+        <div class="marker"><small>Day</small><b>17</b></div>
+        <div class="card">
+          <div class="date">Tue · Jul 21</div>
+          <h3>Grand Canyon South Rim</h3>
+          <div class="chips"><span class="chip drive">~60 mi to the rim</span><span class="chip wx">Rim ~29°C (2,100 m) — do NOT hike deep</span></div>
+          <p>Sunrise at Mather Point, walk the flat Rim Trail, free shuttle to the Hermit's Rest viewpoints. If you must descend: Bright Angel to the 1.5-mile resthouse, before 8am only. Sunset at Hopi Point is the grand finale.</p>
+          <div class="stay"><span class="town">Stay: <b>Williams/Tusayan</b> (2nd night)</span><span class="cost">~$200</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Williams%2C+AZ&destination=Grand+Canyon+Village%2C+AZ"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="marker"><small>Day</small><b>18</b></div>
+        <div class="card">
+          <div class="date">Wed · Jul 22</div>
+          <h3>Desert View → Petrified Forest → Santa Fe</h3>
+          <div class="chips"><span class="chip drive">~420 mi · ~6 h with stops</span></div>
+          <p>Exit the canyon east past the Desert View Watchtower. Stops: "Standin' on the Corner" in Winslow, Meteor Crater (optional, $29), a quick drive-through of Petrified Forest NP (covered by your pass). Adobe evening in Santa Fe.</p>
+          <div class="stay"><span class="town">Stay: <b>Santa Fe</b> — oldest capital in the US</span><span class="cost">~$200</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Grand+Canyon+Village%2C+AZ&destination=Santa+Fe%2C+NM&waypoints=Winslow%2C+AZ%7CPetrified+Forest+National+Park"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+      <div class="day flip">
+        <div class="marker"><small>Day</small><b>19</b></div>
+        <div class="card">
+          <div class="date">Thu · Jul 23</div>
+          <h3>Santa Fe → Amarillo, TX</h3>
+          <div class="chips"><span class="chip drive">~280 mi · 4.5 h (afternoon)</span></div>
+          <p>Morning on Santa Fe Plaza: 400-year-old adobe old town, Palace of the Governors, and green-chile <i>everything</i> for lunch. Sunset: spray-paint a Cadillac at Cadillac Ranch (grab cans at a hardware store). Dinner at the Big Texan — watch someone attempt the 72oz steak challenge.</p>
+          <div class="stay"><span class="town">Stay: <b>Amarillo</b></span><span class="cost">~$100</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Santa+Fe%2C+NM&destination=Amarillo%2C+TX&waypoints=Cadillac+Ranch"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="marker"><small>Day</small><b>20</b></div>
+        <div class="card">
+          <div class="date">Fri · Jul 24</div>
+          <h3>Amarillo → Oklahoma City</h3>
+          <div class="chips"><span class="chip drive">~260 mi · 3.75 h</span><span class="chip rest">Easy day</span></div>
+          <p>Old Route 66 alignments if you like, then a relaxed OKC afternoon: the moving OKC National Memorial, Bricktown canal walk, and Oklahoma's famous onion burgers.</p>
+          <div class="stay"><span class="town">Stay: <b>Oklahoma City</b></span><span class="cost">~$110</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Amarillo%2C+TX&destination=Oklahoma+City%2C+OK"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+      <div class="day flip">
+        <div class="marker"><small>Day</small><b>21</b></div>
+        <div class="card">
+          <div class="date">Sat · Jul 25</div>
+          <h3>OKC → Branson, MO (Ozarks)</h3>
+          <div class="chips"><span class="chip drive">~290 mi · 4.5 h</span></div>
+          <p>Into the green Ozark hills — suddenly the West is behind you. Evening at Branson Landing on the lakefront; early night before the theme park.</p>
+          <div class="stay"><span class="town">Stay: <b>Branson</b> ×2 nights</span><span class="cost">~$130</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Oklahoma+City%2C+OK&destination=Branson%2C+MO"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="marker"><small>Day</small><b>22</b></div>
+        <div class="card">
+          <div class="date">Sun · Jul 26</div>
+          <h3>Silver Dollar City — Theme Park #2</h3>
+          <div class="chips"><span class="chip drive">15 min from town</span></div>
+          <p>An 1880s frontier town in the forest with world-class coasters: Time Traveler (spinning launch coaster), Outlaw Run (legendary wooden coaster). Marvel Cave tour is included — do it during the afternoon heat. Cinnamon bread is mandatory.</p>
+          <div class="stay"><span class="town">Stay: <b>Branson</b> (2nd night)</span><span class="cost">~$130</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Branson%2C+MO&destination=Silver+Dollar+City"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+      <div class="day flip">
+        <div class="marker"><small>Day</small><b>23</b></div>
+        <div class="card">
+          <div class="date">Mon · Jul 27</div>
+          <h3>Branson → St. Louis</h3>
+          <div class="chips"><span class="chip drive">~250 mi · 4 h</span></div>
+          <p>Ride the space-age tram to the top of the Gateway Arch (192 m — book the 3–4pm slot online). Frozen custard "concrete" at Ted Drewes, a Route 66 landmark since 1929.</p>
+          <div class="stay"><span class="town">Stay: <b>St. Louis</b></span><span class="cost">~$140</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Branson%2C+MO&destination=Gateway+Arch%2C+St.+Louis%2C+MO"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="marker"><small>Day</small><b>24</b></div>
+        <div class="card">
+          <div class="date">Tue · Jul 28</div>
+          <h3>St. Louis → Chicago (O'Hare)</h3>
+          <div class="chips"><span class="chip drive">~300 mi · 4.5 h</span></div>
+          <p>Old Route 66 towns on the way if you want one last dose (Pontiac, IL has a great little museum). Farewell deep-dish dinner. Fill the tank tonight so the truck goes back full.</p>
+          <div class="stay"><span class="town">Stay: <b>near O'Hare</b></span><span class="cost">~$140</span></div>
+          <a class="maplink" target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=St.+Louis%2C+MO&destination=O%27Hare+International+Airport%2C+Chicago%2C+IL"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Directions</a>
+        </div>
+      </div>
+
+      <div class="day flip">
+        <div class="marker"><small>Day</small><b>25</b></div>
+        <div class="card">
+          <div class="date">Wed · Jul 29</div>
+          <h3>Return Truck → Flight 16:40</h3>
+          <div class="chips"><span class="chip rest">Buffer built in — no stress</span></div>
+          <p>Return the pickup by late morning (allow time for the rental inspection), airport by 13:30 for the 16:40 departure. Güle güle, America. 🇺🇸→🇹🇷</p>
+          <div class="stay"><span class="town"><b>24 nights · ~4,900 miles · one loop of a lifetime</b></span><span class="cost">Done ✓</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= BUDGET ================= -->
+  <section class="panel">
+    <h2 class="display">Budget Summary (2 people)</h2>
+    <table>
+      <thead><tr><th>Item</th><th>Detail</th><th>Est. total</th></tr></thead>
+      <tbody>
+        <tr><td>Hotels · 24 nights</td><td>Avg ≈ $185/night (splurges: W. Yellowstone, Springdale, Jackson · offsets: Vegas, TX/OK, Branson)</td><td>≈ $4,450</td></tr>
+        <tr><td>Fuel</td><td>~4,900 mi ÷ ~18 mpg pickup ≈ 270 gal</td><td>≈ $850–900</td></tr>
+        <tr><td>Parks pass</td><td>America the Beautiful — one per vehicle, covers all 7 parks</td><td>$80</td></tr>
+        <tr><td>Universal Hollywood ×2</td><td>Saturday July date, from ~$154/adult</td><td>≈ $310</td></tr>
+        <tr><td>Silver Dollar City ×2</td><td>~$99/adult, cave tour included</td><td>≈ $200</td></tr>
+        <tr><td>Small tickets</td><td>Rodeo ($50), Jenny Lake boat ($24), Arch tram ($40), Rushmore parking ($10), Narrows gear ($60)</td><td>≈ $185</td></tr>
+        <tr class="total"><td>Trip total (excl. food)</td><td>Food realistically adds $60–100/day for two</td><td>≈ $6,050–6,150</td></tr>
+      </tbody>
+    </table>
+    <p class="fineprint">Hotel figures are July-2026 market rates at time of planning; lock in the three flagged splurge stays immediately and the rest 1–3 days ahead. All prices USD.</p>
+
+    <div class="tips">
+      <div class="tip"><b>Heat rules (Jul 15–23)</b>Desert days hit 38–41°C. Hike 6–10am only, 4L water per person in the truck, never leave anyone (or food) in a parked car.</div>
+      <div class="tip"><b>Wildlife rules</b>Yellowstone: 25 m from bison/elk, 100 m from bears. Bison look slow; they sprint at 55 km/h. Photograph from the truck.</div>
+      <div class="tip"><b>Fuel discipline</b>Fill up at half-tank in WY/UT/AZ — stations can be 100+ km apart. GasBuddy app finds the cheapest pumps.</div>
+      <div class="tip"><b>Zion shuttle</b>Private cars are banned on the Scenic Drive in summer. Park in Springdale, ride the free town shuttle to the gate, then the park shuttle.</div>
+      <div class="tip"><b>Phone signal</b>Expect dead zones in Yellowstone, Bryce and stretches of AZ/NM. Download offline Google Maps for WY, UT, AZ, NM before Jul 8.</div>
+      <div class="tip"><b>Time zones</b>You'll cross Central → Mountain (Jul 6) → Pacific (Jul 16) → back. Double-check park shuttle and rodeo times against your phone's auto-update.</div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <b>The Grand Western Loop</b> · Jul 5–29, 2026 · Print this page or keep it open offline — every day links straight to Google Maps directions.
+</footer>
+
+</body>
+</html>
