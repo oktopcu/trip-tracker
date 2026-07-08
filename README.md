@@ -59,6 +59,14 @@ The app renders any JSON with this shape — paste a new trip into
     { "name": "Leg 1 · ...", "dates": "Jul 5 – 8",
       "days": [
         { "n": 1, "date": "2026-07-05", "title": "A → B",
+          "tz": "America/Chicago",     // IANA zone where you sleep — powers the
+                                       // clock-change chips + sun-time display
+          "mi": 570,                   // numeric miles — powers map/recap stats
+          "mapLabel": "Chicago",       // optional label on the overview map
+          "leaveBy": "8:00",           // morning target; shown as a chip AND as
+          "leaveNote": "why it's tight", // the previous evening's 🌙 banner
+          "costs": { "stay": 120, "food": 65, "fuel": 110,   // day estimate
+                     "extra": [["Parks pass", 80]] },        // (all optional)
           "drive": "570 mi · ~8 h",   // chips (all optional)
           "wx": "Sunny, 34°C",
           "rest": "Easy day",
@@ -66,6 +74,8 @@ The app renders any JSON with this shape — paste a new trip into
           "stops": [                   // ordered checklist; lat/lng power
             { "name": "Falls Park",    // GPS distance + navigation buttons
               "lat": 43.5586, "lng": -96.7226,
+              "when": "golden hour",   // timing hint shown as ⏱
+              "dur": "~45 min",
               "note": "optional", "optional": true }
           ],
           "stay": { "place": "Sioux Falls", "cost": "~$120",
@@ -84,7 +94,13 @@ The app renders any JSON with this shape — paste a new trip into
 Behavior notes:
 
 - **Next stop** = the first unchecked, non-`optional` stop from today onward.
-  "✓ Arrived" checks it and advances.
+  "✓ Arrived" checks it and advances. Within ~350 m of it the button turns
+  green ("You're here").
+- **Sunrise/sunset** is computed offline (NOAA approximation) from each day's
+  first stop, displayed in that day's `tz`.
+- **Map tab** draws the route from each day's overnight coordinates — done
+  legs green, today yellow, ahead dashed — plus a live GPS dot and recap
+  stats (days, miles, est. spend vs. plan).
 - Todos with a `due` on/before today surface as alerts on the Today tab and
   as the red badge on the To-Do tab.
 - All progress is `localStorage`, keyed by `meta.id` — switching trips keeps

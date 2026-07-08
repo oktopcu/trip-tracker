@@ -58,6 +58,32 @@
   .chip.drive{background:#EDF4EF;color:var(--sign-green);border:1px solid #CBE0D3}
   .chip.wx{background:#FDF6E1;color:#8A6D00;border:1px solid #F0E2AE}
   .chip.rest{background:#EEF2F8;color:var(--interstate-blue);border:1px solid #D4DFEE}
+  .chip.sun{background:#FFF4DC;color:#9A6B00;border:1px solid #F0DFAE}
+  .chip.leave{background:#F3EDFB;color:#5B2D91;border:1px solid #DFD0F0}
+  .chip.tz{background:#23272B;color:var(--dash-yellow);border:1px solid #23272B}
+  .costline{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;border-top:1px dashed var(--line);
+            padding-top:9px;margin-top:9px;font-size:12px;color:var(--ink-soft)}
+  .costline b{font-family:'Oswald';font-size:14.5px;color:var(--sign-green);letter-spacing:.03em}
+  .night{background:var(--asphalt);color:#E8EAEC;border-radius:12px;border-left:5px solid var(--dash-yellow);
+         padding:12px 14px;font-size:13px;margin-bottom:12px}
+  .night b{color:var(--dash-yellow);font-family:'Oswald';text-transform:uppercase;letter-spacing:.06em;font-size:13px}
+  .night .sub2{color:#B7BCC2;margin-top:3px}
+  .stop .s-when{font-size:11.5px;color:#9A6B00;font-weight:700}
+  .btn.arrive.near{background:#2BA05A;color:#fff;animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(43,160,90,.5)}50%{box-shadow:0 0 0 9px rgba(43,160,90,0)}}
+  /* map & recap */
+  .mapwrap{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:10px;margin-bottom:12px}
+  .mapwrap svg{width:100%;height:auto;display:block}
+  .maplegend{display:flex;gap:14px;justify-content:center;font-size:11px;color:var(--ink-soft);padding:8px 0 2px;flex-wrap:wrap}
+  .maplegend i{display:inline-block;width:16px;height:4px;border-radius:2px;vertical-align:2px;margin-right:5px}
+  .statgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+  .statcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;text-align:center}
+  .statcard b{display:block;font-family:'Oswald';font-size:22px;font-weight:600;color:var(--interstate-blue)}
+  .statcard small{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+  .recap-hero{background:var(--sign-green);color:#fff;border-radius:14px;border:3px solid #fff;outline:2px solid var(--sign-green-dark);
+              padding:16px;margin-bottom:12px;text-align:center}
+  .recap-hero h2{font-family:'Oswald';font-size:22px;text-transform:uppercase;letter-spacing:.03em}
+  .recap-hero p{font-size:12.5px;color:rgba(255,255,255,.85);margin-top:4px}
   .desc{font-size:13.5px;color:#3B4148;margin-bottom:8px}
   .stay{display:flex;justify-content:space-between;gap:10px;align-items:center;border-top:1px dashed var(--line);
         padding-top:9px;margin-top:9px;font-size:13px}
@@ -210,6 +236,7 @@
 <nav id="tabs">
   <button data-tab="today"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Today</button>
   <button data-tab="route"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 15.5A3.5 3.5 0 0 0 7.5 19H17v2l4-3-4-3v2H7.5a1.5 1.5 0 0 1 0-3H16a4 4 0 0 0 0-8H6V4L2 7l4 3V8h10a2 2 0 0 1 0 4H7.5A3.5 3.5 0 0 0 4 15.5z"/></svg>Route</button>
+  <button data-tab="map"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>Map</button>
   <button data-tab="todo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>To-Do<span class="badge" id="todo-badge" hidden></span></button>
   <button data-tab="info"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>Info</button>
 </nav>
@@ -293,6 +320,61 @@ function distLabelLong(stop){
   return (mi>=100?Math.round(mi):mi.toFixed(1))+' mi ('+(km>=100?Math.round(km):km.toFixed(1))+' km) away';
 }
 
+/* ---- sun times (SunCalc-style NOAA approximation, offline) ---- */
+const SUN = (()=>{
+  const rad=Math.PI/180, dayMs=864e5, J1970=2440588, J2000=2451545, e=rad*23.4397;
+  const toDays=d=>d.valueOf()/dayMs-0.5+J1970-J2000, fromJulian=j=>new Date((j+0.5-J1970)*dayMs);
+  const M_=d=>rad*(357.5291+0.98560028*d);
+  const L_=M=>M+rad*(1.9148*Math.sin(M)+0.02*Math.sin(2*M)+0.0003*Math.sin(3*M))+rad*102.9372+Math.PI;
+  const dec=L=>Math.asin(Math.sin(0)*Math.cos(e)+Math.cos(0)*Math.sin(e)*Math.sin(L));
+  function times(date,lat,lng){
+    const lw=rad*-lng, phi=rad*lat, d=toDays(date), n=Math.round(d-0.0009-lw/(2*Math.PI));
+    const ds=0.0009+lw/(2*Math.PI)+n, M=M_(ds), L=L_(M), dc=dec(L);
+    const Jnoon=J2000+ds+0.0053*Math.sin(M)-0.0069*Math.sin(2*L);
+    const cosH=(Math.sin(rad*-0.833)-Math.sin(phi)*Math.sin(dc))/(Math.cos(phi)*Math.cos(dc));
+    if(cosH<-1||cosH>1) return null;
+    const w=Math.acos(cosH), a=0.0009+(w+lw)/(2*Math.PI)+n;
+    const Jset=J2000+a+0.0053*Math.sin(M)-0.0069*Math.sin(2*L);
+    return {sunrise:fromJulian(Jnoon-(Jset-Jnoon)), sunset:fromJulian(Jset)};
+  }
+  return {times};
+})();
+const fmtT=(dt,tz)=>dt.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',...(tz?{timeZone:tz}:{})}).toLowerCase().replace(' ','');
+const dayAnchor = d=>{
+  const s=(d.stops||[]).find(x=>x.lat!=null);
+  return s || (d.stay && d.stay.lat!=null ? d.stay : null);
+};
+const dayEnd = d=>{
+  if(d.stay && d.stay.lat!=null) return d.stay;
+  const s=(d.stops||[]).slice().reverse().find(x=>x.lat!=null);
+  return s||null;
+};
+function sunTimes(d){
+  const a=dayAnchor(d); if(!a) return null;
+  return SUN.times(new Date(d.date+'T12:00:00'), a.lat, a.lng);
+}
+/* July UTC offsets for the zones this app cares about */
+const TZ_OFF={'America/Chicago':-5,'America/Denver':-6,'America/Phoenix':-7,'America/Los_Angeles':-7};
+const TZ_NAME={'America/Chicago':'Central','America/Denver':'Mountain','America/Phoenix':'Arizona (no DST)','America/Los_Angeles':'Pacific'};
+function tzChange(d){
+  const i=DAYS.indexOf(d); if(i<1) return null;
+  const prev=DAYS[i-1].tz, cur=d.tz;
+  if(!prev||!cur||prev===cur||TZ_OFF[prev]==null||TZ_OFF[cur]==null) return null;
+  const diff=TZ_OFF[cur]-TZ_OFF[prev];
+  if(!diff) return {label:TZ_NAME[cur]||cur, diff:0};
+  return {label:(TZ_NAME[cur]||cur)+' · clocks '+(diff>0?'+':'')+diff+' h', diff};
+}
+function costTotal(d){
+  const c=d.costs; if(!c) return 0;
+  return (c.stay||0)+(c.food||0)+(c.fuel||0)+(c.extra||[]).reduce((a,x)=>a+x[1],0);
+}
+function costLine(d){
+  const c=d.costs; if(!c) return '';
+  const parts=[['stay',c.stay],['food',c.food],['fuel',c.fuel]].filter(x=>x[1])
+    .map(x=>x[0]+' $'+x[1]).concat((c.extra||[]).map(x=>esc(x[0])+' $'+x[1]));
+  return '<div class="costline"><b>≈ $'+costTotal(d)+' today</b><span>'+parts.join(' · ')+'</span></div>';
+}
+
 const appleUrl  = st=>'https://maps.apple.com/?daddr='+st.lat+','+st.lng+'&dirflg=d';
 const googleUrl = st=>'https://www.google.com/maps/dir/?api=1&destination='+st.lat+'%2C'+st.lng+'&travelmode=driving';
 
@@ -340,6 +422,7 @@ function stopRow(day,i,st){
   return '<div class="stop'+(done?' done':'')+'">'
     +'<input type="checkbox" data-stop="'+key+'" '+(done?'checked':'')+'>'
     +'<div class="s-main"><div class="s-name">'+esc(st.name)+(st.optional?'<span class="s-opt">optional</span>':'')+'</div>'
+    +((st.when||st.dur)?'<div class="s-when">⏱ '+esc([st.when,st.dur].filter(Boolean).join(' · '))+'</div>':'')
     +(st.note?'<div class="s-note">'+esc(st.note)+'</div>':'')+'</div>'
     +(d?'<span class="s-dist">'+d+'</span>':'')
     +(st.lat!=null?'<a class="s-nav" href="'+appleUrl(st)+'" target="_blank" rel="noopener" aria-label="Navigate">'+navSvg+'</a>':'')
@@ -351,6 +434,11 @@ function dayChips(d){
   if(d.drive) h+='<span class="chip drive">'+esc(d.drive)+'</span>';
   if(d.wx)    h+='<span class="chip wx">'+esc(d.wx)+'</span>';
   if(d.rest)  h+='<span class="chip rest">'+esc(d.rest)+'</span>';
+  if(d.leaveBy) h+='<span class="chip leave">⏰ leave by '+esc(d.leaveBy)+'</span>';
+  const st=sunTimes(d);
+  if(st) h+='<span class="chip sun">☀ '+fmtT(st.sunrise,d.tz)+' – '+fmtT(st.sunset,d.tz)+'</span>';
+  const tzc=tzChange(d);
+  if(tzc) h+='<span class="chip tz">🕐 '+esc(tzc.label)+'</span>';
   return h+'</div>';
 }
 
@@ -377,16 +465,19 @@ function viewToday(){
   if(due.length>2) h += '<div class="alert" style="background:#FDF6E1;border-color:#F0E2AE;border-left-color:#8A6D00">'
        +'<b style="color:#8A6D00">+'+(due.length-2)+' more deadline'+(due.length-2>1?'s':'')+'</b> — <a href="#" data-goto-todo>open the To-Do tab</a></div>';
 
-  // hero: next stop
+  // hero: next stop (auto-arrival: within ~350 m the arrive button lights up)
   if(ns){
+    const near = POS && ns.stop.lat!=null && haversine(POS,ns.stop)<0.35;
     h += '<div class="hero"><div class="eyebrow">Next stop · Day '+ns.day.n+'</div>'
       +'<h2>'+esc(ns.stop.name)+'</h2>'
+      +((ns.stop.when||ns.stop.dur)?'<div class="sub">⏱ '+esc([ns.stop.when,ns.stop.dur].filter(Boolean).join(' · '))+'</div>':'')
       +(ns.stop.note?'<div class="sub">'+esc(ns.stop.note)+'</div>':'')
       +(POS && ns.stop.lat!=null?'<div class="dist">'+distLabelLong(ns.stop)+' <small>as the crow flies</small></div>':'')
       +'<div class="hero-btns">'
       +(ns.stop.lat!=null?'<a class="btn nav" href="'+appleUrl(ns.stop)+'" target="_blank" rel="noopener">'+navSvg+' Apple Maps</a>'
         +'<a class="btn nav g" href="'+googleUrl(ns.stop)+'" target="_blank" rel="noopener">Google Maps</a>':'')
-      +'<button class="btn arrive" data-arrive="'+stopKey(ns.day,ns.i)+'">✓ Arrived — next stop</button>'
+      +'<button class="btn arrive'+(near?' near':'')+'" data-arrive="'+stopKey(ns.day,ns.i)+'">'
+      +(near?'📍 You’re here — mark arrived':'✓ Arrived — next stop')+'</button>'
       +'</div></div>';
   }else{
     h += '<div class="hero done"><div class="eyebrow">All stops checked</div><h2>One loop of a lifetime ✓</h2>'
@@ -412,16 +503,94 @@ function viewToday(){
   if(day.stay) h += '<div class="stay"><span>Stay: <b>'+esc(day.stay.place)+'</b>'
       +(day.stay.lat!=null?' · <a href="'+appleUrl(day.stay)+'" target="_blank" rel="noopener">navigate</a>':'')
       +'</span><span class="cost">'+esc(day.stay.cost||'')+'</span></div>';
+  h += costLine(day);
   if(day.routeUrl) h += '<a class="btn small" style="margin-top:11px" href="'+esc(day.routeUrl)+'" target="_blank" rel="noopener">Full day route ↗</a>';
   h += '</div>';
 
-  // tomorrow teaser
+  // tonight banner: tomorrow's wake-up call, with tomorrow's sunrise where it matters
   if(idx < DAYS.length-1){
     const tm = DAYS[idx+1];
+    if(tm.leaveBy){
+      const st2 = sunTimes(tm);
+      h += '<div class="night"><b>🌙 Tomorrow: leave by '+esc(tm.leaveBy)+'</b>'
+        +(st2?' · sunrise '+fmtT(st2.sunrise,tm.tz):'')
+        +(tm.leaveNote?'<div class="sub2">'+esc(tm.leaveNote)+'</div>':'')+'</div>';
+    }
     h += '<div class="card" style="opacity:.85"><div class="date-eyebrow">Tomorrow · '+esc(fmtDate(tm.date))+'</div>'
-      +'<h2 class="daytitle" style="font-size:16px">'+esc(tm.title)+'</h2>'
-      +(tm.drive?'<div class="chips"><span class="chip drive">'+esc(tm.drive)+'</span></div>':'')+'</div>';
+      +'<h2 class="daytitle" style="font-size:16px">'+esc(tm.title)+'</h2>'+dayChips(tm)+'</div>';
   }
+  return h;
+}
+
+/* ================= map & recap ================= */
+function viewMap(){
+  const t = todayISO();
+  const org = TRIP.meta.origin;
+  const pts = [];
+  if(org && org.lat!=null) pts.push({lat:org.lat,lng:org.lng,label:org.name,date:TRIP.meta.start<t?'0000':'9999',start:true});
+  DAYS.forEach(d=>{ const a=dayEnd(d); if(a) pts.push({lat:a.lat,lng:a.lng,label:d.mapLabel,date:d.date,n:d.n}); });
+  if(pts.length<2) return '<p class="empty">No coordinates in this trip.</p>';
+  const lats=pts.map(p=>p.lat), lngs=pts.map(p=>p.lng);
+  if(POS){ lats.push(POS.lat); lngs.push(POS.lng); }
+  const minLa=Math.min(...lats)-1.1, maxLa=Math.max(...lats)+1.1, minLo=Math.min(...lngs)-1.4, maxLo=Math.max(...lngs)+1.4;
+  const kx=Math.cos((minLa+maxLa)/2*Math.PI/180);
+  const W=700, sc=W/((maxLo-minLo)*kx), H=Math.round((maxLa-minLa)*sc);
+  const X=lng=>((lng-minLo)*kx*sc).toFixed(1), Y=lat=>((maxLa-lat)*sc).toFixed(1);
+  let seg='', dots='', labels='';
+  for(let i=1;i<pts.length;i++){
+    const done=pts[i].date<t, isToday=pts[i].date===t;
+    seg += '<line x1="'+X(pts[i-1].lng)+'" y1="'+Y(pts[i-1].lat)+'" x2="'+X(pts[i].lng)+'" y2="'+Y(pts[i].lat)
+      +'" stroke="'+(done?'#00693C':isToday?'#F5C518':'#C9C4B6')+'" stroke-width="'+(isToday?5:3.5)+'"'
+      +(done||isToday?'':' stroke-dasharray="7 6"')+' stroke-linecap="round"/>';
+  }
+  pts.forEach(p=>{
+    const done=p.date<t, isToday=p.date===t;
+    dots += '<circle cx="'+X(p.lng)+'" cy="'+Y(p.lat)+'" r="'+(isToday?8:5)+'" fill="'
+      +(done?'#00693C':isToday?'#F5C518':'#fff')+'" stroke="'+(done?'#00552F':isToday?'#8A6D00':'#B5B0A2')+'" stroke-width="2"/>';
+    if(p.label) labels += '<text x="'+X(p.lng)+'" y="'+(Y(p.lat)-12)+'" text-anchor="middle" '
+      +'font-family="Oswald,sans-serif" font-size="15" font-weight="600" fill="#22262A" stroke="#FAF8F2" stroke-width="4" paint-order="stroke" '
+      +'style="text-transform:uppercase;letter-spacing:.05em">'+esc(p.label)+'</text>';
+  });
+  let you='';
+  if(POS && POS.lat>minLa && POS.lat<maxLa && POS.lng>minLo && POS.lng<maxLo){
+    const ns=nextStop();
+    if(ns && ns.stop.lat!=null)
+      you += '<line x1="'+X(POS.lng)+'" y1="'+Y(POS.lat)+'" x2="'+X(ns.stop.lng)+'" y2="'+Y(ns.stop.lat)
+        +'" stroke="#10437C" stroke-width="2.5" stroke-dasharray="3 5" stroke-linecap="round"/>';
+    you += '<circle cx="'+X(POS.lng)+'" cy="'+Y(POS.lat)+'" r="9" fill="#10437C" fill-opacity=".25">'
+      +'<animate attributeName="r" values="7;13;7" dur="2s" repeatCount="indefinite"/></circle>'
+      +'<circle cx="'+X(POS.lng)+'" cy="'+Y(POS.lat)+'" r="5.5" fill="#10437C" stroke="#fff" stroke-width="2.5"/>';
+  }
+  let h = '<div class="mapwrap"><svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trip route map">'
+    +seg+dots+labels+you+'</svg>'
+    +'<div class="maplegend"><span><i style="background:#00693C"></i>done</span>'
+    +'<span><i style="background:#F5C518"></i>today</span>'
+    +'<span><i style="background:#C9C4B6"></i>ahead</span>'
+    +(POS?'<span><i style="background:#10437C"></i>you</span>':'')+'</div></div>';
+  if(!POS) h += '<div class="locbar" style="margin:0 2px 12px"><span class="locdot'+(LOC_STATE==='err'?' err':'')+'"></span>'
+    +'<span>Turn on GPS to see yourself on the map</span><button data-act="locate">turn on</button></div>';
+
+  // recap stats
+  const daysDone = DAYS.filter(d=>d.date<t).length;
+  const inTrip = t>=TRIP.meta.start && t<=TRIP.meta.end;
+  const miDone = DAYS.filter(d=>d.date<t).reduce((a,d)=>a+(d.mi||0),0);
+  const miTotal = DAYS.reduce((a,d)=>a+(d.mi||0),0);
+  const p = progress();
+  const spentEst = DAYS.filter(d=>d.date<=t).reduce((a,d)=>a+costTotal(d),0);
+  const totalEst = DAYS.reduce((a,d)=>a+costTotal(d),0);
+  if(t>TRIP.meta.end){
+    h += '<div class="recap-hero"><h2>Loop closed 🏁</h2><p>'+miTotal.toLocaleString()+' miles · '+DAYS.length+' days · '
+      +(TRIP.meta.states||[]).length+' states · one loop of a lifetime</p></div>';
+  }
+  h += '<div class="statgrid">'
+    +'<div class="statcard"><b>'+(inTrip?daysDone+1:daysDone)+' / '+DAYS.length+'</b><small>days</small></div>'
+    +'<div class="statcard"><b>'+p.done+' / '+p.total+'</b><small>stops checked</small></div>'
+    +'<div class="statcard"><b>'+miDone.toLocaleString()+'</b><small>of '+miTotal.toLocaleString()+' mi driven</small></div>'
+    +'<div class="statcard"><b>'+(TRIP.meta.states||[]).length+'</b><small>states on the route</small></div>'
+    +'<div class="statcard"><b>$'+spentEst.toLocaleString()+'</b><small>est. spend through today</small></div>'
+    +'<div class="statcard"><b>$'+totalEst.toLocaleString()+'</b><small>est. trip total</small></div>'
+    +'</div>'
+    +'<p class="empty" style="padding:4px">Spend figures are the plan’s day-by-day estimates (stay + food + fuel + tickets) — compare hotel prices against them as you book.</p>';
   return h;
 }
 
@@ -505,7 +674,7 @@ function viewInfo(){
 function render(){
   renderHeader();
   const v = $('#view');
-  v.innerHTML = TAB==='today'?viewToday():TAB==='route'?viewRoute():TAB==='todo'?viewTodo():viewInfo();
+  v.innerHTML = TAB==='today'?viewToday():TAB==='route'?viewRoute():TAB==='map'?viewMap():TAB==='todo'?viewTodo():viewInfo();
   document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active', b.dataset.tab===TAB));
 }
 
