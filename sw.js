@@ -1,6 +1,6 @@
 /* Trip Tracker service worker — offline-first for the app shell,
    runtime cache for fonts so it survives dead zones after first load. */
-const CACHE = 'trip-tracker-v3';
+const CACHE = 'trip-tracker-v4';
 const PRECACHE = [
   './',
   './index.html',

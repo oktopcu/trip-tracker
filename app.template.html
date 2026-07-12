@@ -414,6 +414,13 @@ function costLine(d){
 
 const appleUrl  = st=>'https://maps.apple.com/?daddr='+st.lat+','+st.lng+'&dirflg=d';
 const googleUrl = st=>'https://www.google.com/maps/dir/?api=1&destination='+st.lat+'%2C'+st.lng+'&travelmode=driving';
+/* preferred maps app: saved per device; default = platform (Android → Google) */
+const MAPP_KEY='tt-mapapp';
+const mapApp = ()=> localStorage.getItem(MAPP_KEY) || (/android/i.test(navigator.userAgent)?'google':'apple');
+const navUrl  = st=> mapApp()==='google' ? googleUrl(st) : appleUrl(st);
+const navUrl2 = st=> mapApp()==='google' ? appleUrl(st)  : googleUrl(st);   // the other one
+const navLabel  = ()=> mapApp()==='google' ? 'Google Maps' : 'Apple Maps';
+const navLabel2 = ()=> mapApp()==='google' ? 'Apple Maps'  : 'Google Maps';
 
 function locate(auto){
   if(!navigator.geolocation){ LOC_STATE='err'; LOC_ERRMSG='No geolocation on this device'; render(); return; }
@@ -464,7 +471,7 @@ function stopRow(day,i,st){
     +((st.when||st.dur)?'<div class="s-when">⏱ '+esc([st.when,st.dur].filter(Boolean).join(' · '))+'</div>':'')
     +(st.note?'<div class="s-note">'+esc(st.note)+'</div>':'')+'</div>'
     +(d?'<span class="s-dist">'+d+'</span>':'')
-    +(st.lat!=null?'<a class="s-nav" href="'+appleUrl(st)+'" target="_blank" rel="noopener" aria-label="Navigate">'+navSvg+'</a>':'')
+    +(st.lat!=null?'<a class="s-nav" href="'+navUrl(st)+'" target="_blank" rel="noopener" aria-label="Navigate">'+navSvg+'</a>':'')
     +'</div>';
 }
 
@@ -513,8 +520,8 @@ function viewToday(){
       +(ns.stop.note?'<div class="sub">'+esc(ns.stop.note)+'</div>':'')
       +(POS && ns.stop.lat!=null?'<div class="dist">'+distLabelLong(ns.stop)+' <small>as the crow flies</small></div>':'')
       +'<div class="hero-btns">'
-      +(ns.stop.lat!=null?'<a class="btn nav" href="'+appleUrl(ns.stop)+'" target="_blank" rel="noopener">'+navSvg+' Apple Maps</a>'
-        +'<a class="btn nav g" href="'+googleUrl(ns.stop)+'" target="_blank" rel="noopener">Google Maps</a>':'')
+      +(ns.stop.lat!=null?'<a class="btn nav" href="'+navUrl(ns.stop)+'" target="_blank" rel="noopener">'+navSvg+' '+navLabel()+'</a>'
+        +'<a class="btn nav g" href="'+navUrl2(ns.stop)+'" target="_blank" rel="noopener">'+navLabel2()+'</a>':'')
       +'<button class="btn arrive'+(near?' near':'')+'" data-arrive="'+stopKey(ns.day,ns.i)+'">'
       +(near?'📍 You’re here — mark arrived':'✓ Arrived — next stop')+'</button>'
       +(ns.stop.guide?'<button class="btn" style="flex:1 1 100%;background:rgba(255,255,255,.16);color:#fff" data-open-guide="'+ns.day.n+':'+ns.i+'">ⓘ Read the guide</button>':'')
@@ -541,7 +548,7 @@ function viewToday(){
     day.stops.forEach((st,i)=>h+=stopRow(day,i,st));
   }
   if(day.stay) h += '<div class="stay"><span>Stay: <b>'+esc(day.stay.place)+'</b>'
-      +(day.stay.lat!=null?' · <a href="'+appleUrl(day.stay)+'" target="_blank" rel="noopener">navigate</a>':'')
+      +(day.stay.lat!=null?' · <a href="'+navUrl(day.stay)+'" target="_blank" rel="noopener">navigate</a>':'')
       +'</span><span class="cost">'+esc(day.stay.cost||'')+'</span></div>';
   h += costLine(day);
   if(day.routeUrl) h += '<a class="btn small" style="margin-top:11px" href="'+esc(day.routeUrl)+'" target="_blank" rel="noopener">Full day route ↗</a>';
@@ -696,6 +703,14 @@ function viewInfo(){
   (TRIP.tips||[]).forEach(tp=>h+='<div class="tip"><b>'+esc(tp.t)+'</b>'+esc(tp.d)+'</div>');
   h += '</div>';
 
+  h += '<div class="panel"><h3 class="display">Navigation</h3>'
+    +'<p class="fineprint" style="margin:0 0 8px">The single ➤ button on each stop opens this app. Currently: <b>'+navLabel()+'</b>'
+    +(localStorage.getItem(MAPP_KEY)?'':' (auto-detected for this phone)')+'.</p>'
+    +'<div class="btnrow">'
+    +'<button class="btn small'+(mapApp()==='apple'?'':' plain')+'" data-mapapp="apple"> Apple Maps</button>'
+    +'<button class="btn small'+(mapApp()==='google'?'':' plain')+'" data-mapapp="google">Google Maps</button>'
+    +'</div></div>';
+
   h += '<div class="panel"><h3 class="display">Trip data</h3>'
     +'<p class="fineprint" style="margin:0 0 8px">This app renders any <code>trip-tracker/v1</code> JSON. Export this trip, or paste another trip’s JSON to switch.</p>'
     +'<textarea id="io" placeholder="Paste trip JSON here to import…"></textarea>'
@@ -736,8 +751,8 @@ function openGuide(dn, i){
   }
   if(g.fact) b += '<div class="g-fact"><b>Worth knowing</b>'+esc(g.fact)+'</div>';
   b += '<div class="g-btns">'
-    +(st.lat!=null?'<a class="btn nav" style="flex:1" href="'+appleUrl(st)+'" target="_blank" rel="noopener">'+navSvg+' Apple Maps</a>'
-      +'<a class="btn nav g" style="flex:1;border:1px solid #D4DFEE" href="'+googleUrl(st)+'" target="_blank" rel="noopener">Google</a>':'')
+    +(st.lat!=null?'<a class="btn nav" style="flex:1" href="'+navUrl(st)+'" target="_blank" rel="noopener">'+navSvg+' '+navLabel()+'</a>'
+      +'<a class="btn nav g" style="flex:1;border:1px solid #D4DFEE" href="'+navUrl2(st)+'" target="_blank" rel="noopener">'+navLabel2()+'</a>':'')
     +'<button class="btn arrive" style="flex:1 1 100%" data-sheet-done="'+key+'">'
     +(done?'↩ Mark as not done':'✓ Mark done')+'</button></div>';
   $('#sheet-body').innerHTML = b;
@@ -790,6 +805,8 @@ document.getElementById('view').addEventListener('click', e=>{
   if(del){ S.custom = S.custom.filter(c=>c.id!==del.dataset.del); delete S.todos[del.dataset.del]; save(); render(); return; }
   const row = t.closest('[data-goday]');
   if(row){ DAY_OVERRIDE = +row.dataset.goday; TAB='today'; window.scrollTo(0,0); render(); return; }
+  const ma = t.closest('[data-mapapp]');
+  if(ma){ localStorage.setItem(MAPP_KEY, ma.dataset.mapapp); render(); return; }
   const act = t.closest('[data-act]');
   if(!act) return;
   const a = act.dataset.act;
