@@ -29,8 +29,19 @@ for pack in sorted(root.glob('guides-*.json')):
         stops_by_key[key]['guide'] = guide
         guide_count += 1
 
+map_count = 0
+for pack in sorted(root.glob('maps-*.json')):
+    for key, m in json.loads(pack.read_text()).items():
+        if key not in stops_by_key:
+            sys.exit(f'{pack.name}: unknown stop key {key!r}')
+        if '"' in m.get('svg', ''):
+            sys.exit(f'{pack.name}: {key} svg must use single-quoted attributes')
+        stops_by_key[key].setdefault('guide', {})['map'] = m
+        map_count += 1
+
 tpl = (root / 'app.template.html').read_text()
 payload = json.dumps(trip, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
 (root / 'index.html').write_text(tpl.replace('__TRIP_JSON__', payload))
 print(f'index.html written — {sum(len(l["days"]) for l in trip["legs"])} days, '
-      f'{len(stops_by_key)} stops, {guide_count} guides, {len(payload)} bytes of trip data')
+      f'{len(stops_by_key)} stops, {guide_count} guides, {map_count} maps, '
+      f'{len(payload)} bytes of trip data')

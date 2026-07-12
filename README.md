@@ -12,6 +12,7 @@ Apple Maps / Google Maps.
 | `app.template.html` | App source: UI + logic, with a `__TRIP_JSON__` placeholder |
 | `trip.json` | The itinerary data (see format below) |
 | `guides-leg*.json` | Offline guide content per stop, keyed `d<day>s<stopIndex>` |
+| `maps-leg*.json` | Sketch SVG maps for guides, same keys; `{svg, caption}`, single-quoted SVG attributes only (build-enforced) |
 | `build.py` | Merges guides into `trip.json` data, injects into the template → `index.html` |
 | `sw.js` | Service worker — makes the app work offline (dead zones!) |
 | `manifest.webmanifest`, `icon-*.png` | PWA install metadata |
