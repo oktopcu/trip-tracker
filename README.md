@@ -11,7 +11,8 @@ Apple Maps / Google Maps.
 | `index.html` | **The app** (generated — don't edit directly) |
 | `app.template.html` | App source: UI + logic, with a `__TRIP_JSON__` placeholder |
 | `trip.json` | The itinerary data (see format below) |
-| `build.py` | Injects `trip.json` into the template → writes `index.html` |
+| `guides-leg*.json` | Offline guide content per stop, keyed `d<day>s<stopIndex>` |
+| `build.py` | Merges guides into `trip.json` data, injects into the template → `index.html` |
 | `sw.js` | Service worker — makes the app work offline (dead zones!) |
 | `manifest.webmanifest`, `icon-*.png` | PWA install metadata |
 | `grand-western-loop-itinerary.html` | The original printable itinerary page (unchanged) |
@@ -76,7 +77,13 @@ The app renders any JSON with this shape — paste a new trip into
               "lat": 43.5586, "lng": -96.7226,
               "when": "golden hour",   // timing hint shown as ⏱
               "dur": "~45 min",
-              "note": "optional", "optional": true }
+              "note": "optional", "optional": true,
+              "guide": {               // tap the stop → bottom-sheet guidebook
+                "what": "One paragraph: what it is and why it matters.",
+                "see":  ["Don't-miss items, in priority order"],
+                "tips": ["Practical: parking, crowds, prices, timing"],
+                "fact": "One story that makes the place land harder."
+              } }
           ],
           "stay": { "place": "Sioux Falls", "cost": "~$120",
                     "lat": 43.546, "lng": -96.731 },
