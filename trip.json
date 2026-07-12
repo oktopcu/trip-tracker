@@ -49,8 +49,8 @@
           "desc": "Buy the $80 parks pass at the Badlands gate. Drive the Loop Road in golden-hour light; bighorn sheep at dusk.",
           "stops": [
             {"name": "Corn Palace, Mitchell", "lat": 43.7166, "lng": -98.0263, "dur": "15 min", "note": "World's only — photo stop"},
-            {"name": "Badlands NP — Ben Reifel Visitor Center", "lat": 43.7508, "lng": -101.9415, "when": "aim ~4pm", "note": "Buy the $80 America the Beautiful pass at the gate"},
-            {"name": "Door & Notch Trailhead", "lat": 43.7529, "lng": -101.9270, "when": "golden hour 6–8pm", "dur": "~1 h", "note": "Short walks into the moonscape"},
+            {"name": "Door & Notch Trailhead", "lat": 43.7529, "lng": -101.9270, "when": "golden hour 6–8pm", "dur": "~1 h", "note": "First stop past the NE entrance — buy the $80 pass at the gate booth"},
+            {"name": "Badlands NP — Ben Reifel Visitor Center", "lat": 43.7508, "lng": -101.9415, "note": "Fossil lab + water refill, 5 min past the trailheads"},
             {"name": "Wall Drug", "lat": 43.9930, "lng": -102.2416, "when": "evening or breakfast tomorrow", "dur": "45 min", "note": "Free ice water since 1931"}
           ],
           "stay": {"place": "Wall or Rapid City", "cost": "~$140", "lat": 44.0805, "lng": -103.2310},
@@ -62,7 +62,7 @@
           "drive": "Scenic loop ~100 mi — driving IS the activity", "wx": "Mild, ~24°C",
           "leaveBy": "7:15", "leaveNote": "Rushmore parking + light are best before 9am; wildlife is most active early.",
           "costs": {"stay": 140, "food": 70, "fuel": 19, "extra": [["Rushmore parking", 10]]},
-          "desc": "Mount Rushmore early (parking $10), then Custer State Park's Wildlife Loop — 1,300 bison roam free — and the Needles Highway's granite tunnels.",
+          "desc": "Mount Rushmore early (parking $10), then take Iron Mountain Road south — its pigtail bridges and tunnels frame Rushmore in the rear-view. Custer State Park's Wildlife Loop (1,300 bison roam free), then the Needles Highway's granite tunnels back north.",
           "stops": [
             {"name": "Mount Rushmore", "lat": 43.8791, "lng": -103.4591, "when": "before 9am", "dur": "~2 h", "note": "Parking $10"},
             {"name": "Custer SP Wildlife Loop (State Game Lodge)", "lat": 43.7622, "lng": -103.3745, "when": "mid-morning", "dur": "~2 h", "note": "1,300 bison roam free — stay in the truck"},
@@ -306,8 +306,8 @@
           "desc": "Exit the canyon east past the Desert View Watchtower. Adobe evening in Santa Fe — the oldest capital in the US.",
           "stops": [
             {"name": "Desert View Watchtower", "lat": 36.0402, "lng": -111.8262, "when": "~9am", "dur": "45 min", "note": "Last canyon view, exit east"},
-            {"name": "Standin' on the Corner, Winslow AZ", "lat": 35.0242, "lng": -110.6974, "dur": "20 min", "note": "Eagles photo op"},
-            {"name": "Meteor Crater", "lat": 35.0278, "lng": -111.0225, "dur": "~1 h", "note": "$29 — optional", "optional": true},
+            {"name": "Meteor Crater", "lat": 35.0278, "lng": -111.0225, "dur": "~1 h", "note": "$29 — optional; I-40 exit 233, before Winslow", "optional": true},
+            {"name": "Standin' on the Corner, Winslow AZ", "lat": 35.0242, "lng": -110.6974, "dur": "20 min", "note": "Eagles photo op — I-40 exit 252"},
             {"name": "Petrified Forest NP", "lat": 35.0657, "lng": -109.7817, "dur": "~1.5 h drive-through", "note": "Covered by your pass"},
             {"name": "Santa Fe", "lat": 35.6870, "lng": -105.9378}
           ],
@@ -379,8 +379,8 @@
           "costs": {"stay": 140, "food": 75, "fuel": 48, "extra": [["Arch tram ×2", 40]]},
           "desc": "Ride the space-age tram to the top of the Gateway Arch (192 m — book the 3–4pm slot online). Frozen custard “concrete” at Ted Drewes, a Route 66 landmark since 1929.",
           "stops": [
-            {"name": "Gateway Arch", "lat": 38.6247, "lng": -90.1848, "when": "your 3–4pm tram slot", "dur": "~2 h", "note": "Book online"},
-            {"name": "Ted Drewes Frozen Custard", "lat": 38.5900, "lng": -90.3021, "when": "after", "note": "Route 66 landmark since 1929"}
+            {"name": "Ted Drewes Frozen Custard", "lat": 38.5900, "lng": -90.3021, "when": "~1pm — it's on the way in", "note": "Route 66 landmark since 1929"},
+            {"name": "Gateway Arch", "lat": 38.6247, "lng": -90.1848, "when": "your 3–4pm tram slot", "dur": "~2 h", "note": "Book online"}
           ],
           "stay": {"place": "St. Louis", "cost": "~$140", "lat": 38.6270, "lng": -90.1994},
           "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Branson%2C+MO&destination=Gateway+Arch%2C+St.+Louis%2C+MO"
