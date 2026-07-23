@@ -8,7 +8,7 @@
     "end": "2026-07-29",
     "origin": {"name": "Chicago", "lat": 41.8781, "lng": -87.6298},
     "states": ["IL", "WI", "MN", "SD", "WY", "MT", "ID", "UT", "AZ", "NV", "CA", "NM", "TX", "OK", "MO"],
-    "stats": [["24", "nights"], ["~4,900 mi", "driving"], ["7", "national parks"], ["2", "theme parks"]]
+    "stats": [["24", "nights"], ["~4,950 mi", "driving"], ["7", "national parks"], ["3", "theme parks"]]
   },
   "todos": [
     {"id": "t1", "title": "Hotel: West Yellowstone ×2", "due": "2026-07-03", "note": "Nights of Jul 9 & 10. July occupancy runs 90%+ and rates $305–559. Backup if full: Island Park, ID (30 min south, cheaper).", "url": "https://www.booking.com/city/us/west-yellowstone.html"},
@@ -19,8 +19,8 @@
     {"id": "t6", "title": "Cody Nite Rodeo tickets", "due": "2026-07-06", "note": "~$25/person, runs every summer night at 8pm — for the Jul 8 show. Easy to buy online a couple of days out.", "url": "https://codystampederodeo.com"},
     {"id": "t9", "title": "Download offline maps (WY, UT, AZ, NM)", "due": "2026-07-08", "note": "Google Maps → profile → Offline maps. Dead zones ahead in Yellowstone, Bryce and long stretches of AZ/NM."},
     {"id": "t3", "title": "Universal Hollywood tickets ×2", "due": "2026-07-10", "note": "Dated tickets for Sat Jul 18 — from ~$154/adult for July weekends. Buy the Super Nintendo World early-access add-on if available.", "url": "https://www.universalstudioshollywood.com"},
-    {"id": "t7", "title": "Silver Dollar City tickets", "due": "2026-07-23", "note": "~$99/person online, for Jul 26. Marvel Cave tour is included with admission — do it in the afternoon heat.", "url": "https://www.silverdollarcity.com"},
-    {"id": "t10", "title": "Gateway Arch tram slot", "due": "2026-07-26", "note": "Book the 3–4pm tram slot online for Jul 27 — summer slots sell out day-of.", "url": "https://www.gatewayarch.com"}
+    {"id": "t7", "title": "Disneyland day — done ✓", "due": "2026-07-20", "note": "The extra LA day. Silver Dollar City dropped in exchange — fair trade.", "url": null},
+    {"id": "t11", "title": "Six Flags St. Louis tickets ×2", "due": "2026-07-24", "note": "For Mon Jul 27 — buy online ahead (~$35–45 vs ~$85 at the gate). Parking ~$35. Hurricane Harbor waterpark is included — swim stuff in the day bag.", "url": "https://www.sixflags.com/stlouis"}
   ],
   "legs": [
     {
@@ -159,7 +159,7 @@
     },
     {
       "name": "Leg 3 · Red Rock, Vegas & Los Angeles",
-      "dates": "Jul 13 – 19",
+      "dates": "Jul 13 – 20",
       "days": [
         {
           "n": 9, "date": "2026-07-13", "title": "SLC → Bryce Canyon Country",
@@ -260,15 +260,28 @@
           ],
           "stay": {"place": "Universal City / Burbank (3rd night)", "cost": "~$200", "lat": 34.1381, "lng": -118.3534},
           "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Universal+City%2C+CA&destination=Santa+Monica+Pier&waypoints=Venice+Beach+Boardwalk"
+        },
+        {
+          "n": 16, "date": "2026-07-20", "title": "Disneyland — the bonus LA day",
+          "tz": "America/Los_Angeles", "mi": 75,
+          "drive": "~75 mi round trip to Anaheim — I-5 south",
+          "leaveBy": "6:45", "leaveNote": "Rope drop 8am — the garage + tram eats 40 min, and I-5 gets ugly after 7.",
+          "costs": {"stay": 200, "food": 130, "fuel": 15, "extra": [["Disneyland ×2", 400]]},
+          "desc": "The day that shifted the whole trip — worth it. Rope-drop Star Wars: Rise of the Resistance, then Space Mountain before the lines build; classics (Indiana Jones, Pirates, Haunted Mansion) through the afternoon. Fireworks ~9:30pm, then home — tomorrow is the 440-mile push east.",
+          "stops": [
+            {"name": "Disneyland Park, Anaheim", "lat": 33.8121, "lng": -117.9190, "when": "rope drop 8am — garage by 7:15", "dur": "all day", "note": "Rise of the Resistance first; fireworks to close"}
+          ],
+          "stay": {"place": "Universal City / Burbank (4th night)", "cost": "~$200", "lat": 34.1381, "lng": -118.3534},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Universal+City%2C+CA&destination=Disneyland%2C+Anaheim%2C+CA"
         }
       ]
     },
     {
       "name": "Leg 4 · Grand Canyon & Route 66 Home",
-      "dates": "Jul 20 – 29",
+      "dates": "Jul 21 – 29",
       "days": [
         {
-          "n": 16, "date": "2026-07-20", "title": "LA → Route 66 → Williams, AZ",
+          "n": 17, "date": "2026-07-21", "title": "LA → Route 66 → Williams, AZ",
           "tz": "America/Phoenix", "mi": 440,
           "drive": "~440 mi · 6.5–7 h — 2nd longest day",
           "leaveBy": "7:30", "leaveNote": "Second-longest day (440 mi) + Route 66 stops. Leave LA before traffic.",
@@ -283,7 +296,7 @@
           "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Universal+City%2C+CA&destination=Williams%2C+AZ&waypoints=Seligman%2C+AZ"
         },
         {
-          "n": 17, "date": "2026-07-21", "title": "Grand Canyon South Rim",
+          "n": 18, "date": "2026-07-22", "title": "Grand Canyon South Rim",
           "tz": "America/Phoenix", "mi": 60, "mapLabel": "Grand Canyon",
           "drive": "~60 mi to the rim", "wx": "Rim ~29°C (2,100 m) — do NOT hike deep",
           "leaveBy": "6:30", "leaveNote": "Rim parking fills by ~9am. Hardcore option: leave 4:45 for the 5:20 sunrise at Mather.",
@@ -298,7 +311,7 @@
           "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Williams%2C+AZ&destination=Grand+Canyon+Village%2C+AZ"
         },
         {
-          "n": 18, "date": "2026-07-22", "title": "Desert View → Petrified Forest → Santa Fe",
+          "n": 19, "date": "2026-07-23", "title": "Desert View → Petrified Forest → Santa Fe",
           "tz": "America/Denver", "mi": 420, "mapLabel": "Santa Fe",
           "drive": "~420 mi · ~6 h with stops",
           "leaveBy": "8:00", "leaveNote": "420 mi with three stops — Santa Fe by dinner needs discipline.",
@@ -315,7 +328,7 @@
           "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Grand+Canyon+Village%2C+AZ&destination=Santa+Fe%2C+NM&waypoints=Winslow%2C+AZ%7CPetrified+Forest+National+Park"
         },
         {
-          "n": 19, "date": "2026-07-23", "title": "Santa Fe → Amarillo, TX",
+          "n": 20, "date": "2026-07-24", "title": "Santa Fe → Amarillo, TX",
           "tz": "America/Chicago", "mi": 280, "mapLabel": "Amarillo",
           "drive": "~280 mi · 4.5 h (afternoon)",
           "leaveBy": "9:30", "leaveNote": "Morning is for the Plaza; Cadillac Ranch wants sunset light anyway.",
@@ -330,7 +343,7 @@
           "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Santa+Fe%2C+NM&destination=Amarillo%2C+TX&waypoints=Cadillac+Ranch"
         },
         {
-          "n": 20, "date": "2026-07-24", "title": "Amarillo → Oklahoma City",
+          "n": 21, "date": "2026-07-25", "title": "Amarillo → Oklahoma City",
           "tz": "America/Chicago", "mi": 260, "mapLabel": "OKC",
           "drive": "~260 mi · 3.75 h", "rest": "Easy day",
           "leaveBy": "9:30", "leaveNote": "Easy 260 mi — sleep in.",
@@ -345,45 +358,33 @@
           "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Amarillo%2C+TX&destination=Oklahoma+City%2C+OK&waypoints=U-Drop+Inn%2C+Shamrock%2C+TX"
         },
         {
-          "n": 21, "date": "2026-07-25", "title": "OKC → Branson, MO (Ozarks)",
+          "n": 22, "date": "2026-07-26", "title": "OKC → Branson, MO (Ozarks)",
           "tz": "America/Chicago", "mi": 290,
           "drive": "~290 mi · 4.5 h",
           "leaveBy": "9:00", "leaveNote": "Blue Whale detour + Branson Landing evening.",
           "costs": {"stay": 130, "food": 70, "fuel": 55},
-          "desc": "Into the green Ozark hills — suddenly the West is behind you. Route 66's goofiest landmark is 5 min off I-44 near Tulsa. Evening at Branson Landing on the lakefront; early night before the theme park.",
+          "desc": "Into the green Ozark hills — suddenly the West is behind you. Route 66's goofiest landmark is 5 min off I-44 near Tulsa. Evening at Branson Landing on the lakefront; early night before the Six Flags day.",
           "stops": [
             {"name": "Blue Whale of Catoosa", "lat": 36.1878, "lng": -95.7440, "dur": "20 min", "note": "Route 66's goofiest landmark — 5 min off I-44"},
             {"name": "Branson Landing", "lat": 36.6437, "lng": -93.2113, "when": "evening", "note": "Lakefront stroll"}
           ],
-          "stay": {"place": "Branson ×2 nights", "cost": "~$130", "lat": 36.6437, "lng": -93.2185},
+          "stay": {"place": "Branson", "cost": "~$130", "lat": 36.6437, "lng": -93.2185},
           "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Oklahoma+City%2C+OK&destination=Branson%2C+MO&waypoints=Blue+Whale+of+Catoosa"
         },
         {
-          "n": 22, "date": "2026-07-26", "title": "Silver Dollar City — Theme Park #2",
-          "tz": "America/Chicago", "mi": 15, "mapLabel": "Branson",
-          "drive": "15 min from town",
-          "leaveBy": "8:45", "leaveNote": "Park opens 9:30 — ride Time Traveler before the lines build.",
-          "costs": {"stay": 130, "food": 110, "fuel": 3, "extra": [["Silver Dollar City ×2", 200]]},
-          "desc": "An 1880s frontier town in the forest with world-class coasters: Time Traveler and Outlaw Run. Marvel Cave tour is included — do it during the afternoon heat. Cinnamon bread is mandatory.",
-          "stops": [
-            {"name": "Silver Dollar City", "lat": 36.6685, "lng": -93.3380, "when": "opens 9:30 — Time Traveler first", "dur": "all day", "note": "Marvel Cave in the afternoon heat"}
-          ],
-          "stay": {"place": "Branson (2nd night)", "cost": "~$130", "lat": 36.6437, "lng": -93.2185},
-          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Branson%2C+MO&destination=Silver+Dollar+City"
-        },
-        {
-          "n": 23, "date": "2026-07-27", "title": "Branson → St. Louis",
+          "n": 23, "date": "2026-07-27", "title": "Branson → Six Flags St. Louis → St. Louis",
           "tz": "America/Chicago", "mi": 250, "mapLabel": "St. Louis",
-          "drive": "~250 mi · 4 h",
-          "leaveBy": "8:30", "leaveNote": "4 h drive + your 3–4pm Arch tram slot.",
-          "costs": {"stay": 140, "food": 75, "fuel": 48, "extra": [["Arch tram ×2", 40]]},
-          "desc": "Ride the space-age tram to the top of the Gateway Arch (192 m — book the 3–4pm slot online). Frozen custard “concrete” at Ted Drewes, a Route 66 landmark since 1929.",
+          "drive": "~250 mi · 3.5 h + park day", "wx": "Hot & humid, ~33°C",
+          "leaveBy": "7:45", "leaveNote": "215 mi to the park — gates ~11am, and The Boss waits for no one.",
+          "costs": {"stay": 140, "food": 110, "fuel": 48, "extra": [["Six Flags ×2", 80], ["Parking", 35]]},
+          "desc": "Silver Dollar City got traded for Disneyland, so today's coaster fix comes from Six Flags St. Louis — right on I-44 in Eureka, zero detour on the way into town. The Boss first (it's at the back), Screamin' Eagle and American Thunder after; Hurricane Harbor waterpark (included!) for the afternoon heat. Evening into St. Louis: Ted Drewes custard, Arch grounds at dusk if you're still standing.",
           "stops": [
-            {"name": "Ted Drewes Frozen Custard", "lat": 38.5900, "lng": -90.3021, "when": "~1pm — it's on the way in", "note": "Route 66 landmark since 1929"},
-            {"name": "Gateway Arch", "lat": 38.6247, "lng": -90.1848, "when": "your 3–4pm tram slot", "dur": "~2 h", "note": "Book online"}
+            {"name": "Six Flags St. Louis, Eureka MO", "lat": 38.5139, "lng": -90.6757, "when": "gates ~11am — The Boss first", "dur": "till ~7pm", "note": "I-44 exit 261 · waterpark included — bring swim stuff"},
+            {"name": "Ted Drewes Frozen Custard", "lat": 38.5900, "lng": -90.3021, "when": "evening — on the way in", "note": "Route 66 landmark since 1929 — open late"},
+            {"name": "Gateway Arch grounds (dusk)", "lat": 38.6247, "lng": -90.1848, "when": "dusk if energy remains", "dur": "45 min", "note": "Free riverfront photo stop — skipping the tram this time", "optional": true}
           ],
           "stay": {"place": "St. Louis", "cost": "~$140", "lat": 38.6270, "lng": -90.1994},
-          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Branson%2C+MO&destination=Gateway+Arch%2C+St.+Louis%2C+MO"
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Branson%2C+MO&destination=Gateway+Arch%2C+St.+Louis%2C+MO&waypoints=Six+Flags+St.+Louis%7CTed+Drewes+Frozen+Custard"
         },
         {
           "n": 24, "date": "2026-07-28", "title": "St. Louis → Chicago (O'Hare)",
@@ -417,17 +418,18 @@
   ],
   "budget": {
     "rows": [
-      ["Hotels · 24 nights", "Avg ≈ $185/night (splurges: W. Yellowstone, Springdale, Jackson · offsets: Vegas, TX/OK, Branson)", "≈ $4,450"],
-      ["Fuel", "~4,900 mi ÷ ~18 mpg pickup ≈ 270 gal", "≈ $850–900"],
+      ["Hotels · 24 nights", "Avg ≈ $185/night (splurges: W. Yellowstone, Springdale, Jackson · offsets: Vegas, TX/OK · 4th LA night added, Branson cut to 1)", "≈ $4,520"],
+      ["Fuel", "~4,950 mi ÷ ~18 mpg pickup ≈ 275 gal", "≈ $850–900"],
       ["Parks pass", "America the Beautiful — one per vehicle, covers all 7 parks", "$80"],
       ["Universal Hollywood ×2", "Saturday July date, from ~$154/adult", "≈ $310"],
-      ["Silver Dollar City ×2", "~$99/adult, cave tour included", "≈ $200"],
-      ["Small tickets", "Rodeo ($50), Jenny Lake boat ($24), Arch tram ($40), Rushmore parking ($10), Narrows gear ($60)", "≈ $185"]
+      ["Disneyland ×2", "Peak July 1-park tickets + parking — the bonus day", "≈ $400"],
+      ["Six Flags St. Louis ×2", "~$35–45/adult online + ~$35 parking, waterpark included", "≈ $115"],
+      ["Small tickets", "Rodeo ($50), Jenny Lake boat ($24), Rushmore parking ($10), Narrows gear ($60)", "≈ $145"]
     ],
-    "total": ["Trip total (excl. food)", "Food realistically adds $60–100/day for two", "≈ $6,050–6,150"]
+    "total": ["Trip total (excl. food)", "Food realistically adds $60–100/day for two", "≈ $6,400–6,500"]
   },
   "tips": [
-    {"t": "Heat rules (Jul 15–23)", "d": "Desert days hit 38–41°C. Hike 6–10am only, 4L water per person in the truck, never leave anyone (or food) in a parked car."},
+    {"t": "Heat rules (Jul 15–24)", "d": "Desert days hit 38–41°C. Hike 6–10am only, 4L water per person in the truck, never leave anyone (or food) in a parked car."},
     {"t": "Wildlife rules", "d": "Yellowstone: 25 m from bison/elk, 100 m from bears. Bison look slow; they sprint at 55 km/h. Photograph from the truck."},
     {"t": "Fuel discipline", "d": "Fill up at half-tank in WY/UT/AZ — stations can be 100+ km apart. GasBuddy app finds the cheapest pumps."},
     {"t": "Zion shuttle", "d": "Private cars are banned on the Scenic Drive in summer. Park in Springdale, ride the free town shuttle to the gate, then the park shuttle."},

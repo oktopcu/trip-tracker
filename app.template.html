@@ -304,6 +304,24 @@ S.todos  = S.todos  || {};   // {"t3": true}
 S.custom = S.custom || [];   // [{id,title,note}]
 const save = ()=>localStorage.setItem(SKEY(), JSON.stringify(S));
 
+/* One-time mid-trip migration (Jul 22): a Disneyland day was inserted as day 16
+   and the Silver Dollar City day removed, so days 16–21 moved to 17–22, the old
+   day 22 vanished, and days 23–25 kept their numbers. Stop checkmarks are keyed
+   "d<day>s<i>" — remap them once so existing progress lands on the right day. */
+if(!S.mig0722){
+  const SHIFT = {16:17, 17:18, 18:19, 19:20, 20:21, 21:22};
+  const remapped = {};
+  for(const k in S.stops){
+    const m = /^d(\d+)s(\d+)$/.exec(k);
+    if(m && SHIFT[+m[1]]) remapped['d'+SHIFT[+m[1]]+'s'+m[2]] = S.stops[k];
+    else if(m && +m[1] === 22) continue; // dropped Silver Dollar City day
+    else remapped[k] = S.stops[k];
+  }
+  S.stops = remapped;
+  S.mig0722 = true;
+  save();
+}
+
 let TAB = 'today';
 let DAY_OVERRIDE = null;      // day number when browsing, null = follow the date
 let POS = null;               // {lat,lng,at}
