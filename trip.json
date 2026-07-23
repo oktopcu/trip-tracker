@@ -8,7 +8,7 @@
     "end": "2026-07-29",
     "origin": {"name": "Chicago", "lat": 41.8781, "lng": -87.6298},
     "states": ["IL", "WI", "MN", "SD", "WY", "MT", "ID", "UT", "AZ", "NV", "CA", "NM", "TX", "OK", "MO"],
-    "stats": [["24", "nights"], ["~4,950 mi", "driving"], ["7", "national parks"], ["3", "theme parks"]]
+    "stats": [["24", "nights"], ["~4,900 mi", "driving"], ["7", "national parks"], ["3", "theme parks"]]
   },
   "todos": [
     {"id": "t1", "title": "Hotel: West Yellowstone ×2", "due": "2026-07-03", "note": "Nights of Jul 9 & 10. July occupancy runs 90%+ and rates $305–559. Backup if full: Island Park, ID (30 min south, cheaper).", "url": "https://www.booking.com/city/us/west-yellowstone.html"},
@@ -358,33 +358,34 @@
           "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Amarillo%2C+TX&destination=Oklahoma+City%2C+OK&waypoints=U-Drop+Inn%2C+Shamrock%2C+TX"
         },
         {
-          "n": 22, "date": "2026-07-26", "title": "OKC → Branson, MO (Ozarks)",
-          "tz": "America/Chicago", "mi": 290,
-          "drive": "~290 mi · 4.5 h",
-          "leaveBy": "9:00", "leaveNote": "Blue Whale detour + Branson Landing evening.",
-          "costs": {"stay": 130, "food": 70, "fuel": 55},
-          "desc": "Into the green Ozark hills — suddenly the West is behind you. Route 66's goofiest landmark is 5 min off I-44 near Tulsa. Evening at Branson Landing on the lakefront; early night before the Six Flags day.",
+          "n": 22, "date": "2026-07-26", "title": "OKC → Rolla, MO (Route 66 corridor)",
+          "tz": "America/Chicago", "mi": 370, "mapLabel": "Rolla",
+          "drive": "~370 mi · 5.5 h — the last long one",
+          "leaveBy": "9:00", "leaveNote": "370 interstate miles — the reward is waking up 1 h from the Six Flags gate.",
+          "costs": {"stay": 120, "food": 70, "fuel": 70},
+          "desc": "No Branson: without Silver Dollar City it's just a detour for a fountain show. Instead, run I-44 — the Route 66 corridor — straight toward St. Louis. The Blue Whale and the world's largest concrete totem pole are the leg-stretches. Sleep in Rolla, one hour from the park — tomorrow starts fresh.",
           "stops": [
             {"name": "Blue Whale of Catoosa", "lat": 36.1878, "lng": -95.7440, "dur": "20 min", "note": "Route 66's goofiest landmark — 5 min off I-44"},
-            {"name": "Branson Landing", "lat": 36.6437, "lng": -93.2113, "when": "evening", "note": "Lakefront stroll"}
+            {"name": "Totem Pole Park, Foyil OK", "lat": 36.4372, "lng": -95.4481, "dur": "20 min", "note": "World's largest concrete totem pole — free, 3.5 mi off old 66", "optional": true},
+            {"name": "Rolla, MO", "lat": 37.9514, "lng": -91.7713, "when": "evening", "note": "Sleep 1 h from the Six Flags gate"}
           ],
-          "stay": {"place": "Branson", "cost": "~$130", "lat": 36.6437, "lng": -93.2185},
-          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Oklahoma+City%2C+OK&destination=Branson%2C+MO&waypoints=Blue+Whale+of+Catoosa"
+          "stay": {"place": "Rolla — I-44 exit hotel row", "cost": "~$120", "lat": 37.9514, "lng": -91.7713},
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Oklahoma+City%2C+OK&destination=Rolla%2C+MO&waypoints=Blue+Whale+of+Catoosa"
         },
         {
-          "n": 23, "date": "2026-07-27", "title": "Branson → Six Flags St. Louis → St. Louis",
-          "tz": "America/Chicago", "mi": 250, "mapLabel": "St. Louis",
-          "drive": "~250 mi · 3.5 h + park day", "wx": "Hot & humid, ~33°C",
-          "leaveBy": "7:45", "leaveNote": "215 mi to the park — gates ~11am, and The Boss waits for no one.",
-          "costs": {"stay": 140, "food": 110, "fuel": 48, "extra": [["Six Flags ×2", 80], ["Parking", 35]]},
-          "desc": "Silver Dollar City got traded for Disneyland, so today's coaster fix comes from Six Flags St. Louis — right on I-44 in Eureka, zero detour on the way into town. The Boss first (it's at the back), Screamin' Eagle and American Thunder after; Hurricane Harbor waterpark (included!) for the afternoon heat. Evening into St. Louis: Ted Drewes custard, Arch grounds at dusk if you're still standing.",
+          "n": 23, "date": "2026-07-27", "title": "Rolla → Six Flags St. Louis → St. Louis",
+          "tz": "America/Chicago", "mi": 95, "mapLabel": "St. Louis",
+          "drive": "~95 mi · 1.5 h + park day", "wx": "Hot & humid, ~33°C",
+          "leaveBy": "9:30", "leaveNote": "Sleep in — the gate is 1 h away and the park opens ~11am.",
+          "costs": {"stay": 140, "food": 110, "fuel": 20, "extra": [["Six Flags ×2", 80], ["Parking", 35]]},
+          "desc": "The reward for yesterday's push: wake up one hour from Six Flags St. Louis — the coaster day that replaced both Silver Dollar City and the Arch tram. The Boss first (it's at the back), Screamin' Eagle and American Thunder after; Hurricane Harbor waterpark (included!) for the afternoon heat. Evening into St. Louis: Ted Drewes custard, Arch grounds at dusk if you're still standing.",
           "stops": [
             {"name": "Six Flags St. Louis, Eureka MO", "lat": 38.5139, "lng": -90.6757, "when": "gates ~11am — The Boss first", "dur": "till ~7pm", "note": "I-44 exit 261 · waterpark included — bring swim stuff"},
             {"name": "Ted Drewes Frozen Custard", "lat": 38.5900, "lng": -90.3021, "when": "evening — on the way in", "note": "Route 66 landmark since 1929 — open late"},
             {"name": "Gateway Arch grounds (dusk)", "lat": 38.6247, "lng": -90.1848, "when": "dusk if energy remains", "dur": "45 min", "note": "Free riverfront photo stop — skipping the tram this time", "optional": true}
           ],
           "stay": {"place": "St. Louis", "cost": "~$140", "lat": 38.6270, "lng": -90.1994},
-          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Branson%2C+MO&destination=Gateway+Arch%2C+St.+Louis%2C+MO&waypoints=Six+Flags+St.+Louis%7CTed+Drewes+Frozen+Custard"
+          "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Rolla%2C+MO&destination=Gateway+Arch%2C+St.+Louis%2C+MO&waypoints=Six+Flags+St.+Louis%7CTed+Drewes+Frozen+Custard"
         },
         {
           "n": 24, "date": "2026-07-28", "title": "St. Louis → Chicago (O'Hare)",
@@ -418,8 +419,8 @@
   ],
   "budget": {
     "rows": [
-      ["Hotels · 24 nights", "Avg ≈ $185/night (splurges: W. Yellowstone, Springdale, Jackson · offsets: Vegas, TX/OK · 4th LA night added, Branson cut to 1)", "≈ $4,520"],
-      ["Fuel", "~4,950 mi ÷ ~18 mpg pickup ≈ 275 gal", "≈ $850–900"],
+      ["Hotels · 24 nights", "Avg ≈ $185/night (splurges: W. Yellowstone, Springdale, Jackson · offsets: Vegas, TX/OK · 4th LA night added, Branson dropped)", "≈ $4,510"],
+      ["Fuel", "~4,900 mi ÷ ~18 mpg pickup ≈ 270 gal", "≈ $850–900"],
       ["Parks pass", "America the Beautiful — one per vehicle, covers all 7 parks", "$80"],
       ["Universal Hollywood ×2", "Saturday July date, from ~$154/adult", "≈ $310"],
       ["Disneyland ×2", "Peak July 1-park tickets + parking — the bonus day", "≈ $400"],

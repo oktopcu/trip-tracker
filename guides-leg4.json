@@ -231,7 +231,7 @@
     "tips": [
       "Onion burger targets: Tucker's Onion Burgers (temple of the form) or S&B's for the creative versions",
       "Bricktown parking garages are cheap; the district is compact and walkable",
-      "This is an easy night — you've earned a slow one; tomorrow is short"
+      "This is an easy night — you've earned a slow one; tomorrow is the long I-44 run to Rolla"
     ],
     "fact": "The fried-onion burger was engineering: onions were a nickel a sack, beef wasn't. El Reno still holds a Fried Onion Burger Day festival, and purists insist the onions must cook IN the smash, not beside it."
   },
@@ -248,17 +248,30 @@
     "fact": "Kids swam from the whale's dive platforms into the pond through the 1980s until insurance ended it. Zelda outlived Hugh and kept the whale; when paint faded in the 2000s, donations arrived from Route 66 clubs in Germany, Japan and Brazil."
   },
   "d22s1": {
-    "what": "Branson is Nashville's unhinged country cousin — a town of 12,000 with 100+ live theaters — and the Landing is its lakefront: 2.4 km of boardwalk on Lake Taneycomo, a reservoir so deep and cold it holds trophy trout in the Ozark summer.",
+    "what": "Ed Galloway — a retired fiddle-maker with no art training — spent his retirement (1937–1948) single-handedly pouring a folk-art garden out of concrete: the centerpiece totem pole rises 27 m, the largest concrete totem pole in the world. It's the 'Watts Towers of the Plains' and the oldest, largest folk-art environment in Oklahoma.",
     "see": [
-      "The fire-and-water fountain show at the center plaza — geysers, flames and music on the hour (evenings); unapologetically Vegas-lite and the kids next to you will lose their minds",
-      "The lake itself: Taneycomo's water comes from the bottom of an upstream dam at a constant 9°C — fog rolls off it on warm evenings like a horror film, beautifully"
+      "The big totem itself — 200+ carved figures stacked on a turtle's back; walk the circle slowly, every face is different",
+      "The Fiddle House, held up inside and out by 25 concrete totems — Galloway built it to display his handmade fiddles (many were stolen in 1970; the survivors are still there)",
+      "The smaller concrete birds, fish and arrowheads scattered across the grounds"
     ],
     "tips": [
-      "Dinner on any boardwalk patio; the White River Fish House is the local pick",
-      "Early night, seriously — tomorrow is the 215-mile run to Six Flags St. Louis, and the 7:45 departure buys you a near-empty Boss at opening",
-      "If you ever return with more days: the $10 'Baldknobbers' or Presleys' shows are the authentic Branson experience, sequins and all"
+      "Free, 20–30 min; 3.5 mi off old Route 66 near Foyil — pairs perfectly with the Blue Whale just up the road",
+      "Grounds open daily; the Fiddle House shop runs Mon–Sat 11–5, Sun 1–5 (you'll make Sunday hours)",
+      "This is the last folk-art stop of the trip — the road gets practical from here"
     ],
-    "fact": "Branson's show industry started in 1959 with the Baldknobbers Jamboree — four brothers in a converted skating rink. The town now sells more theater seats per year than Broadway."
+    "fact": "Galloway rose at 5am and worked until dark, every day, mixing concrete by hand for 11 years — then kept adding pieces until his death in 1962. The restoration in the 1990s took volunteers seven years of repainting weekends to undo 30 years of weather."
+  },
+  "d22s2": {
+    "what": "Rolla is tonight's purely strategic stop — a university town (Missouri S&T) on I-44 whose only job is to put you one hour from the Six Flags gate. After 370 miles, that job is sacred.",
+    "see": [
+      "The half-scale Stonehenge replica on the S&T campus (yes, really) — 5 min if you arrive with daylight and curiosity left"
+    ],
+    "tips": [
+      "Hotels cluster at the I-44 exits (Kingshighway); pick anything with a pool and an early breakfast",
+      "Fuel and snacks tonight — tomorrow you go straight from bed to roller coasters",
+      "Set the alarm for 9:00, not 7:00 — that's the whole point of tonight"
+    ],
+    "fact": "Rolla's Stonehenge replica was built by the university's High Pressure Waterjet Lab to show off the tech — it took a month to carve what took Neolithic builders centuries, and it's one of the few astronomically-aligned modern replicas."
   },
   "d23s0": {
     "what": "Six Flags St. Louis (opened 1971 as Six Flags Over Mid-America, the last park the company built from scratch) sprawls across a Missouri hillside in Eureka — directly on your I-44 route into St. Louis, which is why it won the swap. It's a coaster park, not a theme park: three excellent wooden coasters in the trees, a launched Mr. Freeze, and a full waterpark (Hurricane Harbor) folded into the same ticket.",
@@ -269,7 +282,7 @@
       "Mr. Freeze: Reverse Blast — 0–110 km/h in 4 seconds, straight up a 66 m spike, then the whole thing backwards"
     ],
     "tips": [
-      "Weekday July hours run ~11am–8/9pm — your 7:45 Branson departure lands you at the gate as it opens; check the Six Flags app for today's exact close",
+      "Weekday July hours run ~11am–8/9pm — sleeping in Rolla means a 9:30 departure and a fresh 11am arrival; check the Six Flags app for today's exact close",
       "Buy tickets online before Jul 27 (~$35–45 vs ~$85 at the gate); parking ~$35, I-44 exit 261",
       "Hurricane Harbor is included — do coasters 11–2, waterpark through the 2–5pm peak heat (swim stuff + towel in the day bag), then back out for evening rides",
       "Lockers at the waterpark; the park is hilly — you are once again walking up and down a Missouri hollow all day"
@@ -332,7 +345,7 @@
   "d25s0": {
     "what": "The unglamorous final boss: return the pickup full, clean-ish and on time at O'Hare's consolidated rental facility, then ride the ATS train to the terminals. Build slack into every step and the day stays boring, which is the goal.",
     "see": [
-      "One last odometer photo — you'll want the final number: ~5,200 miles"
+      "One last odometer photo — you'll want the final number: ~5,150 miles"
     ],
     "tips": [
       "Fuel within 15 km of the airport and KEEP THE RECEIPT — agencies dispute 'full' tanks; a timestamped receipt ends the conversation",
